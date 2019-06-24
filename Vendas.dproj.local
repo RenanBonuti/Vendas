@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2019/06/11 15:40:20.000.492,=D:\Meu projetos\Fontes\Vendas\Unit1.pas</Transaction>
+    <Transaction>2019/06/11 16:07:10.000.575,D:\Meu projetos\Fontes\Vendas\Unit1.pas=D:\Meu projetos\Fontes\Vendas\URelCliente.pas</Transaction>
+    <Transaction>2019/06/11 16:07:10.000.575,D:\Meu projetos\Fontes\Vendas\Unit1.dfm=D:\Meu projetos\Fontes\Vendas\URelCliente.dfm</Transaction>
+    <Transaction>2019/06/12 09:04:21.000.233,D:\Meu projetos\Fontes\Vendas\URelCliente.pas=</Transaction>
+    <Transaction>2019/06/13 10:18:52.000.652,=D:\Meu projetos\Fontes\Vendas\Unit1.pas</Transaction>
+    <Transaction>2019/06/13 10:28:28.000.418,D:\Meu projetos\Fontes\Vendas\UPesquisaVenda.pas=D:\Meu projetos\Fontes\Vendas\Unit1.pas</Transaction>
+    <Transaction>2019/06/13 10:28:28.000.418,D:\Meu projetos\Fontes\Vendas\UPesquisaVenda.dfm=D:\Meu projetos\Fontes\Vendas\Unit1.dfm</Transaction>
+    <Transaction>2019/06/17 09:00:49.000.525,=D:\Meu projetos\Fontes\Vendas\Unit1.pas</Transaction>
+    <Transaction>2019/06/17 09:01:37.000.814,D:\Meu projetos\Fontes\Vendas\Unit1.dfm=D:\Meu projetos\Fontes\Vendas\UImpressaoCupom.dfm</Transaction>
+    <Transaction>2019/06/17 09:01:37.000.814,D:\Meu projetos\Fontes\Vendas\Unit1.pas=D:\Meu projetos\Fontes\Vendas\UImpressaoCupom.pas</Transaction>
+  </Transactions>
+</BorlandProject>

@@ -1,0 +1,200 @@
+object frmRelCliente: TfrmRelCliente
+  Left = 0
+  Top = 0
+  Caption = 'frmRelCliente'
+  ClientHeight = 562
+  ClientWidth = 942
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object relClientes: TRLReport
+    Left = 72
+    Top = 48
+    Width = 794
+    Height = 1123
+    DataSource = DataModule1.dsCliente
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Arial'
+    Font.Style = []
+    Title = 'Relat'#243'rio de Clientes'
+    object rlbnd1: TRLBand
+      Left = 38
+      Top = 38
+      Width = 718
+      Height = 16
+      BandType = btHeader
+      Color = clSilver
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -15
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      object rlbl1: TRLLabel
+        Left = 0
+        Top = 0
+        Width = 55
+        Height = 18
+        Align = faTopOnly
+        Caption = 'C'#243'digo'
+        Transparent = False
+      end
+      object rlbl2: TRLLabel
+        Left = 77
+        Top = 0
+        Width = 45
+        Height = 18
+        Align = faTopOnly
+        Caption = 'Nome'
+        Transparent = False
+      end
+      object rlbl3: TRLLabel
+        Left = 400
+        Top = 0
+        Width = 123
+        Height = 18
+        Align = faTopOnly
+        Caption = 'Data Nascimento'
+        Transparent = False
+      end
+      object rlbl4: TRLLabel
+        Left = 529
+        Top = 0
+        Width = 34
+        Height = 18
+        Align = faTopOnly
+        Caption = 'CPF'
+        Transparent = False
+      end
+      object rlbl5: TRLLabel
+        Left = 640
+        Top = 0
+        Width = 49
+        Height = 18
+        Align = faTopOnly
+        Caption = 'Status'
+        Transparent = False
+      end
+    end
+    object rlbnd2: TRLBand
+      Left = 38
+      Top = 54
+      Width = 718
+      Height = 16
+      BandType = btHeader
+    end
+    object rlbnd3: TRLBand
+      Left = 38
+      Top = 70
+      Width = 718
+      Height = 16
+      object rldbtxtCL_CODIGO: TRLDBText
+        Left = 3
+        Top = 0
+        Width = 78
+        Height = 16
+        Align = faTopOnly
+        AutoSize = False
+        DataField = 'CL_CODIGO'
+        DataSource = DataModule1.dsCliente
+        Text = ''
+      end
+      object rldbNome: TRLDBText
+        Left = 87
+        Top = 0
+        Width = 78
+        Height = 16
+        Align = faTopOnly
+        AutoSize = False
+        DataField = 'CL_NOME'
+        DataSource = DataModule1.dsCliente
+        Text = ''
+      end
+      object rldbDataNas: TRLDBText
+        Left = 415
+        Top = 0
+        Width = 78
+        Height = 16
+        Align = faTopOnly
+        AutoSize = False
+        DataField = 'CL_DATA_NASCIMENTO'
+        DataSource = DataModule1.dsCliente
+        Text = ''
+      end
+      object rldbCpf: TRLDBText
+        Left = 529
+        Top = 0
+        Width = 78
+        Height = 16
+        Align = faTopOnly
+        AutoSize = False
+        DataField = 'CL_CPF'
+        DataSource = DataModule1.dsCliente
+        Text = ''
+      end
+      object rldbStatus: TRLDBText
+        Left = 637
+        Top = 0
+        Width = 78
+        Height = 16
+        Align = faTopOnly
+        AutoSize = False
+        DataField = 'CL_ATIVO'
+        DataSource = DataModule1.dsCliente
+        Text = ''
+      end
+    end
+    object rlbnd4: TRLBand
+      Left = 38
+      Top = 86
+      Width = 718
+      Height = 16
+      BandType = btFooter
+      object rlsystmnf3: TRLSystemInfo
+        Left = 648
+        Top = 0
+        Width = 70
+        Height = 16
+        Align = faRightTop
+        Text = 'Data:'
+      end
+      object rlsystmnf4: TRLSystemInfo
+        Left = 578
+        Top = 0
+        Width = 70
+        Height = 16
+        Align = faRightTop
+        Info = itHour
+        Text = 'Hora:'
+      end
+    end
+    object rlsystmnf2: TRLSystemInfo
+      Left = 745
+      Top = 102
+      Width = 11
+      Height = 16
+      Align = faRightTop
+      Info = itPageNumber
+      Text = ''
+    end
+    object rlsystmnf1: TRLSystemInfo
+      Left = 335
+      Top = 102
+      Width = 124
+      Height = 16
+      Align = faCenterTop
+      Info = itTitle
+      Text = ''
+    end
+  end
+end

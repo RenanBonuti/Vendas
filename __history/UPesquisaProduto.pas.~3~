@@ -1,0 +1,32 @@
+unit UPesquisaProduto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.Buttons, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TfrmPesquisaProduto = class(TForm)
+    pnlPesquisaCliente: TPanel;
+    lblPesquisa: TLabel;
+    dbgrdPesquisar: TDBGrid;
+    btnPesquisar2: TBitBtn;
+    rgPesquisar: TRadioGroup;
+    edtPesquisa: TEdit;
+    dsPesquisaProduto: TDataSource;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPesquisaProduto: TfrmPesquisaProduto;
+
+implementation
+
+{$R *.dfm}
+
+end.

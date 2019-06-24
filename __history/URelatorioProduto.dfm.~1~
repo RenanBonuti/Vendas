@@ -1,0 +1,148 @@
+object frmRelatorioProduto: TfrmRelatorioProduto
+  Left = 0
+  Top = 0
+  Caption = 'Relat'#243'rio de Produtos'
+  ClientHeight = 201
+  ClientWidth = 447
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object btnImprimir: TBitBtn
+    Left = 168
+    Top = 136
+    Width = 75
+    Height = 25
+    Caption = 'btnImprimir'
+    TabOrder = 0
+  end
+  object frxrprtProduto: TfrxReport
+    Version = '5.6.1'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Padr'#227'o'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 43622.620414884300000000
+    ReportOptions.LastChange = 43622.752959085700000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 320
+    Top = 8
+    Datasets = <
+      item
+        DataSet = frxdbdtstProduto
+        DataSetName = 'frxDBDataset1'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      object PageHeader1: TfrxPageHeader
+        FillType = ftBrush
+        Height = 71.811070000000000000
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+        object Memo1: TfrxMemoView
+          Left = 3.779530000000000000
+          Top = 49.133890000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          Memo.UTF8W = (
+            'C'#243'digo')
+        end
+        object Memo2: TfrxMemoView
+          Left = 83.149660000000000000
+          Top = 49.133890000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          Memo.UTF8W = (
+            'Produto')
+        end
+        object Memo3: TfrxMemoView
+          Left = 491.338900000000000000
+          Top = 49.133890000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          Memo.UTF8W = (
+            'Valor')
+        end
+      end
+      object PageFooter1: TfrxPageFooter
+        FillType = ftBrush
+        Height = 22.677180000000000000
+        Top = 317.480520000000000000
+        Width = 718.110700000000000000
+      end
+      object MasterData1: TfrxMasterData
+        FillType = ftBrush
+        Height = 105.826840000000000000
+        Top = 151.181200000000000000
+        Width = 718.110700000000000000
+        DataSet = frxdbdtstProduto
+        DataSetName = 'frxDBDataset1'
+        RowCount = 0
+        object frxDBDataset1PR_CODIGO: TfrxMemoView
+          Left = 3.779530000000000000
+          Top = 15.118120000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          DataField = 'PR_CODIGO'
+          DataSet = frxdbdtstProduto
+          DataSetName = 'frxDBDataset1'
+          Memo.UTF8W = (
+            '[frxDBDataset1."PR_CODIGO"]')
+        end
+        object frxDBDataset1PR_DESCRICAO: TfrxMemoView
+          Left = 90.708720000000000000
+          Top = 15.118120000000000000
+          Width = 400.630180000000000000
+          Height = 18.897650000000000000
+          DataField = 'PR_DESCRICAO'
+          DataSet = frxdbdtstProduto
+          DataSetName = 'frxDBDataset1'
+          Memo.UTF8W = (
+            '[frxDBDataset1."PR_DESCRICAO"]')
+        end
+        object frxDBDataset1PR_VALOR_UNITARIO: TfrxMemoView
+          Left = 495.118430000000000000
+          Top = 15.118120000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          DataField = 'PR_VALOR_UNITARIO'
+          DataSet = frxdbdtstProduto
+          DataSetName = 'frxDBDataset1'
+          Memo.UTF8W = (
+            '[frxDBDataset1."PR_VALOR_UNITARIO"]')
+        end
+      end
+    end
+  end
+  object frxdbdtstProduto: TfrxDBDataset
+    UserName = 'frxDBDataset1'
+    CloseDataSource = False
+    DataSet = DataModule1.sqlRelProduto
+    BCDToCurrency = False
+    Left = 248
+    Top = 8
+  end
+end

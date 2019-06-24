@@ -1,0 +1,38 @@
+object frmRelCliente: TfrmRelCliente
+  Left = 0
+  Top = 0
+  Caption = 'frmRelCliente'
+  ClientHeight = 562
+  ClientWidth = 942
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object relClientes: TRLReport
+    Left = 72
+    Top = 40
+    Width = 794
+    Height = 1123
+    DataSource = DataModule1.dsCliente
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Arial'
+    Font.Style = []
+    Title = 'Relat'#243'rio de Clientes'
+    object rlbnd1: TRLBand
+      Left = 38
+      Top = 38
+      Width = 718
+      Height = 16
+      Color = clSilver
+      ParentColor = False
+      Transparent = False
+    end
+  end
+end

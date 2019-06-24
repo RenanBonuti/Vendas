@@ -1,0 +1,28 @@
+unit URelatorioProduto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, frxClass,
+  frxDBSet;
+
+type
+  TfrmRelatorioProduto = class(TForm)
+    frxrprtProduto: TfrxReport;
+    frxdbdtstProduto: TfrxDBDataset;
+    btnImprimir: TBitBtn;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelatorioProduto: TfrmRelatorioProduto;
+
+implementation
+
+{$R *.dfm}
+
+end.

@@ -1,0 +1,64 @@
+unit URelCliente;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport;
+
+type
+  TfrmRelCliente = class(TForm)
+    relClientes: TRLReport;
+    rlbnd1: TRLBand;
+    rlbnd2: TRLBand;
+    rlbnd3: TRLBand;
+    rlbnd4: TRLBand;
+    rldbtxtCL_CODIGO: TRLDBText;
+    rldbNome: TRLDBText;
+    rldbDataNas: TRLDBText;
+    rldbCpf: TRLDBText;
+    rldbStatus: TRLDBText;
+    rlsystmnf3: TRLSystemInfo;
+    rlsystmnf4: TRLSystemInfo;
+    rlbl1: TRLLabel;
+    rlbl2: TRLLabel;
+    rlbl3: TRLLabel;
+    rlbl4: TRLLabel;
+    rlbl5: TRLLabel;
+    rlsystmnf1: TRLSystemInfo;
+    procedure relClientesBeforePrint(Sender: TObject; var PrintIt: Boolean);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelCliente: TfrmRelCliente;
+
+implementation
+
+uses
+  UDados, URelatorioClientes;
+
+{$R *.dfm}
+
+procedure TfrmRelCliente.relClientesBeforePrint(Sender: TObject;
+  var PrintIt: Boolean);
+begin
+  try
+    datamodule1.cdsCliente.IndexFieldNames := '' + (TfrmRelatorioClientes.varcodigonome) + '';
+    datamodule1.cdsCliente.Filter := 'CL_ATIVO = ' + QuotedStr(TfrmRelatorioClientes.varfiltro);
+    if TfrmRelatorioClientes.varfiltro = 'T' then
+    begin
+      datamodule1.cdsCliente.Filtered := False;
+    end
+    else
+      datamodule1.cdsCliente.Filtered := True;
+  finally
+    datamodule1.cdsCliente.Open;
+  end;
+
+end;
+
+end.

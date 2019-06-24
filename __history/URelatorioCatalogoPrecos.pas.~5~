@@ -1,0 +1,43 @@
+unit URelatorioCatalogoPrecos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, frxClass,
+  frxDBSet, Vcl.Buttons;
+
+type
+  TfrmRelatorioCatalogoPrecos = class(TForm)
+    frxrprtProduto: TfrxReport;
+    btnImprimir: TBitBtn;
+    frxProduto: TfrxDBDataset;
+    procedure btnImprimirClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelatorioCatalogoPrecos: TfrmRelatorioCatalogoPrecos;
+
+implementation
+
+uses
+  UDados;
+
+{$R *.dfm}
+
+procedure TfrmRelatorioCatalogoPrecos.btnImprimirClick(Sender: TObject);
+begin
+          DataModule1.cdsProduto.Close;
+          DataModule1.sqlProduto.SQL.Clear;
+          DataModule1.sqlProduto.SQL.Add('SELECT P.PR_DESCRICAO, P.* FROM PRODUTO P  WHERE P.PR_ATIVO =' + QuotedStr('A')+ 'ORDER BY 1');
+          DataModule1.cdsProduto.Open;
+          frxrprtProduto.ShowReport();
+          DataModule1.sqlProduto.Close;
+
+end;
+
+end.

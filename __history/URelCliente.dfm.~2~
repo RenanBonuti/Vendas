@@ -1,0 +1,91 @@
+object frmRelCliente: TfrmRelCliente
+  Left = 0
+  Top = 0
+  Caption = 'frmRelCliente'
+  ClientHeight = 562
+  ClientWidth = 942
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object relCliente: TRLReport
+    Left = 77
+    Top = 24
+    Width = 794
+    Height = 1123
+    DataSource = DataModule1.dsCliente
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Arial'
+    Font.Style = []
+    Title = 'Relat'#243'rio de Clientes'
+    object RLBand1: TRLBand
+      Left = 38
+      Top = 38
+      Width = 718
+      Height = 16
+      BandType = btHeader
+      Color = clMedGray
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+    end
+    object rlbnd2: TRLBand
+      Left = 38
+      Top = 54
+      Width = 718
+      Height = 16
+      BandType = btHeader
+    end
+    object rlbnd3: TRLBand
+      Left = 38
+      Top = 70
+      Width = 718
+      Height = 16
+    end
+    object rlbnd4: TRLBand
+      Left = 38
+      Top = 86
+      Width = 718
+      Height = 16
+      BandType = btFooter
+    end
+    object rlbl1: TRLLabel
+      Left = 38
+      Top = 102
+      Width = 92
+      Height = 16
+      Align = faLeftTop
+      Caption = 'Revista Informe'
+    end
+    object rlsystmnf1: TRLSystemInfo
+      Left = 379
+      Top = 102
+      Width = 36
+      Height = 16
+      Align = faCenterTop
+      Info = itTitle
+      Text = ''
+    end
+    object rlsystmnf2: TRLSystemInfo
+      Left = 642
+      Top = 102
+      Width = 114
+      Height = 16
+      Align = faRightTop
+      Info = itPageNumber
+      Text = 'P'#225'g:'
+    end
+  end
+end

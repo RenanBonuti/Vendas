@@ -1,0 +1,75 @@
+unit URelatorioClientes;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.ExtCtrls;
+
+type
+  TfrmRelatorioClientes = class(TForm)
+    bvl1: TBevel;
+    rgFiltro1: TRadioGroup;
+    rgFiltro2: TRadioGroup;
+    btnImprimir: TBitBtn;
+    procedure ordena;
+    procedure filtrar;
+    procedure btnImprimirClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+   varCodigoNome :String;
+   varFiltro     :String;
+
+
+
+  end;
+
+var
+  frmRelatorioClientes: TfrmRelatorioClientes;
+
+implementation
+
+uses
+  UDados, URelCliente;
+
+{$R *.dfm}
+
+procedure TfrmRelatorioClientes.ordena;
+begin
+  case rgFiltro2.ItemIndex of
+    0:
+      varCodigoNome := 'CL_CODIGO';
+    1:
+      varCodigoNome := 'CL_NOME';
+  end;
+    TfrmRelatorioClientes.varcodigoNome := varCodigoNome;
+end;
+
+procedure TfrmRelatorioClientes.btnImprimirClick(Sender: TObject);
+begin
+    try
+      ordena;
+      filtrar;
+    finally
+      FrmRelCliente.relClientes.Prepare;
+      FrmRelCliente.relClientes.Preview();
+    end;
+end;
+
+procedure TfrmRelatorioClientes.filtrar;
+begin
+{  case rgFiltro1.ItemIndex of
+    0:
+      TfrmRelCliente.varFiltro := 'S';
+    1:
+      TfrmRelCliente.varFiltro := 'N';
+    2:
+      TfrmRelCliente.varFiltro := 'T';
+  end
+      TfrmRelatorioClientes.varFiltro := varfiltro;    }
+end;
+
+end.

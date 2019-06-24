@@ -1,0 +1,116 @@
+unit UPesquisaVenda;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons, Vcl.DBCtrls, uniGUIBaseClasses,
+  uniGUIClasses, uniPanel, Vcl.Mask;
+
+type
+  TfrmPesquisaVenda = class(TForm)
+    Panel1: TPanel;
+    dbgrdPesquisar: TDBGrid;
+    btnPesquisar2: TBitBtn;
+    rgTipoPesquisa: TRadioGroup;
+    lblCodigo: TLabel;
+    lblVenIni: TLabel;
+    lblVenFin: TLabel;
+    dsPesquisaVenda: TDataSource;
+    edtVenIni: TEdit;
+    edtVenFim: TEdit;
+    Label1: TLabel;
+    Panel2: TPanel;
+    Label2: TLabel;
+    Label3: TLabel;
+    medtDataIni: TMaskEdit;
+    medtDatafim: TMaskEdit;
+    procedure btnPesquisar2Click(Sender: TObject);
+    procedure dbgrdPesquisarDblClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure rgTipoPesquisaClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    varCodigoVenda:  Integer;
+  end;
+
+var
+  frmPesquisaVenda: TfrmPesquisaVenda;
+
+implementation
+
+uses
+  UDados, UVendas;
+
+{$R *.dfm}
+
+procedure TfrmPesquisaVenda.btnPesquisar2Click(Sender: TObject);
+begin
+
+    with DataModule1.sqlVenda do
+    begin
+    Close;
+    SQL.Clear;
+    SQL.Add('SELECT * FROM VENDA');
+
+    case rgTipoPesquisa.ItemIndex of
+      0:
+      begin;
+        SQL.Add('WHERE VD_NUMERO BETEWHEN :VENDAINICIO AND :VENDAFIM ');
+        ParamByName('VENDAINICIO').Value :=  (edtVenIni.Text);
+        ParamByName('VENDAFIM').Value    :=  (edtVenFim.Text);
+      end;
+      1:
+      begin;
+        SQL.Add('WHERE VD_NUMERO BETEWHEN :VENDAINICIO AND :VENDAFIM ');
+        ParamByName('VENDAINICIO').Value :=  (medtDataIni.Text);
+        ParamByName('VENDAFIM').Value    :=  (medtDatafim.Text);
+      end;
+end;
+
+
+procedure TfrmPesquisaVenda.dbgrdPesquisarDblClick(Sender: TObject);
+begin
+    varcodigoVenda := dbgrdPesquisar.Columns[0].Field.Value;
+    ModalResult := mrOk;
+end;
+
+procedure TfrmPesquisaVenda.FormCreate(Sender: TObject);
+begin
+    Panel1.Enabled := False;
+    Panel2.Enabled := False;
+end;
+
+procedure TfrmPesquisaVenda.FormShow(Sender: TObject);
+begin
+//    edtInicio.Enabled   := False;
+//    edtFim.Enabled      := False;
+//    edtPesquisa.Enabled := False;
+end;
+
+procedure TfrmPesquisaVenda.rgTipoPesquisaClick(Sender: TObject);
+begin
+      case rgTipoPesquisa.ItemIndex of
+    0:
+    begin
+        Panel1.Color            := clSilver;
+        Panel2.Color            := clWhite;
+        Panel1.Enabled          := True;
+        Panel2.Enabled          := False
+    end;
+    1:
+    begin
+        Panel2.Color            := clSilver;
+        Panel1.Color            := clWhite;
+        Panel2.Enabled          := True;
+        Panel1.Enabled          := False
+    end;
+
+    end;
+end;
+
+end.

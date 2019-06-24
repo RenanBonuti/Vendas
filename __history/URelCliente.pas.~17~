@@ -1,0 +1,39 @@
+unit URelCliente;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, RLReport, Data.DB, Vcl.StdCtrls;
+
+type
+  TfrmRelCliente = class(TForm)
+    btn1: TButton;
+    procedure btn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+   varCodigoNome :String;
+   varFiltro     :String;
+
+  end;
+
+var
+  frmRelCliente: TfrmRelCliente;
+
+implementation
+
+uses
+  UDados, URelatorioClientes;
+
+{$R *.dfm}
+
+
+procedure TfrmRelCliente.btn1Click(Sender: TObject);
+begin
+    relClientes.Prepare;
+    relClientes.Preview();
+end;
+
+end.

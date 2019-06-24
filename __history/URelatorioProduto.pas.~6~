@@ -1,0 +1,73 @@
+unit URelatorioProduto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, frxClass,
+  frxDBSet, Vcl.ExtCtrls;
+
+type
+  TfrmRelatorioProduto = class(TForm)
+    Panel1: TPanel;
+    frxrprtProduto: TfrxReport;
+    frxdbdtstProduto: TfrxDBDataset;
+    btnImprimir: TBitBtn;
+    rgRelatorio: TRadioGroup;
+    btnSair: TBitBtn;
+    pnl1: TPanel;
+    rgFiltro: TRadioGroup;
+    procedure btnImprimirClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelatorioProduto: TfrmRelatorioProduto;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmRelatorioProduto.btnImprimirClick(Sender: TObject);
+begin
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('SELECT * FROM PRODUTO');
+
+    case rgRelatorio.ItemIndex of
+      0:
+      begin;
+        SQL.Add('WHERE CL_CODIGO = :codigo ');
+        ParamByName('codigo').Value :=  (edtPesquisa.Text);
+      end;
+      1:
+      begin;
+        SQL.Add('WHERE UPPER (CL_NOME) LIKE :nome');
+        ParamByName('nome').Value := UpperCase('%' + edtPesquisa.Text + '%');
+      end;
+      2:
+      begin
+        SQL.Add('WHERE CL_CPF = :cpf');
+        ParamByName('cpf').Value := edtPesquisa.Text;
+      end;
+
+    end;
+  end;
+  with  DataModule1.cdsCliente do
+  begin
+    Close;
+    Open;
+
+    if RecordCount = 0 then
+    begin
+      ShowMessage('Nenhum registro encontrado com esses dados!');
+      Exit;
+    end;
+  end;
+end;
+
+end.

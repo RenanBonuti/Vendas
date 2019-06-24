@@ -1,0 +1,31 @@
+unit URelatorioCatalogoPrecos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, frxClass,
+  frxDBSet, Vcl.Buttons;
+
+type
+  TfrmRelatorioCatalogoPrecos = class(TForm)
+    frxrprtProduto: TfrxReport;
+    btnImprimir: TBitBtn;
+    frxProduto: TfrxDBDataset;
+    rgFiltro2: TRadioGroup;
+    rgRelatorio: TRadioGroup;
+    lbl1: TLabel;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelatorioCatalogoPrecos: TfrmRelatorioCatalogoPrecos;
+
+implementation
+
+{$R *.dfm}
+
+end.

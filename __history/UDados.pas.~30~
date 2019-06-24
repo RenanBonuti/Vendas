@@ -1,0 +1,105 @@
+unit UDados;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, Data.DBXFirebird, Data.FMTBcd, Data.SqlExpr,
+  Data.DB, Datasnap.DBClient, Datasnap.Provider, RxMemDS;
+
+type
+  TDataModule1 = class(TDataModule)
+    DadosVendas: TSQLConnection;
+    sqlCliente: TSQLQuery;
+    dspCliente: TDataSetProvider;
+    cdsCliente: TClientDataSet;
+    cdsClienteCL_CODIGO: TIntegerField;
+    cdsClienteCL_NOME: TStringField;
+    cdsClienteCL_CPF: TStringField;
+    cdsClienteCL_DATA_NASCIMENTO: TDateField;
+    cdsClienteCL_ATIVO: TStringField;
+    sqlProduto: TSQLQuery;
+    dspProduto: TDataSetProvider;
+    cdsProduto: TClientDataSet;
+    tb_Aux_Impressao: TRxMemoryData;
+    tb_Aux_ImpressaoPR_CODIGO: TIntegerField;
+    tb_Aux_ImpressaoPR_DESCRICAO: TStringField;
+    tb_Aux_ImpressaoPR_VALOR_UNITARIO: TSingleField;
+    tb_Aux_ImpressaoPR_ATIVO: TStringField;
+    dsRelProduto: TDataSource;
+    dsCliente: TDataSource;
+    dsProduto: TDataSource;
+    sqlVenda: TSQLQuery;
+    dspVenda: TDataSetProvider;
+    cdsVenda: TClientDataSet;
+    dsVenda: TDataSource;
+    sqlItem: TSQLQuery;
+    dspItem: TDataSetProvider;
+    cdsItem: TClientDataSet;
+    dsItem: TDataSource;
+    cdsVendaVD: TIntegerField;
+    cdsVendaVD_CLIENTE: TIntegerField;
+    cdsVendaVD_DATA_EMISSAO: TDateField;
+    cdsVendaVD_SITUACAO: TStringField;
+    cdsVendaVD_VALOR_TOTAL: TFMTBCDField;
+    cdsVendaVD_OBSERVACAO: TStringField;
+    cdsProdutoPR_CODIGO: TIntegerField;
+    cdsProdutoPR_DESCRICAO: TStringField;
+    cdsPrValUni: TFMTBCDField;
+    cdsProdutoPR_ATIVO: TStringField;
+    sqldtsRelCliente: TSQLDataSet;
+    sqldtsRelClienteCL_CODIGO: TIntegerField;
+    sqldtsRelClienteCL_NOME: TStringField;
+    sqldtsRelClienteCL_CPF: TStringField;
+    sqldtsRelClienteCL_DATA_NASCIMENTO: TDateField;
+    sqldtsRelClienteCL_ATIVO: TStringField;
+    dtstprRelCliente: TDataSetProvider;
+    cdsRelCliente: TClientDataSet;
+    sqlClienteCL_CODIGO: TIntegerField;
+    sqlClienteCL_NOME: TStringField;
+    sqlClienteCL_CPF: TStringField;
+    sqlClienteCL_DATA_NASCIMENTO: TDateField;
+    sqlClienteCL_ATIVO: TStringField;
+    cdsItemIV_VENDA: TIntegerField;
+    cdsItemIV_ITEM: TIntegerField;
+    cdsItemIV_PRODUTO: TIntegerField;
+    cdsItemIV_QUANTIDADE: TIntegerField;
+    cdsItemIV_VALOR_UNITARIO: TSingleField;
+    cdsItemIV_TOTAL_ITEM: TSingleField;
+    cdsItemIV_VENDA1: TIntegerField;
+    cdsItemIV_ITEM1: TIntegerField;
+    cdsItemIV_PRODUTO1: TIntegerField;
+    cdsItemIV_QUANTIDADE1: TIntegerField;
+    cdsItemIV_VALOR_UNITARIO1: TSingleField;
+    cdsItemIV_TOTAL_ITEM1: TSingleField;
+    sqlItemCupom: TSQLQuery;
+    cdsItemCupom: TClientDataSet;
+    dspItemCupom: TDataSetProvider;
+    dsItemCupom: TDataSource;
+    cdsItemCupomIV_VENDA: TIntegerField;
+    cdsItemCupomIV_ITEM: TIntegerField;
+    cdsItemCupomIV_PRODUTO: TIntegerField;
+    cdsItemCupomIV_QUANTIDADE: TIntegerField;
+    cdsItemCupomIV_VALOR_UNITARIO: TSingleField;
+    cdsItemCupomIV_TOTAL_ITEM: TSingleField;
+    cdsItemCupomIV_VENDA2: TIntegerField;
+    cdsItemCupomIV_ITEM2: TIntegerField;
+    cdsItemCupomIV_PRODUTO2: TIntegerField;
+    cdsItemCupomIV_QUANTIDADE2: TIntegerField;
+    cdsItemCupomIV_VALOR_UNITARIO2: TSingleField;
+    cdsItemCupomIV_TOTAL_ITEM2: TSingleField;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DataModule1: TDataModule1;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+end.
