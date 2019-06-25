@@ -9,7 +9,9 @@
     <Transaction>2019/06/13 10:28:28.000.418,D:\Meu projetos\Fontes\Vendas\UPesquisaVenda.pas=D:\Meu projetos\Fontes\Vendas\Unit1.pas</Transaction>
     <Transaction>2019/06/13 10:28:28.000.418,D:\Meu projetos\Fontes\Vendas\UPesquisaVenda.dfm=D:\Meu projetos\Fontes\Vendas\Unit1.dfm</Transaction>
     <Transaction>2019/06/17 09:00:49.000.525,=D:\Meu projetos\Fontes\Vendas\Unit1.pas</Transaction>
-    <Transaction>2019/06/17 09:01:37.000.814,D:\Meu projetos\Fontes\Vendas\Unit1.dfm=D:\Meu projetos\Fontes\Vendas\UImpressaoCupom.dfm</Transaction>
     <Transaction>2019/06/17 09:01:37.000.814,D:\Meu projetos\Fontes\Vendas\Unit1.pas=D:\Meu projetos\Fontes\Vendas\UImpressaoCupom.pas</Transaction>
+    <Transaction>2019/06/17 09:01:37.000.814,D:\Meu projetos\Fontes\Vendas\Unit1.dfm=D:\Meu projetos\Fontes\Vendas\UImpressaoCupom.dfm</Transaction>
+    <Transaction>2019/06/25 17:50:36.719,=D:\Meu projetos\Fontes\Vendas\Unit1.pas</Transaction>
+    <Transaction>2019/06/25 17:51:17.612,D:\Meu projetos\Fontes\Vendas\UValidaSomenteNumeros.pas=D:\Meu projetos\Fontes\Vendas\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>

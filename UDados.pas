@@ -121,6 +121,15 @@ type
     strngfldRelClienteCL_UF1: TStringField;
     strngfldRelClienteCL_CEP1: TStringField;
     strngfldRelClienteCL_TIPOSUJEITO1: TStringField;
+    strngfldVendaVD_CONDPGTO: TStringField;
+    cdsVendaVD_NUMERO: TIntegerField;
+    dtfldVendaVD_DATA_EMISSAO: TDateField;
+    strngfldVendaVD_SITUACAO: TStringField;
+    sqlVendaVD_VALOR_TOTAL: TFMTBCDField;
+    strngfldVendaVD_OBSERVACAO: TStringField;
+    cdsVendaVD_CLIENTE1: TIntegerField;
+    strngfldVendaVD_CONDPGTO1: TStringField;
+    procedure cdsVendaAfterInsert(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -132,8 +141,16 @@ var
 
 implementation
 
+uses
+  UVendas;
+
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
+
+procedure TDataModule1.cdsVendaAfterInsert(DataSet: TDataSet);
+begin
+  cdsVenda.FieldByName('VD_CONDPGTO').AsString := '0/';
+end;
 
 end.

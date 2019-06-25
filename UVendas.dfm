@@ -757,6 +757,13 @@ object frmVendas: TfrmVendas
         FF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFF
         FF01FFFFFF01}
     end
+    object lblCond: TLabel
+      Left = 484
+      Top = 426
+      Width = 69
+      Height = 13
+      Caption = 'Condi'#231#227'o Pgto'
+    end
     object edtProduto: TDBEdit
       Left = 79
       Top = 118
@@ -765,6 +772,8 @@ object frmVendas: TfrmVendas
       CharCase = ecUpperCase
       DataField = 'PR_DESCRICAO'
       DataSource = DataModule1.dsProduto
+      Enabled = False
+      ReadOnly = True
       TabOrder = 0
     end
     object edtCliente: TDBEdit
@@ -775,6 +784,8 @@ object frmVendas: TfrmVendas
       CharCase = ecUpperCase
       DataField = 'CL_NOME'
       DataSource = DataModule1.dsCliente
+      Enabled = False
+      ReadOnly = True
       TabOrder = 1
     end
     object btnCliente: TBitBtn
@@ -847,13 +858,12 @@ object frmVendas: TfrmVendas
           Visible = True
         end>
     end
-    object editQuantidade: TDBEdit
+    object editQuantidade: TEdit
       Left = 617
       Top = 118
       Width = 72
       Height = 21
-      DataField = 'IV_QUANTIDADE'
-      DataSource = DataModule1.dsItem
+      Enabled = False
       TabOrder = 5
     end
     object edtDataVenda: TDBEdit
@@ -1175,6 +1185,7 @@ object frmVendas: TfrmVendas
       Height = 21
       DataField = 'VD_CLIENTE'
       DataSource = DataModule1.dsVenda
+      Enabled = False
       TabOrder = 11
     end
     object edtCodigoProduto: TDBEdit
@@ -1184,6 +1195,7 @@ object frmVendas: TfrmVendas
       Height = 21
       DataField = 'PR_CODIGO'
       DataSource = DataModule1.dsProduto
+      Enabled = False
       TabOrder = 12
     end
     object btnGravarObservacao: TBitBtn
@@ -2260,7 +2272,20 @@ object frmVendas: TfrmVendas
       Height = 21
       DataField = 'PR_VALOR_UNITARIO'
       DataSource = DataModule1.dsProduto
+      Enabled = False
       TabOrder = 22
+    end
+    object edtCondicaoPGTO: TDBEdit
+      Left = 464
+      Top = 441
+      Width = 121
+      Height = 21
+      DataField = 'VD_CONDPGTO'
+      DataSource = DataModule1.dsVenda
+      Enabled = False
+      TabOrder = 23
+      OnEnter = edtCondicaoPGTOEnter
+      OnExit = edtCondicaoPGTOExit
     end
   end
   object rdpCupom: TRDprint

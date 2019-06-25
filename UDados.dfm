@@ -270,6 +270,32 @@ object DataModule1: TDataModule1
     SQLConnection = DadosVendas
     Left = 56
     Top = 248
+    object cdsVendaVD_NUMERO: TIntegerField
+      FieldName = 'VD_NUMERO'
+      Required = True
+    end
+    object dtfldVendaVD_DATA_EMISSAO: TDateField
+      FieldName = 'VD_DATA_EMISSAO'
+    end
+    object strngfldVendaVD_SITUACAO: TStringField
+      FieldName = 'VD_SITUACAO'
+      Size = 1
+    end
+    object sqlVendaVD_VALOR_TOTAL: TFMTBCDField
+      FieldName = 'VD_VALOR_TOTAL'
+      Precision = 18
+      Size = 2
+    end
+    object strngfldVendaVD_OBSERVACAO: TStringField
+      FieldName = 'VD_OBSERVACAO'
+      Size = 1000
+    end
+    object cdsVendaVD_CLIENTE1: TIntegerField
+      FieldName = 'VD_CLIENTE'
+    end
+    object strngfldVendaVD_CONDPGTO1: TStringField
+      FieldName = 'VD_CONDPGTO'
+    end
   end
   object dspVenda: TDataSetProvider
     DataSet = sqlVenda
@@ -282,6 +308,7 @@ object DataModule1: TDataModule1
     Aggregates = <>
     Params = <>
     ProviderName = 'dspVenda'
+    AfterInsert = cdsVendaAfterInsert
     Left = 112
     Top = 248
     object cdsVendaVD: TIntegerField
@@ -306,6 +333,9 @@ object DataModule1: TDataModule1
     object cdsVendaVD_OBSERVACAO: TStringField
       FieldName = 'VD_OBSERVACAO'
       Size = 1000
+    end
+    object strngfldVendaVD_CONDPGTO: TStringField
+      FieldName = 'VD_CONDPGTO'
     end
   end
   object dsVenda: TDataSource

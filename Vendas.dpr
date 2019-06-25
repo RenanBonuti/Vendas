@@ -15,7 +15,8 @@ uses
   UPesquisaProduto in 'UPesquisaProduto.pas' {frmPesquisaProduto},
   URelatorioProdutos in 'URelatorioProdutos.pas' {frmRelatorioProdutos},
   UPesquisaVenda in 'UPesquisaVenda.pas' {frmPesquisaVenda},
-  UImpressaoCupom in 'UImpressaoCupom.pas' {frmImpressaoCupom};
+  UImpressaoCupom in 'UImpressaoCupom.pas' {frmImpressaoCupom},
+  UValidaSomenteNumeros in 'UValidaSomenteNumeros.pas';
 
 {$R *.res}
 
