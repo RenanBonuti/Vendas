@@ -37,10 +37,6 @@ type
     cdsVendaVD_SITUACAO: TStringField;
     cdsVendaVD_VALOR_TOTAL: TFMTBCDField;
     cdsVendaVD_OBSERVACAO: TStringField;
-    cdsProdutoPR_CODIGO: TIntegerField;
-    cdsProdutoPR_DESCRICAO: TStringField;
-    cdsPrValUni: TFMTBCDField;
-    cdsProdutoPR_ATIVO: TStringField;
     sqldtsRelCliente: TSQLDataSet;
     sqldtsRelClienteCL_CODIGO: TIntegerField;
     sqldtsRelClienteCL_NOME: TStringField;
@@ -95,6 +91,36 @@ type
     strngfldClienteCL_CIDADE1: TStringField;
     strngfldClienteCL_UF1: TStringField;
     strngfldClienteCL_CEP1: TStringField;
+    cdsProdutoPR_CODIGO: TIntegerField;
+    strngfldProdutoPR_DESCRICAO: TStringField;
+    cdsProdutoPR_VALOR_UNITARIO: TFMTBCDField;
+    strngfldProdutoPR_ATIVO: TStringField;
+    cdsProdutoPR_ESTOQUE: TIntegerField;
+    strngfldRelClienteCL_RG: TStringField;
+    strngfldRelClienteCL_CNPJ: TStringField;
+    strngfldRelClienteCL_IE: TStringField;
+    strngfldRelClienteCL_ENDERECO: TStringField;
+    strngfldRelClienteCL_NUMERO: TStringField;
+    strngfldRelClienteCL_BAIRRO: TStringField;
+    strngfldRelClienteCL_CIDADE: TStringField;
+    strngfldRelClienteCL_UF: TStringField;
+    strngfldRelClienteCL_CEP: TStringField;
+    strngfldRelClienteCL_TIPOSUJEITO: TStringField;
+    cdsRelClienteCL_CODIGO: TIntegerField;
+    strngfldRelClienteCL_NOME: TStringField;
+    strngfldRelClienteCL_CPF: TStringField;
+    dtfldRelClienteCL_DATA_NASCIMENTO: TDateField;
+    strngfldRelClienteCL_ATIVO: TStringField;
+    strngfldRelClienteCL_RG1: TStringField;
+    strngfldRelClienteCL_CNPJ1: TStringField;
+    strngfldRelClienteCL_IE1: TStringField;
+    strngfldRelClienteCL_ENDERECO1: TStringField;
+    strngfldRelClienteCL_NUMERO1: TStringField;
+    strngfldRelClienteCL_BAIRRO1: TStringField;
+    strngfldRelClienteCL_CIDADE1: TStringField;
+    strngfldRelClienteCL_UF1: TStringField;
+    strngfldRelClienteCL_CEP1: TStringField;
+    strngfldRelClienteCL_TIPOSUJEITO1: TStringField;
   private
     { Private declarations }
   public

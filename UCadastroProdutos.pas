@@ -25,8 +25,10 @@ type
     lblValor: TLabel;
     lblId: TLabel;
     lblProduto: TLabel;
-    dsProduto: TDataSource;
     btnSalvarEdicao: TBitBtn;
+    edtEstoque: TDBEdit;
+    dsProduto: TDataSource;
+    lbl1: TLabel;
     procedure PegaUltimoProduto;
     procedure btnNovoClick(Sender: TObject);
     procedure ControlarBotoes;
@@ -80,6 +82,15 @@ end;
 procedure TfrmCadastroProdutos.btnCancelarClick(Sender: TObject);
 begin
     DataModule1.cdsProduto.Cancel;
+    DataModule1.cdsProduto.Close;
+    btnPesquisar.Enabled     := True;
+    btnGravar.Enabled        := False;
+    dbedtProduto.Enabled     := False;
+    dbedtValor.Enabled       := False;
+    edtEstoque.Enabled       := False;
+    btnGravar.Enabled        := False;
+    btnSalvarEdicao.Visible  := False;
+
 end;
 
 procedure TfrmCadastroProdutos.btnDeletarClick(Sender: TObject);
@@ -90,6 +101,10 @@ begin
           DataModule1.cdsProduto.Delete;
           DataModule1.cdsProduto.ApplyUpdates(0);
           ShowMessage('Registro deletado com sucesso!!!');
+          btnDeletar.Enabled     := False;
+          btnEditar.Enabled      := False;
+          btnCancelar.Enabled    := False;
+          btnNovo.Enabled        := True;
         end;
       IDNO:
         Exit;
@@ -99,16 +114,15 @@ end;
 procedure TfrmCadastroProdutos.btnEditarClick(Sender: TObject);
 begin
     DataModule1.cdsProduto.Edit;
-  //  dbedtProduto.SetFocus;
     btnSalvarEdicao.Visible   := True;
     btnSalvarEdicao.Left      := 197;
     btnGravar.Enabled         := False;
     btnNovo.Enabled           := False;
     btnDeletar.Enabled        := False;
     dbcbbAtivoInativo.Enabled := True;
-    dbedtValor.Enabled            := True;
-    btnGravar.Enabled             := True;
-
+    dbedtValor.Enabled        := True;
+    dbedtProduto.Enabled      := True;
+    edtEstoque.Enabled        := True;
 end;
 
 procedure TfrmCadastroProdutos.btnGravarClick(Sender: TObject);
@@ -121,6 +135,7 @@ begin
           DataModule1.sqlProduto.SQL.Clear;
           DataModule1.sqlProduto.SQL.Text := 'UPDATE PRODUTO SET PR_DESCRICAO ='  + QuotedStr(dbedtProduto.text) +', PR_VALOR_UNITARIO ='
           + QuotedStr(StringReplace(dbedtValor.text,',','.',[rfReplaceAll])) + ',PR_ATIVO =' +  QuotedStr('S')
+          + ',PR_ESTOQUE =' + QuotedStr(edtEstoque.Text)
           + 'WHERE PR_CODIGO =' + IntToStr(varUltimoProduto);
          DataModule1.sqlProduto.ExecSQL(true);
         finally
@@ -149,7 +164,10 @@ begin
     DataModule1.cdsProduto.Insert;
     dbedtProduto.Enabled          := True;
     dbedtValor.Enabled            := True;
+    edtEstoque.Enabled            := True;
     btnGravar.Enabled             := True;
+    btnCancelar.Enabled           := True;
+    btnPesquisar.Enabled          := False;
     dbedtProduto.SetFocus;
 end;
 
@@ -162,7 +180,7 @@ begin
       begin
         Close;
         DataModule1.cdsProduto.Close;
-        DataModule1.sqlProduto.SQL.Text := 'SELECT PR_CODIGO, PR_DESCRICAO, PR_VALOR_UNITARIO, PR_ATIVO FROM PRODUTO WHERE PR_CODIGO ='
+        DataModule1.sqlProduto.SQL.Text := 'SELECT * FROM PRODUTO WHERE PR_CODIGO ='
         + QuotedStr(IntToStr(frmPesquisaProduto.varcodigoproduto));
           DataModule1.cdsProduto.Open;
       end;
@@ -199,6 +217,12 @@ begin
       ShowMessage('Produto atualizado com sucesso !');
       DataModule1.cdsProduto.Close;
       btnSalvarEdicao.Visible  := False;
+      btnNovo.Enabled          := True;
+      btnEditar.Enabled        := False;
+      dbedtProduto.Enabled     := False;
+      dbedtValor.Enabled       := False;
+      edtEstoque.Enabled       := False;
+      dbcbbAtivoInativo.Enabled:= False;
    end;
 end;
 

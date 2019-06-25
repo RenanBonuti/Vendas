@@ -846,7 +846,7 @@ object frmRelatorioProdutos: TfrmRelatorioProdutos
     PrintOptions.Printer = 'Padr'#227'o'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 43622.620414884300000000
-    ReportOptions.LastChange = 43628.884328993100000000
+    ReportOptions.LastChange = 43640.729610636600000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -876,7 +876,7 @@ object frmRelatorioProdutos: TfrmRelatorioProdutos
       Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
       object PageHeader1: TfrxPageHeader
         FillType = ftBrush
-        Fill.BackColor = clGray
+        Fill.BackColor = 15000804
         Height = 18.897650000000000000
         Top = 128.504020000000000000
         Width = 718.110700000000000000
@@ -895,7 +895,7 @@ object frmRelatorioProdutos: TfrmRelatorioProdutos
             'Produto')
         end
         object Memo3: TfrxMemoView
-          Left = 491.338900000000000000
+          Left = 400.630180000000000000
           Width = 79.370130000000000000
           Height = 18.897650000000000000
           Memo.UTF8W = (
@@ -907,6 +907,13 @@ object frmRelatorioProdutos: TfrmRelatorioProdutos
           Height = 18.897650000000000000
           Memo.UTF8W = (
             'Status')
+        end
+        object Memo8: TfrxMemoView
+          Left = 487.559370000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          Memo.UTF8W = (
+            'Estoque')
         end
       end
       object PageFooter1: TfrxPageFooter
@@ -1840,6 +1847,7 @@ object frmRelatorioProdutos: TfrmRelatorioProdutos
           Font.Name = 'Arial'
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          HAlign = haRight
           Memo.UTF8W = (
             '[frxDBDataset1."PR_CODIGO"]')
           ParentFont = False
@@ -1847,7 +1855,7 @@ object frmRelatorioProdutos: TfrmRelatorioProdutos
         object frxDBDataset1PR_DESCRICAO: TfrxMemoView
           Align = baLeft
           Left = 79.370130000000000000
-          Width = 400.630180000000000000
+          Width = 309.921460000000000000
           Height = 18.897650000000000000
           DataField = 'PR_DESCRICAO'
           DataSet = frxProduto
@@ -1862,9 +1870,27 @@ object frmRelatorioProdutos: TfrmRelatorioProdutos
             '[frxDBDataset1."PR_DESCRICAO"]')
           ParentFont = False
         end
+        object Memo5: TfrxMemoView
+          Align = baRight
+          Left = 612.283860000000000000
+          Width = 105.826840000000000000
+          Height = 19.275590551181100000
+          DataSet = frxProduto
+          DataSetName = 'frxDBDataset1'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Memo.UTF8W = (
+            '[frxDBDataset1."PR_ATIVO"]')
+          ParentFont = False
+        end
         object frxDBDataset1PR_VALOR_UNITARIO: TfrxMemoView
-          Left = 480.000310000000000000
-          Width = 132.283550000000000000
+          Left = 389.291590000000000000
+          Top = 0.220470000000000000
+          Width = 102.047310000000000000
           Height = 18.897650000000000000
           DataField = 'PR_VALOR_UNITARIO'
           DataSet = frxProduto
@@ -1879,11 +1905,12 @@ object frmRelatorioProdutos: TfrmRelatorioProdutos
             '[frxDBDataset1."PR_VALOR_UNITARIO"]')
           ParentFont = False
         end
-        object Memo5: TfrxMemoView
-          Align = baRight
-          Left = 612.283860000000000000
-          Width = 105.826840000000000000
+        object frxDBDataset1PR_ESTOQUE: TfrxMemoView
+          Left = 491.338582677165000000
+          Top = 0.220470000000000000
+          Width = 120.944960000000000000
           Height = 18.897650000000000000
+          DataField = 'PR_ESTOQUE'
           DataSet = frxProduto
           DataSetName = 'frxDBDataset1'
           Font.Charset = DEFAULT_CHARSET
@@ -1893,7 +1920,7 @@ object frmRelatorioProdutos: TfrmRelatorioProdutos
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Memo.UTF8W = (
-            '[frxDBDataset1."PR_ATIVO"]')
+            '[frxDBDataset1."PR_ESTOQUE"]')
           ParentFont = False
         end
       end

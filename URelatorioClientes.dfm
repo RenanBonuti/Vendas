@@ -3,8 +3,8 @@ object frmRelatorioClientes: TfrmRelatorioClientes
   Top = 0
   BorderStyle = bsSingle
   Caption = 'Relat'#243'rio de Clientes'
-  ClientHeight = 185
-  ClientWidth = 313
+  ClientHeight = 183
+  ClientWidth = 281
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,8 +18,8 @@ object frmRelatorioClientes: TfrmRelatorioClientes
   object bvl1: TBevel
     Left = 0
     Top = 0
-    Width = 505
-    Height = 185
+    Width = 281
+    Height = 177
   end
   object img1: TImage
     Left = 186
@@ -709,8 +709,8 @@ object frmRelatorioClientes: TfrmRelatorioClientes
     OnClick = btnImprimirClick
   end
   object relClientes: TRLReport
-    Left = 8
-    Top = 199
+    Left = 0
+    Top = 183
     Width = 794
     Height = 1123
     DataSource = dsRelCliente
@@ -747,123 +747,351 @@ object frmRelatorioClientes: TfrmRelatorioClientes
         Transparent = False
       end
     end
-    object rlbnd2: TRLBand
+    object rlbnd3: TRLBand
       Left = 38
       Top = 54
       Width = 718
-      Height = 16
-      BandType = btHeader
-      object rlbl1: TRLLabel
-        Left = 0
-        Top = 0
-        Width = 55
-        Height = 18
-        Align = faTopOnly
-        Caption = 'C'#243'digo'
-        Transparent = False
-      end
-      object rlbl2: TRLLabel
-        Left = 77
-        Top = 0
-        Width = 45
-        Height = 18
-        Align = faTopOnly
-        Caption = 'Nome'
-        Transparent = False
-      end
-      object rlbl3: TRLLabel
-        Left = 400
-        Top = 0
-        Width = 123
-        Height = 18
-        Align = faTopOnly
-        Caption = 'Data Nascimento'
-        Transparent = False
-      end
-      object rlbl4: TRLLabel
-        Left = 529
-        Top = 0
-        Width = 34
-        Height = 18
-        Align = faTopOnly
-        Caption = 'CPF'
-        Transparent = False
-      end
-      object rlbl5: TRLLabel
-        Left = 640
-        Top = 0
-        Width = 49
-        Height = 18
-        Align = faTopOnly
-        Caption = 'Status'
-        Transparent = False
-      end
-    end
-    object rlbnd3: TRLBand
-      Left = 38
-      Top = 70
-      Width = 718
-      Height = 16
+      Height = 115
+      Borders.Sides = sdCustom
+      Borders.DrawLeft = True
+      Borders.DrawTop = True
+      Borders.DrawRight = True
+      Borders.DrawBottom = True
       object rldbtxtCL_CODIGO: TRLDBText
-        Left = 3
+        Left = 70
         Top = 0
         Width = 78
         Height = 16
-        Align = faTopOnly
         AutoSize = False
         DataField = 'CL_CODIGO'
         DataSource = dsRelCliente
         Text = ''
       end
       object rldbNome: TRLDBText
-        Left = 87
-        Top = 0
-        Width = 78
+        Left = 72
+        Top = 21
+        Width = 249
         Height = 16
-        Align = faTopOnly
         AutoSize = False
         DataField = 'CL_NOME'
         DataSource = dsRelCliente
         Text = ''
       end
       object rldbDataNas: TRLDBText
-        Left = 415
-        Top = 0
+        Left = 393
+        Top = 22
         Width = 78
         Height = 16
-        Align = faTopOnly
         AutoSize = False
         DataField = 'CL_DATA_NASCIMENTO'
         DataSource = dsRelCliente
         Text = ''
       end
       object rldbCpf: TRLDBText
-        Left = 529
-        Top = 0
+        Left = 557
+        Top = 19
         Width = 102
         Height = 16
-        Align = faTopOnly
         AutoSize = False
         DataField = 'CL_CPF'
         DataSource = dsRelCliente
         Text = ''
       end
       object rldbStatus: TRLDBText
-        Left = 637
-        Top = 0
+        Left = 382
+        Top = 1
         Width = 78
         Height = 16
-        Align = faTopOnly
         AutoSize = False
         DataField = 'CL_ATIVO'
         DataSource = dsRelCliente
         Text = ''
         BeforePrint = rldbStatusBeforePrint
       end
+      object rlbl6: TRLLabel
+        Left = 0
+        Top = 0
+        Width = 48
+        Height = 16
+        Caption = 'C'#243'digo:'
+      end
+      object rlbl7: TRLLabel
+        Left = 2
+        Top = 21
+        Width = 47
+        Height = 16
+        Caption = 'Nome:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Verdana'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rlbl1: TRLLabel
+        Left = 322
+        Top = 22
+        Width = 73
+        Height = 16
+        Caption = 'Data Nasc.:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'z'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rlbl2: TRLLabel
+        Left = 484
+        Top = 19
+        Width = 34
+        Height = 16
+        Caption = 'CPF:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'z'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rlbl3: TRLLabel
+        Left = 321
+        Top = 1
+        Width = 59
+        Height = 16
+        Caption = 'Situa'#231#227'o:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'z'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rlbl4: TRLLabel
+        Left = 485
+        Top = 42
+        Width = 27
+        Height = 16
+        Caption = 'RG:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'z'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rldbtxtCL_CPF: TRLDBText
+        Left = 557
+        Top = 41
+        Width = 102
+        Height = 16
+        AutoSize = False
+        DataField = 'CL_RG'
+        DataSource = dsRelCliente
+        Text = ''
+      end
+      object rlbl5: TRLLabel
+        Left = 485
+        Top = 65
+        Width = 41
+        Height = 16
+        Caption = 'CNPJ:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'z'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rldbtxtCL_RG: TRLDBText
+        Left = 557
+        Top = 65
+        Width = 102
+        Height = 16
+        AutoSize = False
+        DataField = 'CL_CNPJ'
+        DataSource = dsRelCliente
+        Text = ''
+      end
+      object rlbl10: TRLLabel
+        Left = 1
+        Top = 43
+        Width = 52
+        Height = 16
+        Caption = 'Pessoa:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'z'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rldbtxtCL_CNPJ1: TRLDBText
+        Left = 73
+        Top = 43
+        Width = 104
+        Height = 16
+        AutoSize = False
+        DataField = 'CL_TIPOSUJEITO'
+        DataSource = dsRelCliente
+        Text = ''
+        BeforePrint = rldbtxtCL_CNPJ1BeforePrint
+      end
+      object rlbl11: TRLLabel
+        Left = 1
+        Top = 61
+        Width = 63
+        Height = 16
+        Caption = 'Endere'#231'o:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'z'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rldbtxtCL_TIPOSUJEITO: TRLDBText
+        Left = 72
+        Top = 62
+        Width = 104
+        Height = 16
+        AutoSize = False
+        DataField = 'CL_ENDERECO'
+        DataSource = dsRelCliente
+        Text = ''
+      end
+      object rlbl12: TRLLabel
+        Left = 321
+        Top = 38
+        Width = 48
+        Height = 16
+        Caption = 'Cidade:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'z'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rldbtxtCL_ENDERECO: TRLDBText
+        Left = 380
+        Top = 39
+        Width = 104
+        Height = 16
+        AutoSize = False
+        DataField = 'CL_CIDADE'
+        DataSource = dsRelCliente
+        Text = ''
+      end
+      object rlbl13: TRLLabel
+        Left = 2
+        Top = 84
+        Width = 53
+        Height = 16
+        Caption = 'N'#250'mero:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'z'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rldbtxtCL_DATA_NASCIMENTO: TRLDBText
+        Left = 72
+        Top = 84
+        Width = 78
+        Height = 16
+        AutoSize = False
+        DataField = 'CL_NUMERO'
+        DataSource = dsRelCliente
+        Text = ''
+      end
+      object rldbtxtCL_NUMERO1: TRLDBText
+        Left = 380
+        Top = 61
+        Width = 78
+        Height = 16
+        AutoSize = False
+        DataField = 'CL_UF'
+        DataSource = dsRelCliente
+        Text = ''
+      end
+      object rlbl15: TRLLabel
+        Left = 322
+        Top = 60
+        Width = 49
+        Height = 16
+        Caption = 'Estado:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'z'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rldbtxtCL_DATA_NASCIMENTO1: TRLDBText
+        Left = 561
+        Top = 85
+        Width = 78
+        Height = 15
+        AutoSize = False
+        DataField = 'CL_IE'
+        DataSource = dsRelCliente
+        Text = ''
+      end
+      object rlbl16: TRLLabel
+        Left = 485
+        Top = 86
+        Width = 71
+        Height = 15
+        Caption = 'Inscri. Est.:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'z'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
+      object rldbtxtCL_UF: TRLDBText
+        Left = 380
+        Top = 83
+        Width = 101
+        Height = 16
+        AutoSize = False
+        DataField = 'CL_CEP'
+        DataSource = dsRelCliente
+        Text = ''
+      end
+      object rlbl17: TRLLabel
+        Left = 322
+        Top = 82
+        Width = 35
+        Height = 16
+        Caption = 'CEP:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'z'
+        Font.Style = []
+        ParentFont = False
+        Transparent = False
+      end
     end
     object rlbnd4: TRLBand
       Left = 38
-      Top = 86
+      Top = 169
       Width = 718
       Height = 16
       BandType = btFooter

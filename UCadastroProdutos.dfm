@@ -3,7 +3,7 @@ object frmCadastroProdutos: TfrmCadastroProdutos
   Top = 0
   BorderStyle = bsSingle
   Caption = 'Cadastro de Produtos'
-  ClientHeight = 286
+  ClientHeight = 291
   ClientWidth = 574
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,12 +18,12 @@ object frmCadastroProdutos: TfrmCadastroProdutos
   TextHeight = 13
   object pnl1: TPanel
     Left = 0
-    Top = 0
+    Top = 8
     Width = 585
     Height = 289
     TabOrder = 0
     object lblAtivoInativo: TLabel
-      Left = 147
+      Left = 299
       Top = 69
       Width = 41
       Height = 13
@@ -49,6 +49,13 @@ object frmCadastroProdutos: TfrmCadastroProdutos
       Width = 38
       Height = 13
       Caption = 'Produto'
+    end
+    object lbl1: TLabel
+      Left = 147
+      Top = 69
+      Width = 70
+      Height = 13
+      Caption = 'Qtde. Estoque'
     end
     object btnGravar: TBitBtn
       Left = 100
@@ -891,13 +898,13 @@ object frmCadastroProdutos: TfrmCadastroProdutos
       OnClick = btnSairClick
     end
     object dbcbbAtivoInativo: TDBComboBox
-      Left = 147
+      Left = 299
       Top = 88
       Width = 145
       Height = 21
       Style = csDropDownList
       DataField = 'PR_ATIVO'
-      DataSource = dsProduto
+      DataSource = DataModule1.dsProduto
       Enabled = False
       Items.Strings = (
         'ATIVO'
@@ -910,7 +917,7 @@ object frmCadastroProdutos: TfrmCadastroProdutos
       Width = 138
       Height = 21
       DataField = 'PR_VALOR_UNITARIO'
-      DataSource = dsProduto
+      DataSource = DataModule1.dsProduto
       Enabled = False
       TabOrder = 7
       OnKeyPress = dbedtValorKeyPress
@@ -921,7 +928,7 @@ object frmCadastroProdutos: TfrmCadastroProdutos
       Width = 138
       Height = 21
       DataField = 'PR_CODIGO'
-      DataSource = dsProduto
+      DataSource = DataModule1.dsProduto
       Enabled = False
       TabOrder = 8
     end
@@ -932,7 +939,7 @@ object frmCadastroProdutos: TfrmCadastroProdutos
       Height = 21
       CharCase = ecUpperCase
       DataField = 'PR_DESCRICAO'
-      DataSource = dsProduto
+      DataSource = DataModule1.dsProduto
       Enabled = False
       TabOrder = 9
     end
@@ -1216,6 +1223,17 @@ object frmCadastroProdutos: TfrmCadastroProdutos
       TabOrder = 11
       Visible = False
       OnClick = btnSalvarEdicaoClick
+    end
+    object edtEstoque: TDBEdit
+      Left = 147
+      Top = 88
+      Width = 138
+      Height = 21
+      DataField = 'PR_ESTOQUE'
+      DataSource = dsProduto
+      Enabled = False
+      TabOrder = 12
+      OnKeyPress = dbedtValorKeyPress
     end
   end
   object dsProduto: TDataSource

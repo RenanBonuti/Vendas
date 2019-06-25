@@ -16,12 +16,6 @@ type
     relClientes: TRLReport;
     rlbnd1: TRLBand;
     rlsystmnf1: TRLSystemInfo;
-    rlbnd2: TRLBand;
-    rlbl1: TRLLabel;
-    rlbl2: TRLLabel;
-    rlbl3: TRLLabel;
-    rlbl4: TRLLabel;
-    rlbl5: TRLLabel;
     rlbnd3: TRLBand;
     rldbtxtCL_CODIGO: TRLDBText;
     rldbNome: TRLDBText;
@@ -33,11 +27,36 @@ type
     rlsystmnf4: TRLSystemInfo;
     dsRelCliente: TDataSource;
     img1: TImage;
+    rlbl6: TRLLabel;
+    rlbl7: TRLLabel;
+    rlbl1: TRLLabel;
+    rlbl2: TRLLabel;
+    rlbl3: TRLLabel;
+    rlbl4: TRLLabel;
+    rldbtxtCL_CPF: TRLDBText;
+    rlbl5: TRLLabel;
+    rldbtxtCL_RG: TRLDBText;
+    rlbl10: TRLLabel;
+    rldbtxtCL_CNPJ1: TRLDBText;
+    rlbl11: TRLLabel;
+    rldbtxtCL_TIPOSUJEITO: TRLDBText;
+    rlbl12: TRLLabel;
+    rldbtxtCL_ENDERECO: TRLDBText;
+    rlbl13: TRLLabel;
+    rldbtxtCL_DATA_NASCIMENTO: TRLDBText;
+    rldbtxtCL_NUMERO1: TRLDBText;
+    rlbl15: TRLLabel;
+    rldbtxtCL_DATA_NASCIMENTO1: TRLDBText;
+    rlbl16: TRLLabel;
+    rldbtxtCL_UF: TRLDBText;
+    rlbl17: TRLLabel;
     procedure ordena;
     procedure filtrar;
     procedure btnImprimirClick(Sender: TObject);
     procedure relClientesBeforePrint(Sender: TObject; var PrintIt: Boolean);
     procedure rldbStatusBeforePrint(Sender: TObject; var AText: string;
+      var PrintIt: Boolean);
+    procedure rldbtxtCL_CNPJ1BeforePrint(Sender: TObject; var AText: string;
       var PrintIt: Boolean);
   private
     { Private declarations }
@@ -92,6 +111,15 @@ begin
        AText := 'Ativo'
     else
        AText := 'Inativo'
+end;
+
+procedure TfrmRelatorioClientes.rldbtxtCL_CNPJ1BeforePrint(Sender: TObject;
+  var AText: string; var PrintIt: Boolean);
+begin
+    if DataModule1.cdsRelCliente.FieldByName('CL_TIPOSUJEITO').AsString = 'F'  then
+       AText := 'Física'
+    else
+       AText := 'Júridica'
 end;
 
 procedure TfrmRelatorioClientes.filtrar;

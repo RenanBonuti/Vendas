@@ -76,7 +76,7 @@ type
   varVenDataVenda      :string;
   varVenObservacao     :string;
   varVenSituacao       :string;
-  varSubtrairTotal     :Integer;
+  varSubtrairTotal     :Double;
   varVenCodigoVenda    :integer;
   varVendaDataEmissao  :string;
   varClienteNome       :string;
@@ -139,7 +139,7 @@ end;
 
 procedure TfrmVendas.SubtrairTotal;
 begin
-    varSubtrairTotal := StrToInt(dbgVenda.columns.items[5].field.text)
+    varSubtrairTotal := StrToFloat(dbgVenda.columns.items[5].field.text)
 end;
 
 procedure TfrmVendas.PegaUltimoItem;
@@ -229,12 +229,12 @@ begin
     vartotalvenda := vartotalvenda + dbgVenda.Columns[5].Field.Value;
     edtTotal.Text := FloatToStr(vartotalvenda);
     edtTotal.Text := FormatFloat('#,##0.00',StrToFloat(edtTotal.Text));
-   { DataModule1.sqlItem.Close;
-    DataModule1.sqlItem.SQL.Clear;
-    DataModule1.sqlItem.SQL.Text := 'INSERT INTO ITEM(IV_VENDA, IV_ITEM, IV_PRODUTO, IV_VALOR_UNITARIO, IV_QUANTIDADE) VALUES('+
-    QuotedStr(IntToStr(varVencodigoVenda))+ ',' + QuotedStr(IntToStr(varsomaquantidade)) + ',' + QuotedStr(edtCodigoProduto.Text) +','
-    + QuotedStr(edtValUni.Text) + ',' +QuotedStr(editQuantidade.Text)+')';
-   DataModule1.sqlItem.ExecSQL(true);}
+    DataModule1.sqlProduto.Close;
+    DataModule1.sqlProduto.SQL.Clear;
+    Datamodule1.sqlProduto.SQL.Text :=  'UPDATE PRODUTO SET PR_ESTOQUE = (SELECT PR_ESTOQUE FROM PRODUTO WHERE PR_CODIGO ='
+    + QuotedStr(edtCodigoProduto.Text) + ') - ' + editQuantidade.text
+    + 'WHERE PR_CODIGO =' + QuotedStr(edtCodigoProduto.text);
+    DataModule1.sqlProduto.ExecSQL(TRUE);
     DataModule1.cdsItem.Append;
 end;
 
@@ -274,7 +274,7 @@ begin
       begin
         Close;
         DataModule1.cdsCliente.Close;
-        DataModule1.sqlCliente.SQL.Text := 'SELECT CL_CODIGO,CL_NOME,CL_CPF,CL_DATA_NASCIMENTO,CL_ATIVO FROM CLIENTE WHERE CL_CODIGO ='
+        DataModule1.sqlCliente.SQL.Text := 'SELECT * FROM CLIENTE WHERE CL_CODIGO ='
         + QuotedStr(IntToStr(frmPesquisaCliente.varcodigoCliente));
           DataModule1.cdsCliente.Open;
           edtCodigoCliente.Text := IntToStr(frmPesquisaCliente.varcodigoCliente);
@@ -585,7 +585,7 @@ begin
       begin
         Close;
         DataModule1.cdsProduto.Close;
-        DataModule1.sqlProduto.SQL.Text := 'SELECT PR_CODIGO, PR_DESCRICAO, PR_VALOR_UNITARIO, PR_ATIVO FROM PRODUTO WHERE PR_CODIGO ='
+        DataModule1.sqlProduto.SQL.Text := 'SELECT * FROM PRODUTO WHERE PR_CODIGO ='
         + QuotedStr(IntToStr(frmPesquisaProduto.varcodigoproduto));
           DataModule1.cdsProduto.Open;
           edtCodigoProduto.Text := IntToStr(frmPesquisaProduto.varcodigoproduto);
@@ -598,10 +598,14 @@ end;
 
 procedure TfrmVendas.btnRemoverClick(Sender: TObject);
 var
-   vartotalquantidade :Integer;
+   vartotalquantidade   :Integer;
+   varProdutoEstoque    :string;
+   varQuantidadeEstoque :String;
 begin
     SubtrairTotal;
-    vartotalquantidade := 0;
+    vartotalquantidade   := 0;
+    varProdutoEstoque    := dbgVenda.Columns.Items[2].Field.Text;
+    varQuantidadeEstoque := dbgVenda.Columns.Items[4].Field.Text;
     DataModule1.cdsItem.Delete;
     DataModule1.cdsItem.First;
     while not DataModule1.cdsItem.Eof do
@@ -615,12 +619,17 @@ begin
       DataModule1.cdsItem.First;
       vartotalvenda := vartotalvenda - varSubtrairTotal;
       edtTotal.Text := FloatToStr(vartotalvenda);
+      DataModule1.sqlProduto.Close;
+      DataModule1.sqlProduto.SQL.Clear;
+      Datamodule1.sqlProduto.SQL.Text :=  'UPDATE PRODUTO SET PR_ESTOQUE = (SELECT PR_ESTOQUE FROM PRODUTO WHERE PR_CODIGO ='
+      + QuotedStr(varProdutoEstoque) + ') + ' + varQuantidadeEstoque
+      + 'WHERE PR_CODIGO =' + QuotedStr(varProdutoEstoque);
+      DataModule1.sqlProduto.ExecSQL(TRUE);
       DataModule1.cdsItem.Append;
 end;
 
 procedure TfrmVendas.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  //  ParaTransacao;
     DataModule1.cdsItem.Cancel;
     DataModule1.cdsCliente.Close;
     DataModule1.cdsProduto.Close;

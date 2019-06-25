@@ -72,7 +72,6 @@ type
     procedure btnSalvarEdicaoClick(Sender: TObject);
     procedure dbedtDataNasExit(Sender: TObject);
     procedure cbTipoChange(Sender: TObject);
-    procedure cbTipoKeyPress(Sender: TObject; var Key: Char);
 
   private
    Transaction:  TDBXTransaction;
@@ -120,6 +119,22 @@ end;
 procedure TfrmCadastroClientes.btnCancelarClick(Sender: TObject);
 begin
     DataModule1.cdsCliente.Cancel;
+    DataModule1.cdsCliente.Close;
+    btnPesquisar.Enabled     := True;
+    btnGravar.Enabled        := False;
+    dbedtNome.Enabled        := False;
+    edtEndereco.Enabled      := False;
+    edtNumero.Enabled        := False;
+    edtBairro.Enabled        := False;
+    edtCidade.Enabled        := False;
+    edtCep.Enabled           := False;
+    edtRG.Enabled            := False;
+    dbedtDataNas.Enabled     := False;
+    cbTipo.Enabled           := False;
+    dbcbbAtivoInativo.Enabled:= False;
+    cbUF.Enabled             := False;
+    btnGravar.Enabled        := False;
+
 end;
 
 procedure TfrmCadastroClientes.ControlarBotoes;
@@ -165,6 +180,9 @@ begin
           DataModule1.cdsCliente.Delete;
           DataModule1.cdsCliente.ApplyUpdates(0);
           ShowMessage('Registro deletado com sucesso!!!');
+          btnDeletar.Enabled   := False;
+          btnEditar.Enabled    := False;
+          btnNovo.Enabled      := True;
         end;
       IDNO:
         Exit;
@@ -182,6 +200,21 @@ begin
     dbedtNome.Enabled        := True;
     dbedtCpf.Enabled         := True;
     dbedtDataNas.Enabled     := True;
+    btnCancelar.Enabled      := True;
+    dbedtNome.Enabled        := True;
+    edtEndereco.Enabled      := True;
+    edtNumero.Enabled        := True;
+    edtBairro.Enabled        := True;
+    edtCidade.Enabled        := True;
+    edtCep.Enabled           := True;
+    edtRG.Enabled            := True;
+    edtIE.Enabled            := True;
+    edtCnpj.Enabled          := True;
+    dbedtDataNas.Enabled     := True;
+    dbcbbAtivoInativo.Enabled:= True;
+    cbTipo.Enabled           := True;
+    cbUF.Enabled             := True;
+
 end;
 
 procedure TfrmCadastroClientes.btnGravarClick(Sender: TObject);
@@ -215,8 +248,6 @@ procedure TfrmCadastroClientes.btnNovoClick(Sender: TObject);
 var
     varTipoPessoa  :string;
 begin
-
-
     PegaUltimoCliente;
     DataModule1.cdsCliente.Active := True;
     DataModule1.cdsCliente.Insert;
@@ -232,6 +263,7 @@ begin
     cbTipo.Enabled           := True;
     cbUF.Enabled             := True;
     btnGravar.Enabled        := True;
+    btnPesquisar.Enabled     := False;
     dbedtNome.SetFocus;
 end;
 
@@ -251,6 +283,7 @@ begin
           btnDeletar.Enabled    := True;
           btnEditar.Enabled     := True;
           btnGravar.Enabled     := False;
+          btnNovo.Enabled       := False;
           dbedtNome.Enabled     := False;
           dbedtCpf.Enabled      := False;
           dbedtDataNas.Enabled  := False;
@@ -290,8 +323,10 @@ begin
    finally
       ShowMessage('Cadastro atualizado com sucesso !');
       DataModule1.cdsCliente.Close;
-      btnSalvarEdicao.Visible  := False;
+      btnSalvarEdicao.Visible   := False;
       dbcbbAtivoInativo.Enabled := true;
+      btnEditar.Enabled         := False;
+      btnNovo.Enabled           := True;
    end;
 
 end;
@@ -308,27 +343,23 @@ begin
        varTipoSujeito  := 'J'
      end;
      end;
-end;
 
-procedure TfrmCadastroClientes.cbTipoKeyPress(Sender: TObject; var Key: Char);
-begin
-    case cbTipo.ItemIndex of
-    0:
-    begin
+     case cbTipo.ItemIndex of
+     0:
+     begin
         dbedtCpf.Enabled      := True;
         edtRG.Enabled         := True;
         edtCnpj.EnAbled       := False;
         edtIE.Enabled         := False;
-    end;
-    1:
-    begin
+     end;
+     1:
+     begin
         dbedtCpf.Enabled      := False;
         edtRG.Enabled         := False;
         edtCnpj.EnAbled       := True;
         edtIE.Enabled         := True;
-    end;
-    end;
-
+      end;
+      end;
 end;
 
 procedure TfrmCadastroClientes.edtNascimentoKeyPress(Sender: TObject;

@@ -19,6 +19,7 @@ type
     procedure btnPesquisar2Click(Sender: TObject);
     procedure dbgrdPesquisarDblClick(Sender: TObject);
     procedure edtPesquisaKeyPress(Sender: TObject; var Key: Char);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -118,6 +119,11 @@ begin
     end;
     end;
 
+end;
+
+procedure TfrmPesquisaCliente.FormCreate(Sender: TObject);
+begin
+    edtPesquisa.Text := '%';
 end;
 
 end.

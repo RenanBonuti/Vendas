@@ -19,6 +19,7 @@ type
     procedure btnPesquisar2Click(Sender: TObject);
     procedure dbgrdPesquisarDblClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -79,6 +80,11 @@ procedure TfrmPesquisaProduto.dbgrdPesquisarDblClick(Sender: TObject);
 begin
     varcodigoproduto := dbgrdPesquisar.Columns[0].Field.Value;
     ModalResult := mrOk;
+end;
+
+procedure TfrmPesquisaProduto.FormCreate(Sender: TObject);
+begin
+    edtPesquisa.Text := '%';
 end;
 
 procedure TfrmPesquisaProduto.FormKeyPress(Sender: TObject; var Key: Char);

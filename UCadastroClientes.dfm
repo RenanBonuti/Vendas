@@ -6,7 +6,7 @@ object frmCadastroClientes: TfrmCadastroClientes
   BorderStyle = bsSingle
   Caption = 'Cadastro de Clientes.'
   ClientHeight = 386
-  ClientWidth = 820
+  ClientWidth = 821
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -30,7 +30,7 @@ object frmCadastroClientes: TfrmCadastroClientes
   object pgc1: TPageControl
     Left = 0
     Top = 0
-    Width = 820
+    Width = 821
     Height = 386
     ActivePage = TabSheetCadastro
     Align = alClient
@@ -1191,8 +1191,8 @@ object frmCadastroClientes: TfrmCadastroClientes
         OnClick = btnPesquisarClick
       end
       object btnSalvarEdicao: TBitBtn
-        Left = 900
-        Top = 276
+        Left = 892
+        Top = 314
         Width = 82
         Height = 41
         Caption = 'Salvar'
@@ -1352,7 +1352,6 @@ object frmCadastroClientes: TfrmCadastroClientes
         TabOrder = 13
         OnChange = cbTipoChange
         OnEnter = dbedtCodigoEnter
-        OnKeyPress = cbTipoKeyPress
       end
       object cbUF: TDBComboBox
         Left = 434

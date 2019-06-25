@@ -54,7 +54,7 @@ begin
   DataModule1.cdsProduto.Close;
   DataModule1.sqlProduto.SQL.Clear;
   DataModule1.sqlProduto.SQL.Text :=
-    'SELECT PR_CODIGO,PR_DESCRICAO,PR_VALOR_UNITARIO, CASE WHEN PR_ATIVO = ' +
+    'SELECT PR_CODIGO,PR_DESCRICAO,PR_VALOR_UNITARIO, PR_ESTOQUE, CASE WHEN PR_ATIVO = ' +
     QuotedStr('A') + ' THEN ' + QuotedStr('ATIVO') + ' ELSE ' +
     QuotedStr('INATIVO') + ' END AS PR_ATIVO FROM PRODUTO ';
   if (varFiltro = 'A') or (varFiltro = 'I') then

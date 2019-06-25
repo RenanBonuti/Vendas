@@ -188,7 +188,7 @@ object DataModule1: TDataModule1
     MaxBlobSize = -1
     Params = <>
     SQL.Strings = (
-      'SELECT * FROM PRODUTO')
+      'SELECT * FROM  PRODUTO')
     SQLConnection = DadosVendas
     Left = 56
     Top = 176
@@ -207,20 +207,24 @@ object DataModule1: TDataModule1
     Top = 176
     object cdsProdutoPR_CODIGO: TIntegerField
       FieldName = 'PR_CODIGO'
+      Required = True
     end
-    object cdsProdutoPR_DESCRICAO: TStringField
+    object strngfldProdutoPR_DESCRICAO: TStringField
       FieldName = 'PR_DESCRICAO'
       Size = 150
     end
-    object cdsPrValUni: TFMTBCDField
+    object cdsProdutoPR_VALOR_UNITARIO: TFMTBCDField
       FieldName = 'PR_VALOR_UNITARIO'
       DisplayFormat = '#,##0.00;0;'
       Precision = 18
       Size = 2
     end
-    object cdsProdutoPR_ATIVO: TStringField
+    object strngfldProdutoPR_ATIVO: TStringField
       FieldName = 'PR_ATIVO'
       Size = 1
+    end
+    object cdsProdutoPR_ESTOQUE: TIntegerField
+      FieldName = 'PR_ESTOQUE'
     end
   end
   object tb_Aux_Impressao: TRxMemoryData
@@ -400,19 +404,59 @@ object DataModule1: TDataModule1
     end
     object sqldtsRelClienteCL_CPF: TStringField
       FieldName = 'CL_CPF'
+      EditMask = '999\.999\.999\-99;0;'
       Size = 11
     end
     object sqldtsRelClienteCL_DATA_NASCIMENTO: TDateField
       FieldName = 'CL_DATA_NASCIMENTO'
+      EditMask = '99/99/9999;1;_'
     end
     object sqldtsRelClienteCL_ATIVO: TStringField
       FieldName = 'CL_ATIVO'
       Size = 1
     end
+    object strngfldRelClienteCL_RG: TStringField
+      FieldName = 'CL_RG'
+    end
+    object strngfldRelClienteCL_CNPJ: TStringField
+      FieldName = 'CL_CNPJ'
+    end
+    object strngfldRelClienteCL_IE: TStringField
+      FieldName = 'CL_IE'
+    end
+    object strngfldRelClienteCL_ENDERECO: TStringField
+      FieldName = 'CL_ENDERECO'
+      Size = 50
+    end
+    object strngfldRelClienteCL_NUMERO: TStringField
+      FieldName = 'CL_NUMERO'
+    end
+    object strngfldRelClienteCL_BAIRRO: TStringField
+      FieldName = 'CL_BAIRRO'
+      Size = 50
+    end
+    object strngfldRelClienteCL_CIDADE: TStringField
+      FieldName = 'CL_CIDADE'
+      Size = 50
+    end
+    object strngfldRelClienteCL_UF: TStringField
+      FieldName = 'CL_UF'
+      Size = 2
+    end
+    object strngfldRelClienteCL_CEP: TStringField
+      FieldName = 'CL_CEP'
+      EditMask = '99999-000;1;_'
+      Size = 10
+    end
+    object strngfldRelClienteCL_TIPOSUJEITO: TStringField
+      FieldName = 'CL_TIPOSUJEITO'
+      FixedChar = True
+      Size = 1
+    end
   end
   object dtstprRelCliente: TDataSetProvider
     DataSet = sqldtsRelCliente
-    Left = 400
+    Left = 392
     Top = 184
   end
   object cdsRelCliente: TClientDataSet
@@ -421,6 +465,65 @@ object DataModule1: TDataModule1
     ProviderName = 'dtstprRelCliente'
     Left = 464
     Top = 184
+    object cdsRelClienteCL_CODIGO: TIntegerField
+      FieldName = 'CL_CODIGO'
+      Required = True
+    end
+    object strngfldRelClienteCL_NOME: TStringField
+      FieldName = 'CL_NOME'
+      Size = 50
+    end
+    object strngfldRelClienteCL_CPF: TStringField
+      FieldName = 'CL_CPF'
+      EditMask = '999\.999\.999\-99;0;'
+      Size = 11
+    end
+    object dtfldRelClienteCL_DATA_NASCIMENTO: TDateField
+      FieldName = 'CL_DATA_NASCIMENTO'
+    end
+    object strngfldRelClienteCL_ATIVO: TStringField
+      FieldName = 'CL_ATIVO'
+      Size = 1
+    end
+    object strngfldRelClienteCL_RG1: TStringField
+      FieldName = 'CL_RG'
+    end
+    object strngfldRelClienteCL_CNPJ1: TStringField
+      FieldName = 'CL_CNPJ'
+      EditMask = '!99\.999\.999\/9999\-99;0;_'
+    end
+    object strngfldRelClienteCL_IE1: TStringField
+      FieldName = 'CL_IE'
+    end
+    object strngfldRelClienteCL_ENDERECO1: TStringField
+      FieldName = 'CL_ENDERECO'
+      Size = 50
+    end
+    object strngfldRelClienteCL_NUMERO1: TStringField
+      FieldName = 'CL_NUMERO'
+    end
+    object strngfldRelClienteCL_BAIRRO1: TStringField
+      FieldName = 'CL_BAIRRO'
+      Size = 50
+    end
+    object strngfldRelClienteCL_CIDADE1: TStringField
+      FieldName = 'CL_CIDADE'
+      Size = 50
+    end
+    object strngfldRelClienteCL_UF1: TStringField
+      FieldName = 'CL_UF'
+      Size = 2
+    end
+    object strngfldRelClienteCL_CEP1: TStringField
+      FieldName = 'CL_CEP'
+      EditMask = '99999\-999;0;_'
+      Size = 10
+    end
+    object strngfldRelClienteCL_TIPOSUJEITO1: TStringField
+      FieldName = 'CL_TIPOSUJEITO'
+      FixedChar = True
+      Size = 1
+    end
   end
   object sqlItemCupom: TSQLQuery
     MaxBlobSize = 1
