@@ -1,0 +1,108 @@
+unit UBaixaCancelamentoParcelas;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.DBCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.Menus;
+
+type
+  TfrmBaixaCancelamentoParcelas = class(TForm)
+    edtCodigoCliente: TDBEdit;
+    edtNomeCliente: TDBEdit;
+    btnPesquisar: TBitBtn;
+    dbgrdParcela: TDBGrid;
+    btn1: TBitBtn;
+    PopMenuParcela: TPopupMenu;
+    mniBaixar: TMenuItem;
+    mniCancelar: TMenuItem;
+    procedure btnPesquisarClick(Sender: TObject);
+    procedure btn1Click(Sender: TObject);
+    procedure mniBaixarClick(Sender: TObject);
+    procedure dbgrdParcelaMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmBaixaCancelamentoParcelas: TfrmBaixaCancelamentoParcelas;
+
+implementation
+
+uses
+  UPesquisaCliente, UDados;
+
+{$R *.dfm}
+
+procedure TfrmBaixaCancelamentoParcelas.btn1Click(Sender: TObject);
+begin
+    DataModule1.cdsParcela.Open;
+    DataModule1.cdsParcela.CommandText :=
+                                      ' Select X.PA_VENDA_ID, ' +
+                                      '        X.PA_PARCELA, ' +
+                                      '        X.PA_DATA_VENCIMENTO, ' +
+                                      '        X.PA_DATA_PGTO, ' +
+                                      '        X.PA_PAGO, ' +
+                                      '        X.PA_VALOR ' +
+                                      ' from PARCELA X ' +
+                                      ' INNER JOIN VENDA L ' +
+                                      ' ON L.VD_NUMERO = X.PA_VENDA_ID ' +
+                                      ' INNER JOIN CLIENTE R ' +
+                                      ' ON R.CL_CODIGO = L.VD_CLIENTE ' +
+                                      ' WHERE R.CL_CODIGO = ' + QuotedStr(edtCodigoCliente.text);
+end;
+
+procedure TfrmBaixaCancelamentoParcelas.btnPesquisarClick(Sender: TObject);
+begin
+  frmPesquisaCliente := TfrmPesquisaCliente.Create(Self);
+  try
+    if frmPesquisaCliente.ShowModal= mrOk then
+      with DataModule1.sqlCliente do
+      begin
+        Close;
+        DataModule1.cdsCliente.Close;
+        DataModule1.sqlCliente.SQL.Text := 'SELECT * FROM CLIENTE WHERE CL_CODIGO ='
+        + QuotedStr(IntToStr(frmPesquisaCliente.varcodigoCliente));
+          edtCodigoCliente.Text := IntToStr(frmPesquisaCliente.varcodigoCliente);
+          DataModule1.cdsCliente.Open;
+       end;
+  finally
+    frmPesquisaCliente.Free;
+  end;
+end;
+
+procedure TfrmBaixaCancelamentoParcelas.dbgrdParcelaMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+  var botao :TMouseButton;
+begin
+  if Button = mbright then
+  begin
+      PopMenuParcela.Popup(100,100);
+  end
+
+end;
+
+procedure TfrmBaixaCancelamentoParcelas.mniBaixarClick(Sender: TObject);
+var
+    varVenda, varParcela, varData :string;
+begin
+      try
+      varVenda   := dbgrdParcela.Columns[0].Field.Value;
+      varParcela := dbgrdParcela.Columns[1].Field.Value;
+      varData    := FormatDateTime('MM/DD/YYYY', now);
+      DataModule1.sqlParcela.Close;
+      DataModule1.sqlParcela.SQL.Clear;
+      DataModule1.sqlParcela.SQL.Text := 'UPDATE PARCELA SET PA_PAGO =' + QuotedStr('S') +
+      ', PA_DATA_PGTO = ' + QuotedStr(varData) + 'WHERE PA_VENDA_ID =' +
+      QuotedStr(varVenda) + ' AND PA_PARCELA = ' + QuotedStr(varParcela);
+      DataModule1.sqlParcela.ExecSQL(true);
+      finally
+        ShowMessage('Parcela Baixada com sucesso');
+      end;
+end;
+
+end.

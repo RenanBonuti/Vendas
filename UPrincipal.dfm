@@ -51,7 +51,14 @@ object frmPrincipal: TfrmPrincipal
     end
     object mnVendas: TMenuItem
       Caption = 'Vendas'
-      OnClick = mnVendasClick
+      object mniCadastroDeVenda: TMenuItem
+        Caption = 'Cadastro de Venda'
+        OnClick = mniCadastroDeVendaClick
+      end
+      object mniBaixaCancelamentoParcela: TMenuItem
+        Caption = 'Baixa/Cancelamento de Parcelas'
+        OnClick = mniBaixaCancelamentoParcelaClick
+      end
     end
     object r1: TMenuItem
       Caption = 'Relat'#243'rios'
@@ -70,6 +77,10 @@ object frmPrincipal: TfrmPrincipal
       object mnRelReimpressaoCupomVen: TMenuItem
         Caption = 'Reimpress'#227'o do Cupom de Venda'
         OnClick = mnRelReimpressaoCupomVenClick
+      end
+      object mnie1: TMenuItem
+        Caption = 'Relat'#243'rio de Parcelas'
+        OnClick = mnie1Click
       end
     end
     object s1: TMenuItem

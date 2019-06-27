@@ -129,6 +129,32 @@ type
     strngfldVendaVD_OBSERVACAO: TStringField;
     cdsVendaVD_CLIENTE1: TIntegerField;
     strngfldVendaVD_CONDPGTO1: TStringField;
+    sqlParcela: TSQLQuery;
+    dspParcela: TDataSetProvider;
+    cdsParcela: TClientDataSet;
+    dsParcela: TDataSource;
+    sqlParcelaSQLQuery: TSQLQuery;
+    cdsParcelaIntegerField: TIntegerField;
+    cdsParcelaIntegerField2: TIntegerField;
+    cdsParcelaIntegerField3: TIntegerField;
+    cdsParcelaIntegerField4: TIntegerField;
+    cdsParcelaSingleField: TSingleField;
+    cdsParcelaSingleField2: TSingleField;
+    dspParcelaDataSetProvider: TDataSetProvider;
+    cdsParcelaClientDataSet: TClientDataSet;
+    cdsParcelaIntegerField5: TIntegerField;
+    cdsParcelaIntegerField6: TIntegerField;
+    cdsParcelaIntegerField7: TIntegerField;
+    cdsParcelaIntegerField8: TIntegerField;
+    cdsParcelaSingleField3: TSingleField;
+    cdsParcelaSingleField4: TSingleField;
+    dsParcelaDataSource: TDataSource;
+    cdsParcelaPA_VENDA_ID: TIntegerField;
+    cdsParcelaPA_PARCELA: TIntegerField;
+    dtfldParcelaPA_DATA_VENCIMENTO: TDateField;
+    strngfldParcelaPA_PAGO: TStringField;
+    dtfldParcelaPA_DATA_PGTO: TDateField;
+    cdsParcelaPA_VALOR: TFMTBCDField;
     procedure cdsVendaAfterInsert(DataSet: TDataSet);
   private
     { Private declarations }

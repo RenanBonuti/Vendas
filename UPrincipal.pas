@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.ExtCtrls,
+  Vcl.Buttons;
 
 type
   TfrmPrincipal = class(TForm)
@@ -22,17 +23,22 @@ type
     mnRelReimpressaoCupomVen: TMenuItem;
     Timer: TTimer;
     StatusBar1: TStatusBar;
+    mniBaixaCancelamentoParcela: TMenuItem;
+    mniCadastroDeVenda: TMenuItem;
+    mnie1: TMenuItem;
     procedure S2Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure mnCadastroClientesClick(Sender: TObject);
     procedure mnCadastroProdutosClick(Sender: TObject);
-    procedure mnVendasClick(Sender: TObject);
     procedure mnRelCadastroClientesClick(Sender: TObject);
     procedure mnRelReimpressaoCupomVenClick(Sender: TObject);
     procedure mnRelCatalogoPrecosClick(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure mnRelRelatoriosProdutosClick(Sender: TObject);
+    procedure mniBaixaCancelamentoParcelaClick(Sender: TObject);
+    procedure mniCadastroDeVendaClick(Sender: TObject);
+    procedure mnie1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,7 +51,7 @@ var
 implementation
 
 uses
-  UCadastroClientes, UCadastroProdutos, UVendas, URelatoriosCatalogoPrecos, UReimpressaoCupomVenda, URelatorioClientes, URelatorioProdutos, URelatorioCatalogoPrecos, UDados;
+  UCadastroClientes, UCadastroProdutos, UVendas, URelatoriosCatalogoPrecos, UReimpressaoCupomVenda, URelatorioClientes, URelatorioProdutos, URelatorioCatalogoPrecos, UDados, UBaixaCancelamentoParcelas, URelatorioParcelas;
 
 {$R *.dfm}
 
@@ -82,9 +88,39 @@ begin
     end;
 end;
 
+procedure TfrmPrincipal.mniBaixaCancelamentoParcelaClick(Sender: TObject);
+begin
+   frmBaixaCancelamentoParcelas := TfrmBaixaCancelamentoParcelas.Create(nil);
+    try
+      frmBaixaCancelamentoParcelas.ShowModal;
+    finally
+      FreeAndNil(frmBaixaCancelamentoParcelas);
+    end;
+end;
+
+procedure TfrmPrincipal.mniCadastroDeVendaClick(Sender: TObject);
+begin
+   frmVendas := TfrmVendas.Create(nil);
+    try
+      frmVendas.ShowModal;
+    finally
+      FreeAndNil(frmVendas);
+    end;
+end;
+
+procedure TfrmPrincipal.mnie1Click(Sender: TObject);
+begin
+    frmRelatorioParcelas := TfrmRelatorioParcelas.Create(nil);
+    try
+      frmRelatorioParcelas.ShowModal;
+    finally
+      FreeAndNil(frmRelatorioParcelas);
+    end;
+end;
+
 procedure TfrmPrincipal.mnRelCadastroClientesClick(Sender: TObject);
 begin
-   frmRelatorioClientes := TfrmRelatorioClientes.Create(nil);
+    frmRelatorioClientes := TfrmRelatorioClientes.Create(nil);
     try
       frmRelatorioClientes.ShowModal;
     finally
@@ -135,16 +171,6 @@ begin
     Statusbar1.Panels.Items[0].Text := DateTimetoSTR(now);
     Statusbar1.Panels.Items[1].Text := ('Servidor: Base Teste');
     Statusbar1.Panels.Items[2].Text := ('Sistec - São Joaquim da Barra-SP');
-end;
-
-procedure TfrmPrincipal.mnVendasClick(Sender: TObject);
-begin
-  frmVendas := TfrmVendas.Create(nil);
-    try
-      frmVendas.ShowModal;
-    finally
-      FreeAndNil(frmVendas);
-    end;
 end;
 
 end.

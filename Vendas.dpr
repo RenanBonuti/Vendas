@@ -16,7 +16,8 @@ uses
   URelatorioProdutos in 'URelatorioProdutos.pas' {frmRelatorioProdutos},
   UPesquisaVenda in 'UPesquisaVenda.pas' {frmPesquisaVenda},
   UImpressaoCupom in 'UImpressaoCupom.pas' {frmImpressaoCupom},
-  UValidaSomenteNumeros in 'UValidaSomenteNumeros.pas';
+  UBaixaCancelamentoParcelas in 'UBaixaCancelamentoParcelas.pas' {frmBaixaCancelamentoParcelas},
+  URelatorioParcelas in 'URelatorioParcelas.pas' {frmRelatorioParcelas};
 
 {$R *.res}
 

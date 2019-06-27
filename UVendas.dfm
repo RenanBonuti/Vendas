@@ -855,6 +855,7 @@ object frmVendas: TfrmVendas
           Expanded = False
           FieldName = 'IV_TOTAL_ITEM'
           Title.Caption = 'Total do Item'
+          Width = 64
           Visible = True
         end>
     end
@@ -864,6 +865,7 @@ object frmVendas: TfrmVendas
       Width = 72
       Height = 21
       Enabled = False
+      NumbersOnly = True
       TabOrder = 5
     end
     object edtDataVenda: TDBEdit
@@ -2277,7 +2279,7 @@ object frmVendas: TfrmVendas
     end
     object edtCondicaoPGTO: TDBEdit
       Left = 464
-      Top = 441
+      Top = 442
       Width = 121
       Height = 21
       DataField = 'VD_CONDPGTO'

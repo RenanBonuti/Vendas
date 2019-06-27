@@ -146,7 +146,14 @@
             <Form>frmImpressaoCupom</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UValidaSomenteNumeros.pas"/>
+        <DCCReference Include="UBaixaCancelamentoParcelas.pas">
+            <Form>frmBaixaCancelamentoParcelas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="URelatorioParcelas.pas">
+            <Form>frmRelatorioParcelas</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

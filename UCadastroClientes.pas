@@ -269,8 +269,7 @@ end;
 
 procedure TfrmCadastroClientes.btnPesquisarClick(Sender: TObject);
 begin
-
-  frmPesquisaCliente := TfrmPesquisaCliente.Create(Self);
+                                                   frmPesquisaCliente := TfrmPesquisaCliente.Create(Self);
   try
     if frmPesquisaCliente.ShowModal= mrOk then
       with DataModule1.sqlCliente do
@@ -299,6 +298,7 @@ begin
   finally
     frmPesquisaCliente.Free;
   end;
+
 
 end;
 
