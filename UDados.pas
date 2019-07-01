@@ -155,6 +155,33 @@ type
     strngfldParcelaPA_PAGO: TStringField;
     dtfldParcelaPA_DATA_PGTO: TDateField;
     cdsParcelaPA_VALOR: TFMTBCDField;
+    sqlRelParcela: TSQLQuery;
+    cdsRelParcela: TClientDataSet;
+    dspRelParcela: TDataSetProvider;
+    dsRelParcela: TDataSource;
+    cdsRelParcelaEXTRACT: TSmallintField;
+    cdsRelParcelaANO: TSmallintField;
+    strngfldRelParcelaMES: TStringField;
+    cdsRelParcelaCL_CODIGO: TIntegerField;
+    strngfldRelParcelaCL_NOME: TStringField;
+    dtfldRelParcelaVD_DATA_EMISSAO: TDateField;
+    cdsRelParcelaPA_VENDA_ID: TIntegerField;
+    cdsRelParcelaPA_PARCELA: TIntegerField;
+    dtfldRelParcelaPA_DATA_VENCIMENTO: TDateField;
+    dtfldRelParcelaPA_DATA_PGTO: TDateField;
+    strngfldRelParcelaPA_PAGO: TStringField;
+    cdsRelParcelaPA_VALOR: TFMTBCDField;
+    cdsBaixaParcela: TClientDataSet;
+    sqlBaixaParcela: TSQLQuery;
+    dsBaixaParcela: TDataSource;
+    dspBaixaParcela: TDataSetProvider;
+    cdsBaixaParcelaCL_CODIGO: TIntegerField;
+    strngfldBaixaParcelaCL_NOME: TStringField;
+    cdsBaixaParcelaPA_VENDA_ID: TIntegerField;
+    cdsBaixaParcelaPA_PARCELA: TIntegerField;
+    dtfldBaixaParcelaPA_DATA_VENCIMENTO: TDateField;
+    dtfldBaixaParcelaPA_DATA_PGTO: TDateField;
+    cdsBaixaParcelaPA_VALOR: TFMTBCDField;
     procedure cdsVendaAfterInsert(DataSet: TDataSet);
   private
     { Private declarations }

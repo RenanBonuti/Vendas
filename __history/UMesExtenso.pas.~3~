@@ -1,0 +1,27 @@
+unit UMesExtenso;
+
+interface
+
+function TQRNota.ExtensoMes(n: Integer): String;
+
+implementation
+
+function TQRNota.ExtensoMes(n: Integer): String;
+begin
+Case n Of
+    01 : result:= 'Janeiro';
+    02 : result:= 'Fevereiro';
+    03 : result:= 'Março';
+    04 : result:= 'Abril';
+    05 : result:= 'Maio';
+    06 : result:= 'Junho';
+    07 : result:= 'Julho';
+    08 : result:= 'Agosto';
+    09 : result:= 'Setembro';
+    10 : result:= 'Outubro';
+    11 : result:= 'Novembro';
+    12 : result:= 'Dezembro';
+  end;
+End;
+
+end.

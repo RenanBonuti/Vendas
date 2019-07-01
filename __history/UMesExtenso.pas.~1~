@@ -1,0 +1,18 @@
+unit UMesExtenso;
+
+interface
+
+implementation
+
+function NomeDoMes(i: word; tipo: integer): string;
+const mes: array[1..12] of string = ('janeiro', 'fevereiro',
+  'março', 'abril', 'maio', 'junho', 'julho', 'agosto',
+  'setembro', 'outubro', 'novembro', 'dezembro');
+begin
+  if (tipo = 0)
+  then NomeDoMes := mes[i] // extenso
+
+  else NomeDoMes := copy(mes[i], 1, 3); // abreviado
+end;
+
+end.

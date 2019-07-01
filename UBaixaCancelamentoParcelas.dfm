@@ -14,6 +14,7 @@ object frmBaixaCancelamentoParcelas: TfrmBaixaCancelamentoParcelas
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -221,25 +222,21 @@ object frmBaixaCancelamentoParcelas: TfrmBaixaCancelamentoParcelas
       item
         Expanded = False
         FieldName = 'PA_DATA_VENCIMENTO'
-        Width = 64
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'PA_PAGO'
-        Width = 64
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'PA_DATA_PGTO'
-        Width = 64
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'PA_VALOR'
-        Width = 64
         Visible = True
       end>
   end
@@ -483,5 +480,265 @@ object frmBaixaCancelamentoParcelas: TfrmBaixaCancelamentoParcelas
       Caption = 'Cancelar'
       OnClick = mniCancelarClick
     end
+  end
+  object frxrprtRecibo: TfrxReport
+    Version = '5.6.1'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Padr'#227'o'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 43647.649555358800000000
+    ReportOptions.LastChange = 43647.649555358800000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 96
+    Top = 64
+    Datasets = <
+      item
+        DataSet = frxdbdtstRecibo
+        DataSetName = 'frxDBDataset1'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      Orientation = poLandscape
+      PaperWidth = 155.000000000000000000
+      PaperHeight = 100.000000000000000000
+      PaperSize = 256
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      object Memo1: TfrxMemoView
+        Align = baLeft
+        Top = 83.149660000000000000
+        Width = 45.354360000000000000
+        Height = 18.897650000000000000
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        Memo.UTF8W = (
+          'Nome:')
+        ParentFont = False
+      end
+      object frxDBDataset1CL_NOME: TfrxMemoView
+        Left = 60.472480000000000000
+        Top = 83.149660000000000000
+        Width = 442.205010000000000000
+        Height = 18.897650000000000000
+        DataField = 'CL_NOME'
+        DataSet = frxdbdtstRecibo
+        DataSetName = 'frxDBDataset1'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Frame.Typ = [ftBottom]
+        Memo.UTF8W = (
+          '[frxDBDataset1."CL_NOME"]')
+        ParentFont = False
+      end
+      object Memo2: TfrxMemoView
+        Align = baLeft
+        Top = 124.724490000000000000
+        Width = 52.913420000000000000
+        Height = 18.897650000000000000
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        Memo.UTF8W = (
+          'Parcela:')
+        ParentFont = False
+      end
+      object frxDBDataset1PA_PARCELA: TfrxMemoView
+        Left = 64.252010000000000000
+        Top = 124.724490000000000000
+        Width = 79.370130000000000000
+        Height = 18.897650000000000000
+        DataField = 'PA_PARCELA'
+        DataSet = frxdbdtstRecibo
+        DataSetName = 'frxDBDataset1'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Frame.Typ = [ftBottom]
+        Memo.UTF8W = (
+          '[frxDBDataset1."PA_PARCELA"]')
+        ParentFont = False
+      end
+      object Memo3: TfrxMemoView
+        Left = 370.393940000000000000
+        Top = 124.724490000000000000
+        Width = 45.354360000000000000
+        Height = 18.897650000000000000
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        Memo.UTF8W = (
+          'Data:')
+        ParentFont = False
+      end
+      object frxDBDataset1PA_DATA_VENCIMENTO: TfrxMemoView
+        Left = 423.307360000000000000
+        Top = 124.504020000000000000
+        Width = 79.370130000000000000
+        Height = 18.897650000000000000
+        DataField = 'PA_DATA_VENCIMENTO'
+        DataSet = frxdbdtstRecibo
+        DataSetName = 'frxDBDataset1'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Frame.Typ = [ftBottom]
+        Memo.UTF8W = (
+          '[frxDBDataset1."PA_DATA_VENCIMENTO"]')
+        ParentFont = False
+      end
+      object Memo4: TfrxMemoView
+        Left = 151.181200000000000000
+        Top = 124.724490000000000000
+        Width = 45.354360000000000000
+        Height = 18.897650000000000000
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        Memo.UTF8W = (
+          'Valor:')
+        ParentFont = False
+      end
+      object frxDBDataset1PA_VALOR: TfrxMemoView
+        Left = 207.874150000000000000
+        Top = 124.724490000000000000
+        Width = 151.181200000000000000
+        Height = 18.897650000000000000
+        DataField = 'PA_VALOR'
+        DataSet = frxdbdtstRecibo
+        DataSetName = 'frxDBDataset1'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Frame.Typ = [ftBottom]
+        Memo.UTF8W = (
+          '[frxDBDataset1."PA_VALOR"]')
+        ParentFont = False
+      end
+      object Memo5: TfrxMemoView
+        Align = baLeft
+        Top = 162.519790000000000000
+        Width = 75.590600000000000000
+        Height = 18.897650000000000000
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        Memo.UTF8W = (
+          'Pagamento:')
+        ParentFont = False
+      end
+      object frxDBDataset1PA_DATA_PGTO: TfrxMemoView
+        Left = 83.149660000000000000
+        Top = 162.519790000000000000
+        Width = 79.370130000000000000
+        Height = 18.897650000000000000
+        DataField = 'PA_DATA_PGTO'
+        DataSet = frxdbdtstRecibo
+        DataSetName = 'frxDBDataset1'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -13
+        Font.Name = 'Arial'
+        Font.Style = []
+        Frame.Typ = [ftBottom]
+        Memo.UTF8W = (
+          '[frxDBDataset1."PA_DATA_PGTO"]')
+        ParentFont = False
+      end
+      object Memo6: TfrxMemoView
+        Align = baLeft
+        Top = 234.330860000000000000
+        Width = 83.149660000000000000
+        Height = 18.897650000000000000
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = [fsBold]
+        Memo.UTF8W = (
+          'Recebido Por:')
+        ParentFont = False
+      end
+      object Memo7: TfrxMemoView
+        Left = 90.708720000000000000
+        Top = 234.330860000000000000
+        Width = 411.968770000000000000
+        Height = 18.897650000000000000
+        Memo.UTF8W = (
+          
+            '________________________________________________________________' +
+            '____')
+      end
+      object ReportTitle1: TfrxReportTitle
+        FillType = ftBrush
+        Height = 45.354360000000000000
+        Top = 18.897650000000000000
+        Width = 510.236550000000000000
+        object Memo8: TfrxMemoView
+          Align = baCenter
+          Left = 143.622140000000000000
+          Width = 222.992270000000000000
+          Height = 41.574830000000000000
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -21
+          Font.Name = 'Segoe UI'
+          Font.Style = [fsBold]
+          Fill.BackColor = clYellow
+          Memo.UTF8W = (
+            'Recibo de Pagamento')
+          ParentFont = False
+        end
+      end
+    end
+  end
+  object frxdbdtstRecibo: TfrxDBDataset
+    UserName = 'frxDBDataset1'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'CL_CODIGO=CL_CODIGO'
+      'CL_NOME=CL_NOME'
+      'PA_VENDA_ID=PA_VENDA_ID'
+      'PA_PARCELA=PA_PARCELA'
+      'PA_DATA_VENCIMENTO=PA_DATA_VENCIMENTO'
+      'PA_DATA_PGTO=PA_DATA_PGTO'
+      'PA_VALOR=PA_VALOR')
+    DataSource = DataModule1.dsBaixaParcela
+    BCDToCurrency = False
+    Left = 224
+    Top = 64
   end
 end
