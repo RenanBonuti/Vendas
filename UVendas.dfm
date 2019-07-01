@@ -855,7 +855,6 @@ object frmVendas: TfrmVendas
           Expanded = False
           FieldName = 'IV_TOTAL_ITEM'
           Title.Caption = 'Total do Item'
-          Width = 64
           Visible = True
         end>
     end
@@ -2390,5 +2389,24 @@ object frmVendas: TfrmVendas
     ReduzParaCaber = True
     Left = 528
     Top = 16
+  end
+  object sqlVendaParcela: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'Select'
+      '        X.PA_VENDA_ID,'
+      '        X.PA_PARCELA,'
+      '        X.PA_DATA_VENCIMENTO,'
+      '        X.PA_VALOR,'
+      'CASE X.pa_pago'
+      '    WHEN '#39'S'#39' THEN '#39'Sim'#39
+      '    WHEN '#39'N'#39' THEN '#39'N'#227'o'#39
+      'END AS PA_PAGO'
+      'FROM PARCELA X'
+      '')
+    SQLConnection = DataModule1.DadosVendas
+    Left = 200
+    Top = 432
   end
 end

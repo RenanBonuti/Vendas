@@ -153,23 +153,6 @@ begin
                                             'ON R.CL_CODIGO = L.VD_CLIENTE ' +
                                             'WHERE L.VD_DATA_EMISSAO ' +
                                             'BETWEEN :datainicio and :datafim ';
-//                                     'Extract(Month from X.pa_data_vencimento),' +
-//                                     'Extract(year from X.pa_data_vencimento),' +
-//                                     'R.CL_CODIGO, ' +
-//                                     'R.CL_NOME, ' +
-//                                     'L.VD_DATA_EMISSAO, ' +
-//                                     'X.PA_VENDA_ID, ' +
-//                                     'X.PA_PARCELA, ' +
-//                                     'X.PA_DATA_VENCIMENTO, ' +
-//                                     'X.PA_DATA_PGTO, ' +
-//                                     'X.PA_PAGO, ' +
-//                                     'X.PA_VALOR ' +
-//                                     'FROM PARCELA X ' +
-//                                     'INNER JOIN VENDA L ' +
-//                                     'ON L.VD_NUMERO = X.PA_VENDA_ID ' +
-//                                     'INNER JOIN CLIENTE R ' +
-//                                     'ON R.CL_CODIGO = L.VD_CLIENTE ' +
-//                                     'WHERE L.VD_DATA_EMISSAO BETWEEN :datainicio AND :datafim ';
     varDataInicio := FormatDateTime('MM/DD/YYYY', StrToDate(medtDataIni.Text));
     varDataFim    := FormatDateTime('MM/DD/YYYY', StrToDate(medtDatafim.Text));
     DataModule1.sqlRelParcela.ParamByName('datainicio').AsString := vardataInicio;
@@ -185,8 +168,6 @@ begin
         DataModule1.sqlRelParcela.SQL.Add('AND X.PA_PAGO = ' + QuotedStr(varFiltro));
       end;
      ordena;
-
-      //DataModule1.sqlRelParcela.SQL.add( ' ORDER BY X.PA_DATA_VENCIMENTO');
 end;
 
 procedure TfrmRelatorioParcelas.btnImprimirClick(Sender: TObject);
@@ -196,12 +177,8 @@ begin
     0:
       begin
         ImprimePorNome;
-      //  varCaminho  := 'D:\Meu projetos\Relatorios fast\';
-      //  varNomeRelatorio := 'RelParcela1';
         DataModule1.cdsRelParcela.Open;
-     //   frxrprtParcela.LoadFromFile(varCaminho + varNomeRelatorio + '.fr3');
-     //   frxrprtParcela.Variables['DataInicialRel'] := QuotedStr(medtDataIni.Text);
-          frxrprtParcela1.ShowReport();
+        frxrprtParcela1.ShowReport();
       end;
     1:
       begin

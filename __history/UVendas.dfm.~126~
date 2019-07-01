@@ -757,7 +757,7 @@ object frmVendas: TfrmVendas
         FF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFF
         FF01FFFFFF01}
     end
-    object lbl1: TLabel
+    object lblCond: TLabel
       Left = 484
       Top = 426
       Width = 69
@@ -858,16 +858,14 @@ object frmVendas: TfrmVendas
           Visible = True
         end>
     end
-    object editQuantidade: TDBEdit
+    object editQuantidade: TEdit
       Left = 617
       Top = 118
       Width = 72
       Height = 21
-      DataField = 'IV_QUANTIDADE'
-      DataSource = DataModule1.dsItem
       Enabled = False
+      NumbersOnly = True
       TabOrder = 5
-      OnExit = editQuantidadeExit
     end
     object edtDataVenda: TDBEdit
       Left = 7
@@ -2280,7 +2278,7 @@ object frmVendas: TfrmVendas
     end
     object edtCondicaoPGTO: TDBEdit
       Left = 464
-      Top = 441
+      Top = 442
       Width = 121
       Height = 21
       DataField = 'VD_CONDPGTO'

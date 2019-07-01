@@ -757,7 +757,7 @@ object frmVendas: TfrmVendas
         FF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFFFF01FFFF
         FF01FFFFFF01}
     end
-    object lbl1: TLabel
+    object lblCond: TLabel
       Left = 484
       Top = 426
       Width = 69
@@ -773,6 +773,7 @@ object frmVendas: TfrmVendas
       DataField = 'PR_DESCRICAO'
       DataSource = DataModule1.dsProduto
       Enabled = False
+      ReadOnly = True
       TabOrder = 0
     end
     object edtCliente: TDBEdit
@@ -784,6 +785,7 @@ object frmVendas: TfrmVendas
       DataField = 'CL_NOME'
       DataSource = DataModule1.dsCliente
       Enabled = False
+      ReadOnly = True
       TabOrder = 1
     end
     object btnCliente: TBitBtn
@@ -856,14 +858,13 @@ object frmVendas: TfrmVendas
           Visible = True
         end>
     end
-    object editQuantidade: TDBEdit
+    object editQuantidade: TEdit
       Left = 617
       Top = 118
       Width = 72
       Height = 21
-      DataField = 'IV_QUANTIDADE'
-      DataSource = DataModule1.dsItem
       Enabled = False
+      NumbersOnly = True
       TabOrder = 5
     end
     object edtDataVenda: TDBEdit
@@ -2277,15 +2278,15 @@ object frmVendas: TfrmVendas
     end
     object edtCondicaoPGTO: TDBEdit
       Left = 464
-      Top = 441
+      Top = 442
       Width = 121
       Height = 21
       DataField = 'VD_CONDPGTO'
       DataSource = DataModule1.dsVenda
       Enabled = False
-      ReadOnly = True
       TabOrder = 23
       OnEnter = edtCondicaoPGTOEnter
+      OnExit = edtCondicaoPGTOExit
     end
   end
   object rdpCupom: TRDprint
@@ -2388,5 +2389,24 @@ object frmVendas: TfrmVendas
     ReduzParaCaber = True
     Left = 528
     Top = 16
+  end
+  object sqlVendaParcela: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'Select'
+      '        X.PA_VENDA_ID,'
+      '        X.PA_PARCELA,'
+      '        X.PA_DATA_VENCIMENTO,'
+      '        X.PA_VALOR,'
+      'CASE X.pa_pago'
+      '    WHEN '#39'S'#39' THEN '#39'Sim'#39
+      '    WHEN '#39'N'#39' THEN '#39'N'#227'o'#39
+      'END AS PA_PAGO'
+      'FROM PARCELA X'
+      'WHERE X.pa_venda_id = :VENDA_ID')
+    SQLConnection = DataModule1.DadosVendas
+    Left = 136
+    Top = 432
   end
 end

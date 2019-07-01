@@ -200,6 +200,7 @@ object DataModule1: TDataModule1
     Top = 176
   end
   object cdsProduto: TClientDataSet
+    Active = True
     Aggregates = <>
     Params = <>
     ProviderName = 'dspProduto'
@@ -229,8 +230,8 @@ object DataModule1: TDataModule1
   end
   object tb_Aux_Impressao: TRxMemoryData
     FieldDefs = <>
-    Left = 616
-    Top = 48
+    Left = 720
+    Top = 24
     object tb_Aux_ImpressaoPR_CODIGO: TIntegerField
       FieldName = 'PR_CODIGO'
     end
@@ -249,8 +250,8 @@ object DataModule1: TDataModule1
   end
   object dsRelProduto: TDataSource
     DataSet = cdsProduto
-    Left = 696
-    Top = 216
+    Left = 616
+    Top = 24
   end
   object dsCliente: TDataSource
     DataSet = cdsCliente
@@ -611,6 +612,7 @@ object DataModule1: TDataModule1
     Top = 256
   end
   object cdsParcela: TClientDataSet
+    Active = True
     Aggregates = <>
     Params = <>
     ProviderName = 'dspParcela'
@@ -724,5 +726,171 @@ object DataModule1: TDataModule1
     DataSet = cdsItem
     Left = 464
     Top = 112
+  end
+  object sqlRelParcela: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'SELECT'
+      '        Extract(Month from X.pa_data_vencimento),'
+      '        EXTRACT(Year from X.pa_data_vencimento) AS ANO,'
+      '        CASE Extract(Month from X.pa_data_vencimento)'
+      '        WHEN '#39'1'#39' THEN '#39'Janeiro'#39
+      '        WHEN '#39'2'#39' THEN '#39'Fevereiro'#39
+      '        WHEN '#39'3'#39' THEN '#39'Mar'#231'o'#39
+      '        WHEN '#39'4'#39' THEN '#39'Abril'#39
+      '        WHEN '#39'5'#39' THEN '#39'Maio'#39
+      '        WHEN '#39'6'#39' THEN '#39'Junho'#39
+      '        WHEN '#39'7'#39' THEN '#39'Julho'#39
+      '        WHEN '#39'8'#39' THEN '#39'Agosto'#39
+      '        WHEN '#39'9'#39' THEN '#39'Setembro'#39
+      '        WHEN '#39'10'#39' THEN '#39'Outubro'#39
+      '        WHEN '#39'11'#39' THEN '#39'Novembro'#39
+      '        WHEN '#39'12'#39' THEN '#39'Dezembro'#39
+      '        ELSE '#39'Caralho'#39' END AS Mes,'
+      '        R.CL_CODIGO,'
+      '        R.CL_NOME,'
+      '        L.VD_DATA_EMISSAO,'
+      '        X.PA_VENDA_ID,'
+      '        X.PA_PARCELA,'
+      '        X.PA_DATA_VENCIMENTO,'
+      '        X.PA_DATA_PGTO,'
+      '        X.PA_PAGO,'
+      '        X.PA_VALOR'
+      'from PARCELA X'
+      'INNER JOIN VENDA L'
+      'ON L.VD_NUMERO = X.PA_VENDA_ID'
+      'INNER JOIN CLIENTE R'
+      'ON R.CL_CODIGO = L.VD_CLIENTE')
+    SQLConnection = DadosVendas
+    Left = 664
+    Top = 160
+  end
+  object cdsRelParcela: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspRelParcela'
+    Left = 576
+    Top = 160
+    object cdsRelParcelaEXTRACT: TSmallintField
+      FieldName = 'EXTRACT'
+    end
+    object cdsRelParcelaANO: TSmallintField
+      FieldName = 'ANO'
+    end
+    object strngfldRelParcelaMES: TStringField
+      FieldName = 'MES'
+      Required = True
+      FixedChar = True
+      Size = 9
+    end
+    object cdsRelParcelaCL_CODIGO: TIntegerField
+      FieldName = 'CL_CODIGO'
+      Required = True
+    end
+    object strngfldRelParcelaCL_NOME: TStringField
+      FieldName = 'CL_NOME'
+      Size = 50
+    end
+    object dtfldRelParcelaVD_DATA_EMISSAO: TDateField
+      FieldName = 'VD_DATA_EMISSAO'
+    end
+    object cdsRelParcelaPA_VENDA_ID: TIntegerField
+      FieldName = 'PA_VENDA_ID'
+    end
+    object cdsRelParcelaPA_PARCELA: TIntegerField
+      FieldName = 'PA_PARCELA'
+    end
+    object dtfldRelParcelaPA_DATA_VENCIMENTO: TDateField
+      FieldName = 'PA_DATA_VENCIMENTO'
+    end
+    object dtfldRelParcelaPA_DATA_PGTO: TDateField
+      FieldName = 'PA_DATA_PGTO'
+    end
+    object strngfldRelParcelaPA_PAGO: TStringField
+      FieldName = 'PA_PAGO'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsRelParcelaPA_VALOR: TFMTBCDField
+      FieldName = 'PA_VALOR'
+      Precision = 18
+      Size = 2
+    end
+  end
+  object dspRelParcela: TDataSetProvider
+    DataSet = sqlRelParcela
+    Constraints = False
+    Left = 576
+    Top = 104
+  end
+  object dsRelParcela: TDataSource
+    DataSet = cdsRelParcela
+    Left = 664
+    Top = 104
+  end
+  object cdsBaixaParcela: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspBaixaParcela'
+    Left = 576
+    Top = 272
+    object cdsBaixaParcelaCL_CODIGO: TIntegerField
+      FieldName = 'CL_CODIGO'
+      Required = True
+    end
+    object strngfldBaixaParcelaCL_NOME: TStringField
+      FieldName = 'CL_NOME'
+      Size = 50
+    end
+    object cdsBaixaParcelaPA_VENDA_ID: TIntegerField
+      FieldName = 'PA_VENDA_ID'
+    end
+    object cdsBaixaParcelaPA_PARCELA: TIntegerField
+      FieldName = 'PA_PARCELA'
+    end
+    object dtfldBaixaParcelaPA_DATA_VENCIMENTO: TDateField
+      FieldName = 'PA_DATA_VENCIMENTO'
+    end
+    object dtfldBaixaParcelaPA_DATA_PGTO: TDateField
+      FieldName = 'PA_DATA_PGTO'
+    end
+    object cdsBaixaParcelaPA_VALOR: TFMTBCDField
+      FieldName = 'PA_VALOR'
+      Precision = 18
+      Size = 2
+    end
+  end
+  object sqlBaixaParcela: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'Select'
+      '        R.CL_CODIGO,'
+      '        R.CL_NOME,'
+      '        X.PA_VENDA_ID,'
+      '        X.PA_PARCELA,'
+      '        X.PA_DATA_VENCIMENTO,'
+      '        X.PA_DATA_PGTO,'
+      '        X.PA_VALOR'
+      'FROM PARCELA X'
+      'INNER JOIN VENDA L'
+      'ON L.VD_NUMERO = X.PA_VENDA_ID'
+      'INNER JOIN CLIENTE R'
+      'ON R.CL_CODIGO = L.VD_CLIENTE')
+    SQLConnection = DadosVendas
+    Left = 649
+    Top = 272
+  end
+  object dsBaixaParcela: TDataSource
+    DataSet = cdsBaixaParcela
+    Left = 649
+    Top = 216
+  end
+  object dspBaixaParcela: TDataSetProvider
+    DataSet = sqlBaixaParcela
+    Constraints = False
+    Left = 576
+    Top = 216
   end
 end

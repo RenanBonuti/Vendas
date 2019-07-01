@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
   Vcl.DBCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Data.DBXCommon,
-  RDprint, acPNG, System.RegularExpressions, dateUtils;
+  RDprint, acPNG, System.RegularExpressions, dateUtils,System.Math, Data.FMTBcd,
+  Data.SqlExpr;
 
 type
   TfrmVendas = class(TForm)
@@ -47,7 +48,7 @@ type
     img1: TImage;
     edtCondicaoPGTO: TDBEdit;
     lblCond: TLabel;
-    btn1: TBitBtn;
+    sqlVendaParcela: TSQLQuery;
     procedure btnProdutoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnObservacaoClick(Sender: TObject);
@@ -125,6 +126,8 @@ var
   varVazia             :Boolean;
   varQuantidadeParcela :Integer;
   varValorParcela      :Double;
+  varTotalDasParcelas  :Double;
+  varDiferenca         :Double;
   varVencimento        :Tdate;
   Vardata              :string;
 begin
@@ -136,7 +139,6 @@ begin
   begin
     if varParte[varContador].isEmpty then
     begin
-      ShowMessage('Numero de parcelas é ' + IntToStr(varContador));
       varVazia := True;
     end
     else
@@ -145,19 +147,44 @@ begin
       Inc(varContador);
     end;
   end;
-
-  varValorParcela := (vartotalvenda/varQuantidadeParcela +1);
-  while  varQuantidadeParcela <= varContador do
+  varContador     := 0;
+  varValorParcela := SimpleRoundTo(vartotalvenda /(varQuantidadeParcela+1),-2);
+  while   varContador <= varQuantidadeParcela do
+  begin
+    if varContador = varQuantidadeParcela then
+    begin
+      varTotalDasParcelas := varValorParcela * (varQuantidadeParcela + 1);
+      varDiferenca := SimpleRoundTo((vartotalvenda - varTotalDasParcelas), -2);
+      varValorParcela := varDiferenca + varValorParcela;
+    end;
     varVencimento := IncDay(StrToDate(edtDataVenda.Text),StrToInt(varParte[varContador]));
     Vardata       := FormatDateTime('MM/DD/YYYY', varVencimento);
     DataModule1.sqlParcela.SQL.Clear;
-    DataModule1.sqlParcela.SQL.Text := 'INSERT INTO PARCELA  (PA_VENDA_ID, PA_PARCELA, PA_DATA_VENCIMENTO, PA_VALOR)  VALUES ' +
-                                      +  IntToStr(varVenCodigoVenda) + ',' + IntToStr(varContador + 1) + ',' +  QuotedStr(Vardata)  + ','
-                                      + QuotedStr(StringReplace(FloatToStr(varValorParcela), '.', '', [rfReplaceAll]));
-
+    DataModule1.sqlParcela.SQL.Text := 'INSERT INTO PARCELA  (PA_VENDA_ID, PA_PARCELA, PA_DATA_VENCIMENTO, PA_VALOR)  VALUES ('
+                                      + QuotedStr(edtCodigoVenda.text) + ',' + IntToStr(varContador + 1) + ',' +  QuotedStr(Vardata)  + ','
+                                      + QuotedStr(StringReplace(FloatToStr(varValorParcela),',','.', [rfReplaceAll])) +')';
     DataModule1.sqlParcela.ExecSQL(True);
+    if varParte[varContador] = '0' then
+    begin
+      DataModule1.sqlParcela.Close;
+      DataModule1.sqlParcela.SQL.Clear;
+      DataModule1.sqlParcela.SQL.Text := 'UPDATE PARCELA SET PA_PAGO =' + QuotedStr('S') +
+        ', PA_DATA_PGTO = ' + QuotedStr(Vardata) + 'WHERE PA_VENDA_ID =' +
+        QuotedStr(edtCodigoVenda.text) + ' AND PA_PARCELA = ' + QuotedStr(IntToStr(varContador + 1));
+      DataModule1.sqlParcela.ExecSQL(true);
+    end
+    else
+    begin
+      DataModule1.sqlParcela.Close;
+      DataModule1.sqlParcela.SQL.Clear;
+      DataModule1.sqlParcela.SQL.Text := 'UPDATE PARCELA SET PA_PAGO =' + QuotedStr('N') +
+        ' WHERE PA_VENDA_ID =' + QuotedStr(edtCodigoVenda.text) + ' AND PA_PARCELA = ' +
+        QuotedStr(IntToStr(varContador + 1));
+      DataModule1.sqlParcela.ExecSQL(true);
+    end;
     inc(varContador);
-
+  end;
+      ShowMessage('Foi gerado ' + IntToStr(varContador) + 'parcela(as) para essa venda, no valor de ' + FloatToStr(varValorParcela) + ' cada!');
 End;
 
 procedure TfrmVendas.Regularexpressions;
@@ -442,6 +469,9 @@ begin
       inc(varLinha);
       imp(varLinha, 01, varCerrilhado);
       inc(varLinha);
+      // vai ser aqui
+
+
       impc(varLinha, 01, DataModule1.cdsVendaVD_OBSERVACAO.Value, [Comp12]);
       inc(varLinha);
       varLinha := varLinha + 3;
@@ -499,6 +529,7 @@ begin
       else
         Abort;
         try
+          quebraParcela;
           varCondicaopagamento := edtCondicaoPGTO.Text;
           ControlaVariaveis;
           varEmTransacao := False;

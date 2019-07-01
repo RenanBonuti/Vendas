@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
   Vcl.DBCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Data.DBXCommon,
-  RDprint, acPNG, System.RegularExpressions, dateUtils,System.Math;
+  RDprint, acPNG, System.RegularExpressions, dateUtils,System.Math, Data.FMTBcd,
+  Data.SqlExpr;
 
 type
   TfrmVendas = class(TForm)
@@ -47,6 +48,7 @@ type
     img1: TImage;
     edtCondicaoPGTO: TDBEdit;
     lblCond: TLabel;
+    sqlVendaParcela: TSQLQuery;
     procedure btnProdutoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnObservacaoClick(Sender: TObject);
@@ -448,7 +450,7 @@ begin
       varProdutoItem := DataModule1.cdsItemIV_PRODUTO.Value;
       PegaDescricaoProduto;
       imp(VarLinha, 06, IntToStr(varPrimeiroItem));
-      impc(VarLinha, 15, varProdutoDescricao, [Comp12]);
+      impC(VarLinha, 15, varProdutoDescricao, [Comp12]);
       inc(VarLinha);
       impval(VarLinha, 10, '##0', DataModule1.cdsItemIV_QUANTIDADE.Value, []);
       impval(VarLinha, 27, '##,##0.00', DataModule1.cdsItemIV_VALOR_UNITARIO.Value, []);
@@ -467,6 +469,36 @@ begin
       inc(varLinha);
       imp(varLinha, 01, varCerrilhado);
       inc(varLinha);
+      sqlVendaParcela.SQL.Clear;
+      sqlVendaParcela.SQL.Text := ' Select ' +
+                                          'X.PA_VENDA_ID, ' +
+                                          'X.PA_PARCELA, ' +
+                                          'X.PA_DATA_VENCIMENTO, ' +
+                                          'X.PA_VALOR, ' +
+                                          'CASE X.pa_pago ' +
+                                          '     WHEN ''S'' THEN ''Sim'' ' +
+                                          '     WHEN ''N'' THEN ''Não'' ' +
+                                          'END AS PA_PAGO ' +
+                                          'FROM PARCELA X ' +
+                                          'WHERE X.pa_venda_id = :venda ';
+
+      sqlVendaParcela.ParamByName('venda').AsString :=  IntToStr(varVenCodigoVenda);
+      sqlVendaParcela.Open;
+      impc(varlinha,01, 'Parcela | ', [Comp12]);
+      impc(varlinha,27, 'Vencimento| ', [Comp12]);
+      impc(varlinha,47, 'Valor | ', [Comp12]);
+      impc(varlinha,62, 'Pago | ', [Comp12]);
+      sqlVendaParcela.First;
+      inc(varLinha);
+      while not (sqlVendaParcela.Eof) do
+        begin
+          impc(varlinha, 01, sqlVendaParcela['PA_PARCELA'], [Comp12]);
+          impc(varlinha, 25, sqlVendaParcela['PA_DATA_VENCIMENTO'], [Comp12]);
+          impc(varlinha, 45, sqlVendaParcela['PA_VALOR'], [Comp12]);
+          impc(varlinha, 60, sqlVendaParcela['PA_PAGO'], [Comp12]);
+          inc(varlinha);
+          sqlVendaParcela.Next;
+        end;
       impc(varLinha, 01, DataModule1.cdsVendaVD_OBSERVACAO.Value, [Comp12]);
       inc(varLinha);
       varLinha := varLinha + 3;

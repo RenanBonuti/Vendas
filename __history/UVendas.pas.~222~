@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
   Vcl.DBCtrls, Data.DB, Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls, Data.DBXCommon,
-  RDprint, acPNG, System.RegularExpressions;
+  RDprint, acPNG, System.RegularExpressions, dateUtils,System.Math;
 
 type
   TfrmVendas = class(TForm)
@@ -72,6 +72,7 @@ type
     procedure btnCupomClick(Sender: TObject);
     procedure edtCondicaoPGTOEnter(Sender: TObject);
     procedure edtCondicaoPGTOExit(Sender: TObject);
+    procedure btn1Click(Sender: TObject);
   private
   Transaction:  TDBXTransaction;
   varsomaquantidade    :integer;
@@ -97,6 +98,7 @@ type
   varEmTransacao       :Boolean;
   t                    :TDBXTransaction;
   varCondicaopagamento :string;
+
     { Private declarations }
   public
     { Public declarations }
@@ -116,23 +118,74 @@ uses
 
 procedure TfrmVendas.quebraParcela;
 var
-  strLinha: String;
-  Parte : TStringList;
+  varstrLinha          :String;
+  varParte             :TStringList;
+  varContador          :Integer;
+  varVazia             :Boolean;
+  varQuantidadeParcela :Integer;
+  varValorParcela      :Double;
+  varTotalDasParcelas  :Double;
+  varDiferenca         :Double;
+  varVencimento        :Tdate;
+  Vardata              :string;
 begin
-  Parte := TStringList.Create;
-  Parte.Delimiter := '/';
-  Parte.DelimitedText := edtCondicaoPGTO.text;
-  ShowMessage(Parte[1]);
-  ShowMessage(Parte[2]);
+  varParte := TStringList.Create;
+  varParte.Delimiter := '/';
+  varParte.DelimitedText := edtCondicaoPGTO.text;
+  varContador := 0;
+  while  varVazia = False do
+  begin
+    if varParte[varContador].isEmpty then
+    begin
+      varVazia := True;
+    end
+    else
+    begin
+      varQuantidadeParcela := varContador;
+      Inc(varContador);
+    end;
+  end;
+  varContador     := 0;
+  varValorParcela := SimpleRoundTo(vartotalvenda /(varQuantidadeParcela+1),-2);
+  while   varContador <= varQuantidadeParcela do
+  begin
+    if varContador = varQuantidadeParcela then
+    begin
+      varTotalDasParcelas := varValorParcela * (varQuantidadeParcela + 1);
+      varDiferenca := SimpleRoundTo((vartotalvenda - varTotalDasParcelas), -2);
+      varValorParcela := varDiferenca + varValorParcela;
+    end;
+    varVencimento := IncDay(StrToDate(edtDataVenda.Text),StrToInt(varParte[varContador]));
+    Vardata       := FormatDateTime('MM/DD/YYYY', varVencimento);
+    DataModule1.sqlParcela.SQL.Clear;
+    DataModule1.sqlParcela.SQL.Text := 'INSERT INTO PARCELA  (PA_VENDA_ID, PA_PARCELA, PA_DATA_VENCIMENTO, PA_VALOR)  VALUES ('
+                                      + QuotedStr(edtCodigoVenda.text) + ',' + IntToStr(varContador + 1) + ',' +  QuotedStr(Vardata)  + ','
+                                      + QuotedStr(StringReplace(FloatToStr(varValorParcela),',','.', [rfReplaceAll])) +')';
+    DataModule1.sqlParcela.ExecSQL(True);
+    if varParte[varContador] = '0' then
+    begin
+      DataModule1.sqlParcela.Close;
+      DataModule1.sqlParcela.SQL.Clear;
+      DataModule1.sqlParcela.SQL.Text := 'UPDATE PARCELA SET PA_PAGO =' + QuotedStr('S') +
+        ', PA_DATA_PGTO = ' + QuotedStr(Vardata) + 'WHERE PA_VENDA_ID =' +
+        QuotedStr(edtCodigoVenda.text) + ' AND PA_PARCELA = ' + QuotedStr(IntToStr(varContador + 1));
+      DataModule1.sqlParcela.ExecSQL(true);
+    end
+    else
+    begin
+      DataModule1.sqlParcela.Close;
+      DataModule1.sqlParcela.SQL.Clear;
+      DataModule1.sqlParcela.SQL.Text := 'UPDATE PARCELA SET PA_PAGO =' + QuotedStr('N') +
+        ' WHERE PA_VENDA_ID =' + QuotedStr(edtCodigoVenda.text) + ' AND PA_PARCELA = ' +
+        QuotedStr(IntToStr(varContador + 1));
+      DataModule1.sqlParcela.ExecSQL(true);
+    end;
+    inc(varContador);
+  end;
+      ShowMessage('Foi gerado ' + IntToStr(varContador) + 'parcela(as) para essa venda, no valor de ' + FloatToStr(varValorParcela) + ' cada!');
 End;
 
-
-
-
-
-
-
-procedure TfrmVendas.RegularExpressions;
+procedure TfrmVendas.Regularexpressions;
 var
    condpgto   :string;
 begin
@@ -140,7 +193,7 @@ begin
 
     if TRegEx.IsMatch(condpgto, '^([0-9]+\/)+$') = False then
       begin
-          ShowMessage('Condição de pagamento inválida');
+          ShowMessage('Condição de pagamento inválida, uma condição sempre deve ter a parcela segudia pela /');
           edtCondicaoPGTO.SetFocus;
       end
 end;
@@ -255,6 +308,11 @@ begin
       DataModule1.sqlVenda.SQLConnection.RollbackFreeAndNil(Transaction);
     raise;
     end;
+end;
+
+procedure TfrmVendas.btn1Click(Sender: TObject);
+begin
+    quebraParcela;
 end;
 
 procedure TfrmVendas.btnAdicionarClick(Sender: TObject);
@@ -407,6 +465,7 @@ begin
       DataModule1.cdsItem.Filter := 'VD_NUMERO = ' + QuotedStr(IntToStr(varVenCodigoVenda));
       impval(varLinha, 55,'##,##0.00',VarTotalCupom, []);
       inc(varLinha);
+      // aqui vem as parcelas
       imp(varLinha, 01, varCerrilhado);
       inc(varLinha);
       impc(varLinha, 01, DataModule1.cdsVendaVD_OBSERVACAO.Value, [Comp12]);
@@ -466,6 +525,7 @@ begin
       else
         Abort;
         try
+          quebraParcela;
           varCondicaopagamento := edtCondicaoPGTO.Text;
           ControlaVariaveis;
           varEmTransacao := False;

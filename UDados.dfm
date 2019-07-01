@@ -200,7 +200,6 @@ object DataModule1: TDataModule1
     Top = 176
   end
   object cdsProduto: TClientDataSet
-    Active = True
     Aggregates = <>
     Params = <>
     ProviderName = 'dspProduto'
@@ -612,7 +611,6 @@ object DataModule1: TDataModule1
     Top = 256
   end
   object cdsParcela: TClientDataSet
-    Active = True
     Aggregates = <>
     Params = <>
     ProviderName = 'dspParcela'

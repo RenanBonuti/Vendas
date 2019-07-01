@@ -35,7 +35,6 @@ type
     procedure btnImprimirClick(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure btn1Click(Sender: TObject);
-    procedure frxrprtParcelaGetValue(const VarName: string; var Value: Variant);
   private
     { Private declarations }
     varfiltro           :string;
@@ -61,11 +60,11 @@ begin
   case rgFiltro2.ItemIndex of
     0:
     begin
-        DataModule1.sqlParcela.SQL.add( ' ORDER BY 3');
+        DataModule1.sqlRelParcela.SQL.add( ' ORDER BY CL_CODIGO');
     end;
     1:
     begin
-        DataModule1.sqlParcela.SQL.add( ' ORDER BY 8');
+        DataModule1.sqlRelParcela.SQL.add( ' ORDER BY X.PA_DATA_VENCIMENTO');
     end;
   end;
 end;
@@ -106,14 +105,6 @@ begin
 end;
 
 
-procedure TfrmRelatorioParcelas.frxrprtParcelaGetValue(const VarName: string;
-  var Value: Variant);
-begin
-  if (VarName = 'DataInicialRel') then
-    Value := medtDataIni.Text;
-
-end;
-
 procedure TfrmRelatorioParcelas.btn1Click(Sender: TObject);
 begin
     medtDataIni.Text := '25/06/2019';
@@ -130,36 +121,72 @@ begin
   DataModule1.cdsRelParcela.Close;
   DataModule1.sqlRelParcela.SQL.Clear;
   DataModule1.sqlRelParcela.SQL.Text := 'SELECT ' +
-                                     'Extract(Month from X.pa_data_vencimento),' +
-                                     'Extract(year from X.pa_data_vencimento),' +
-                                     'L.VD_DATA_EMISSAO, ' +
-                                     'R.CL_CODIGO, ' +
-                                     'R.CL_NOME, ' +
-                                     'X.PA_VENDA_ID, ' +
-                                     'X.PA_PARCELA, ' +
-                                     'X.PA_DATA_VENCIMENTO, ' +
-                                     'X.PA_DATA_PGTO, ' +
-                                     'X.PA_PAGO, ' +
-                                     'X.PA_VALOR ' +
-                                     'FROM PARCELA X ' +
-                                     'INNER JOIN VENDA L ' +
-                                     'ON L.VD_NUMERO = X.PA_VENDA_ID ' +
-                                     'INNER JOIN CLIENTE R ' +
-                                     'ON R.CL_CODIGO = L.VD_CLIENTE ' +
-                                     'WHERE L.VD_DATA_EMISSAO BETWEEN :datainicio AND :datafim ';
+                                            'Extract(Month from X.pa_data_vencimento), ' +
+                                            'EXTRACT(Year from X.pa_data_vencimento) as ANO, ' +
+                                            'CASE Extract(Month from X.pa_data_vencimento) ' +
+                                            'WHEN ''1'' THEN ''Janeiro'''  +
+                                            'WHEN ''2'' THEN ''Fevereiro'''  +
+                                            'WHEN ''3'' THEN ''Março''' +
+                                            'WHEN ''4'' THEN ''Abril''' +
+                                            'WHEN ''5'' THEN ''Maio''' +
+                                            'WHEN ''6'' THEN ''Junho''' +
+                                            'WHEN ''7'' THEN ''Julho''' +
+                                            'WHEN ''8'' THEN ''Agosto''' +
+                                            'WHEN ''9'' THEN ''Setembro''' +
+                                            'WHEN ''10'' THEN ''Outubro''' +
+                                            'WHEN ''11'' THEN ''Novembro''' +
+                                            'WHEN ''12'' THEN ''Dezembro''' +
+                                            'ELSE '''' END AS Mes, ' +
+                                            'R.CL_CODIGO, ' +
+                                            'R.CL_NOME, ' +
+                                            'L.VD_DATA_EMISSAO, ' +
+                                            'X.PA_VENDA_ID, ' +
+                                            'X.PA_PARCELA, ' +
+                                            'X.PA_DATA_VENCIMENTO, ' +
+                                            'X.PA_DATA_PGTO, ' +
+                                            'X.PA_PAGO, ' +
+                                            'X.PA_VALOR ' +
+                                            'from PARCELA X ' +
+                                            'INNER JOIN VENDA L ' +
+                                            'ON L.VD_NUMERO = X.PA_VENDA_ID ' +
+                                            'INNER JOIN CLIENTE R ' +
+                                            'ON R.CL_CODIGO = L.VD_CLIENTE ' +
+                                            'WHERE L.VD_DATA_EMISSAO ' +
+                                            'BETWEEN :datainicio and :datafim ';
+//                                     'Extract(Month from X.pa_data_vencimento),' +
+//                                     'Extract(year from X.pa_data_vencimento),' +
+//                                     'R.CL_CODIGO, ' +
+//                                     'R.CL_NOME, ' +
+//                                     'L.VD_DATA_EMISSAO, ' +
+//                                     'X.PA_VENDA_ID, ' +
+//                                     'X.PA_PARCELA, ' +
+//                                     'X.PA_DATA_VENCIMENTO, ' +
+//                                     'X.PA_DATA_PGTO, ' +
+//                                     'X.PA_PAGO, ' +
+//                                     'X.PA_VALOR ' +
+//                                     'FROM PARCELA X ' +
+//                                     'INNER JOIN VENDA L ' +
+//                                     'ON L.VD_NUMERO = X.PA_VENDA_ID ' +
+//                                     'INNER JOIN CLIENTE R ' +
+//                                     'ON R.CL_CODIGO = L.VD_CLIENTE ' +
+//                                     'WHERE L.VD_DATA_EMISSAO BETWEEN :datainicio AND :datafim ';
     varDataInicio := FormatDateTime('MM/DD/YYYY', StrToDate(medtDataIni.Text));
     varDataFim    := FormatDateTime('MM/DD/YYYY', StrToDate(medtDatafim.Text));
     DataModule1.sqlRelParcela.ParamByName('datainicio').AsString := vardataInicio;
     DataModule1.sqlRelParcela.ParamByName('datafim').AsString    := vardataFim;
 
-    if  (rgFiltro2.ItemIndex = '0') and (varRelatorioCliente <> 0) then
-      DataModule1.sqlRelParcela.SQL.Add(' AND R.CL_CODIGO = ' + QuotedStr(IntToStr(varRelatorioCliente)));
-    filtrar;
+    if varRelatorioCliente <> 0 then
+      begin
+        DataModule1.sqlRelParcela.SQL.Add(' AND R.CL_CODIGO = ' + QuotedStr(IntToStr(varRelatorioCliente)));
+      end;
+      filtrar;
     if ((varfiltro = 'S') or (varFiltro = 'N')) then
       begin
         DataModule1.sqlRelParcela.SQL.Add('AND X.PA_PAGO = ' + QuotedStr(varFiltro));
       end;
-    ordena;
+     ordena;
+
+      //DataModule1.sqlRelParcela.SQL.add( ' ORDER BY X.PA_DATA_VENCIMENTO');
 end;
 
 procedure TfrmRelatorioParcelas.btnImprimirClick(Sender: TObject);
