@@ -10,29 +10,27 @@ uses
 
 type
   TfrmPesquisaVenda = class(TForm)
-    Panel1: TPanel;
     dbgrdPesquisar: TDBGrid;
     btnPesquisar2: TBitBtn;
     rgTipoPesquisa: TRadioGroup;
-    lblCodigo: TLabel;
+    dsPesquisaVenda: TDataSource;
+    grp1: TGroupBox;
+    edtVenIni: TEdit;
     lblVenIni: TLabel;
     lblVenFin: TLabel;
-    dsPesquisaVenda: TDataSource;
-    edtVenIni: TEdit;
     edtVenFim: TEdit;
-    Label1: TLabel;
-    Panel2: TPanel;
-    Label2: TLabel;
-    Label3: TLabel;
+    grp2: TGroupBox;
     medtDataIni: TMaskEdit;
+    lbl1: TLabel;
+    lbl2: TLabel;
     medtDatafim: TMaskEdit;
     procedure btnPesquisar2Click(Sender: TObject);
     procedure dbgrdPesquisarDblClick(Sender: TObject);
     procedure rgTipoPesquisaClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure dbgrdPesquisarDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure medtDataIniExit(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -107,10 +105,9 @@ begin
 
 end;
 
-procedure TfrmPesquisaVenda.FormCreate(Sender: TObject);
+procedure TfrmPesquisaVenda.FormShow(Sender: TObject);
 begin
-    Panel1.Enabled := False;
-    Panel2.Enabled := False;
+    DataModule1.cdsVenda.Open;
 end;
 
 procedure TfrmPesquisaVenda.medtDataIniExit(Sender: TObject);
@@ -128,19 +125,15 @@ begin
       case rgTipoPesquisa.ItemIndex of
     0:
     begin
-        Panel1.Color            := clSilver;
-        Panel2.Color            := clWhite;
-        Panel1.Enabled          := True;
-        Panel2.Enabled          := False;
+        edtVenIni.Enabled  := True;
+        edtVenFim.Enabled  := True;
         medtDataIni.Clear;
         medtDatafim.Clear;
     end;
     1:
     begin
-        Panel2.Color            := clSilver;
-        Panel1.Color            := clWhite;
-        Panel2.Enabled          := True;
-        Panel1.Enabled          := False;
+        medtDataIni.Enabled  := True;
+        medtDatafim.Enabled  := True;
         edtVenIni.Clear;
         edtVenFim.Clear;
     end;

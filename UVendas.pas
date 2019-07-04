@@ -46,11 +46,12 @@ type
     lblSatus: TLabel;
     rdpCupom: TRDprint;
     img1: TImage;
-    edtCondicaoPGTO: TDBEdit;
-    lblCond: TLabel;
     sqlVendaParcela: TSQLQuery;
+    grpCondicao: TGroupBox;
+    edtCondicaoPGTO: TDBEdit;
+    lbl1: TLabel;
+    btnConfirmaCond: TBitBtn;
     procedure btnProdutoClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure btnObservacaoClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnGravarObservacaoClick(Sender: TObject);
@@ -68,13 +69,18 @@ type
     procedure ParaTransacao;
     procedure RegularExpressions;
     procedure quebraParcela;
+    procedure verificaCamposVazios;
+    procedure desativaComponentes;
+    procedure confimaCondicao;
+    procedure finalizaVenda;
     procedure btnCancelarClick(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure btnGravarClick(Sender: TObject);
     procedure btnCupomClick(Sender: TObject);
     procedure edtCondicaoPGTOEnter(Sender: TObject);
     procedure edtCondicaoPGTOExit(Sender: TObject);
-    procedure btn1Click(Sender: TObject);
+    procedure btnConfirmaCondClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
   Transaction:  TDBXTransaction;
   varsomaquantidade    :integer;
@@ -100,6 +106,7 @@ type
   varEmTransacao       :Boolean;
   t                    :TDBXTransaction;
   varCondicaopagamento :string;
+  VarTotalCupom        :double;
 
     { Private declarations }
   public
@@ -114,7 +121,7 @@ var
 implementation
 
 uses
-  UPesquisaProduto, UPesquisaCliente, UDados, UPesquisaVenda;
+  UPesquisaProduto, UPesquisaCliente, UDados, UPesquisaVenda, UPrincipal;
 
 {$R *.dfm}
 
@@ -184,7 +191,7 @@ begin
     end;
     inc(varContador);
   end;
-      ShowMessage('Foi gerado ' + IntToStr(varContador) + 'parcela(as) para essa venda, no valor de ' + FloatToStr(varValorParcela) + ' cada!');
+      ShowMessage('Foi gerado ' + IntToStr(varContador) + ' parcela(as) para essa venda, no valor de ' + FloatToStr(varValorParcela) + ' cada!');
 End;
 
 procedure TfrmVendas.Regularexpressions;
@@ -204,6 +211,71 @@ procedure TfrmVendas.ParaTransacao;
 begin
     DataModule1.sqlVenda.SQLConnection.RollbackFreeAndNil(Transaction);
     varEmTransacao := false;
+end;
+
+procedure TfrmVendas.confimaCondicao;
+begin
+     if Application.MessageBox('Deseja preencher a condição de pagamento neste momento ?','Aviso',MB_YESNO+MB_ICONQUESTION)= mrYes then
+       begin
+         desativaComponentes;
+         edtCondicaoPGTO.Enabled := True;
+         btnConfirmaCond.Enabled := True;
+         edtCondicaoPGTO.SetFocus;
+       end
+      else
+      btnCancelar.Enabled     := True;
+      btnNovo.Enabled         := True;
+      btnPesquisar.Enabled    := True;
+      btnConfirmaCond.Enabled := True;
+      edtCondicaoPGTO.Enabled := True;
+     Abort;
+end;
+
+procedure TfrmVendas.desativaComponentes;
+begin
+    btnPesquisar.Enabled     := False;
+    btnNovo.Enabled          := False;
+    btnCupom.Enabled         := False;
+    btnGravar.Enabled        := False;
+    btnCliente.Enabled       := False;
+    btnCancelar.Enabled      := False;
+    btnProduto.Enabled       := False;
+    btnRemover.Enabled       := False;
+    btnObservacao.Enabled    := False;
+    btnAdicionar.Enabled     := False;
+end;
+
+procedure Tfrmvendas.verificaCamposVazios;
+begin
+    if edtCliente.Text = '' then
+    begin
+      ShowMessage('Cliente não selecionado !!!');
+      btnCliente.SetFocus;
+      Abort;
+    end;
+
+
+    if edtProduto.Text = '' then
+    begin
+      ShowMessage('Produto não selecionado !');
+      btnProduto.SetFocus;
+      Abort;
+    end;
+
+    if editQuantidade.Text = '' then
+    begin
+      ShowMessage('Informe a quatidade do produto !');
+      editQuantidade.SetFocus;
+      Abort
+    end;
+
+
+    if dbgVenda.DataSource.DataSet.RecordCount = 0 then
+    begin
+      ShowMessage('Nenhum produto adicionado a essa venda !');
+      btnAdicionar.SetFocus;
+      Abort;
+    end;
 end;
 
 procedure TfrmVendas.ControlaTransacao;
@@ -252,6 +324,33 @@ begin
       varUltimoItem := DataModule1.sqlItemCupom['MAX'];
     end;
     Close;
+end;
+
+procedure TfrmVendas.finalizaVenda;
+begin
+        try
+          quebraParcela;
+          varCondicaopagamento := edtCondicaoPGTO.Text;
+          DataModule1.sqlVenda.Close;
+          DataModule1.sqlVenda.SQL.Clear;
+          DataModule1.sqlVenda.SQL.text :='UPDATE VENDA SET VD_SITUACAO =' + QuotedStr('F') + 'WHERE VD_NUMERO =' + edtCodigoVenda.text;
+          DataModule1.sqlVenda.ExecSQL(true);
+        finally
+          ShowMessage('Venda finalizada com sucesso, aguarde a impressão do cupom');
+          lblSatus.Caption := 'FINALIZADA';
+          lblSatus.Font.Color   := clGreen;
+          btnCupom.Enabled      := True;
+          btnCancelar.Enabled   := False;
+          btnObservacao.Enabled := False;
+          btnFinalizar.Enabled  := False;
+          btnGravar.Enabled     := False;
+          btnAdicionar.Enabled  := False;
+          btnRemover.Enabled    := False;
+          btnCliente.Enabled    := False;
+          btnProduto.Enabled    := False;
+          btncupom.Click;
+          DataModule1.cdsItemCupom.Open;
+        end
 end;
 
 procedure TfrmVendas.PegaDescricaoProduto;
@@ -312,13 +411,23 @@ begin
     end;
 end;
 
-procedure TfrmVendas.btn1Click(Sender: TObject);
+procedure TfrmVendas.btnConfirmaCondClick(Sender: TObject);
 begin
-    quebraParcela;
+      if Application.MessageBox('Confirma essa condição de pagamento ? ','Aviso',MB_YESNO+MB_ICONQUESTION)= mrYes then
+      begin
+          edtCondicaoPGTO.Enabled := False;
+          btnConfirmaCond.Enabled := False;
+          btnFinalizar.Enabled    := True;
+          btnFinalizar.SetFocus;
+      end
+      else
+      Abort;
+
 end;
 
 procedure TfrmVendas.btnAdicionarClick(Sender: TObject);
 begin
+
     if (editQuantidade.Text = '') or (editQuantidade.Text < '1')  then
       begin
         ShowMessage('O campo quantidade está vazio ou com valor 0 !');
@@ -378,6 +487,7 @@ begin
           btnRemover.Enabled    := False;
           btnCliente.Enabled    := False;
           btnProduto.Enabled    := False;
+          btnNovo.Enabled       := True;
         end
 end;
 
@@ -407,7 +517,6 @@ var
   varTotal         :Integer;
   varCerrilhado    :string;
   VarLinha         :integer;
-  VarTotalCupom    :double;
   VarAuxTotal      :double;
 begin
   varTotal := 0;
@@ -444,7 +553,8 @@ begin
       varPrimeiroItem := 1;
       DataModule1.cdsItem.First;
       VarTotalCupom := 0;
-    while varPrimeiroItem <= varUltimoItem do
+    while not (DataModule1.cdsItem.Eof) do
+//    while varPrimeiroItem <= varUltimoItem do
     begin
       with rdpCupom do
       varProdutoItem := DataModule1.cdsItemIV_PRODUTO.Value;
@@ -518,15 +628,15 @@ begin
        btnCupom.Enabled     := False;
        btnFinalizar.Enabled := False;
        btnNovo.Enabled      := True;
-
 end;
 
 procedure TfrmVendas.btnFinalizarClick(Sender: TObject);
 begin
-      if Application.MessageBox('Deseja Finalizar essa venda?','Aviso',MB_YESNO+MB_ICONQUESTION)= mrYes then
-      else
-        Abort;
+      if Application.MessageBox('Deseja realmente finalizar essa venda?','Aviso',MB_YESNO+MB_ICONQUESTION)= mrYes then
+      begin
         try
+          quebraParcela;
+          varCondicaopagamento := edtCondicaoPGTO.Text;
           DataModule1.sqlVenda.Close;
           DataModule1.sqlVenda.SQL.Clear;
           DataModule1.sqlVenda.SQL.text :='UPDATE VENDA SET VD_SITUACAO =' + QuotedStr('F') + 'WHERE VD_NUMERO =' + edtCodigoVenda.text;
@@ -546,7 +656,16 @@ begin
           btnProduto.Enabled    := False;
           btncupom.Click;
           DataModule1.cdsItemCupom.Open;
-        end
+        end;
+      end
+      else
+      begin
+        btnConfirmaCond.Enabled := True;
+        edtCondicaoPGTO.Enabled := True;
+        edtCondicaoPGTO.SetFocus;
+        btnFinalizar.Enabled    := False;
+      end;
+      Abort;
 
 end;
 
@@ -556,37 +675,38 @@ begin
       else
         Abort;
         try
-          quebraParcela;
-          varCondicaopagamento := edtCondicaoPGTO.Text;
-          ControlaVariaveis;
-          varEmTransacao := False;
-          DataModule1.sqlVenda.Close;
-          DataModule1.sqlVenda.SQL.Clear;
-          DataModule1.sqlVenda.SQL.text := 'UPDATE VENDA SET VD_CLIENTE =' +
-          QuotedStr(IntToStr(varVencodigoCliente)) + ', VD_DATA_EMISSAO =' +
-          QuotedStr(varVenDataVenda) + ', VD_VALOR_TOTAL =' +
-          StringReplace(FloatToStr(vartotalvenda), ',', '.', [rfReplaceAll]) +
-          ', VD_SITUACAO =' + QuotedStr('A') + ', VD_OBSERVACAO =' +
-          QuotedStr(varVenObservacao) + ', VD_CONDPGTO =' + QuotedStr(edtCondicaoPGTO.text) + 'WHERE VD_NUMERO =' +
-          IntToStr(varVenCodigoVenda);
-          DataModule1.sqlVenda.ExecSQL(true);
-          if DataModule1.cdsItem.State in dsEditModes then
-          begin
-            if DataModule1.cdsItemIV_PRODUTO.IsNull then
-              DataModule1.cdsItem.Cancel
-            else
-              DataModule1.cdsItem.Post;
-          end;
-          DataModule1.cdsItem.ApplyUpdates(0);
-          DataModule1.sqlVenda.SQLConnection.CommitFreeAndNil(Transaction);
-        finally
-          ShowMessage('Venda gravada com sucesso!');
-          lblSatus.Caption       :=  'ABERTA';
-          lblSatus.Font.Color    := clBlue;
-          btnFinalizar.Click;
-          btnFinalizar.Enabled   := True;
-          btnNovo.Enabled        := True;
-          btnGravar.Enabled      := False;
+          verificaCamposVazios;
+            try
+              ControlaVariaveis;
+              varEmTransacao := False;
+              DataModule1.sqlVenda.Close;
+              DataModule1.sqlVenda.SQL.Clear;
+              DataModule1.sqlVenda.SQL.text := 'UPDATE VENDA SET VD_CLIENTE =' +
+              QuotedStr(IntToStr(varVencodigoCliente)) + ', VD_DATA_EMISSAO =' +
+              QuotedStr(varVenDataVenda) + ', VD_VALOR_TOTAL =' +
+              StringReplace(FloatToStr(vartotalvenda), ',', '.', [rfReplaceAll]) +
+              ', VD_SITUACAO =' + QuotedStr('A') + ', VD_OBSERVACAO =' +
+              QuotedStr(varVenObservacao) + ', VD_CONDPGTO =' + QuotedStr(edtCondicaoPGTO.text) + 'WHERE VD_NUMERO =' +
+              IntToStr(varVenCodigoVenda);
+              DataModule1.sqlVenda.ExecSQL(true);
+              if DataModule1.cdsItem.State in dsEditModes then
+              begin
+                if DataModule1.cdsItemIV_PRODUTO.IsNull then
+                  DataModule1.cdsItem.Cancel
+                else
+                  DataModule1.cdsItem.Post;
+              end;
+              DataModule1.cdsItem.ApplyUpdates(0);
+              DataModule1.sqlVenda.SQLConnection.CommitFreeAndNil(Transaction);
+            finally
+              ShowMessage('Venda gravada com sucesso!');
+              lblSatus.Caption        :=  'ABERTA';
+              lblSatus.Font.Color     := clBlue;
+              confimaCondicao;
+              btnGravar.Enabled       := False
+            end;
+        except
+          Abort
         end;
 
 end;
@@ -622,8 +742,9 @@ begin
     btnProduto.Enabled            := True;
     btnObservacao.Enabled         := True;
     btnGravar.Enabled             := True;
+    btnPesquisar.Enabled          := False;
     btnNovo.Enabled               := False;
-    edtCondicaoPGTO.Enabled       := True;
+    btnCancelar.Enabled           := False;
 end;
 
 procedure TfrmVendas.btnObservacaoClick(Sender: TObject);
@@ -639,6 +760,7 @@ var
     varStatusVenda     :string;
 begin
   frmPesquisaVenda := TfrmPesquisaVenda.Create(Self);
+
   try
     if frmPesquisaVenda.ShowModal= mrOk then
       with DataModule1.sqlVenda do
@@ -659,6 +781,9 @@ begin
         QuotedStr(IntToStr(varPesquisaItem));
         DataModule1.cdsItem.Open;
         varStatusVenda := DataModule1.cdsVenda.FieldByName('VD_SITUACAO').Value;
+        vartotalvenda  := DataModule1.cdsVenda.FieldByName('VD_VALOR_TOTAL').Value;
+        varsomaquantidade := DataModule1.cdsItem.FieldByName('IV_ITEM').Value;
+        VarTotalCupom     := DataModule1.cdsVenda.FieldByName('VD_VALOR_TOTAL').Value;
 
         if (varStatusVenda = 'F') then
           begin
@@ -688,15 +813,17 @@ begin
           end;
           if  varStatusVenda = 'A' then
           begin
-              btnCupom.Enabled      := False;
-              btnCancelar.Enabled   := True;
-              btnObservacao.Enabled := True;
-              btnFinalizar.Enabled  := True;
-              btnGravar.Enabled     := False;
-              btnAdicionar.Enabled  := True;
-              btnRemover.Enabled    := True;
-              btnCliente.Enabled    := True;
-              btnProduto.Enabled    := True;
+              btnCupom.Enabled        := False;
+              btnCancelar.Enabled     := True;
+              btnObservacao.Enabled   := True;
+              btnFinalizar.Enabled    := True;
+              btnGravar.Enabled       := True;
+              btnAdicionar.Enabled    := True;
+              btnRemover.Enabled      := True;
+              btnCliente.Enabled      := True;
+              btnProduto.Enabled      := True;
+              edtCondicaoPGTO.Enabled := True;
+              DataModule1.cdsItem.append;
           end;
         if (varStatusVenda = 'A') then
           begin
@@ -718,6 +845,7 @@ begin
       frmPesquisaVenda.Free;
   end;
 end;
+
 
 procedure TfrmVendas.btnProdutoClick(Sender: TObject);
 begin
@@ -746,6 +874,14 @@ var
    varProdutoEstoque    :string;
    varQuantidadeEstoque :String;
 begin
+
+
+    if dbgVenda.DataSource.DataSet.RecordCount = 0 then
+    begin
+      ShowMessage('Não existe produtos para remover !');
+      Abort;
+    end;
+
     SubtrairTotal;
     vartotalquantidade   := 0;
     varProdutoEstoque    := dbgVenda.Columns.Items[2].Field.Text;
@@ -792,6 +928,7 @@ begin
     btnGravar.Enabled         := False;
     btnObservacao.Enabled     := False;
     btnFinalizar.Enabled      := False;
+    btnConfirmaCond.Enabled   := False;
     btnNovo.SetFocus;
 end;
 

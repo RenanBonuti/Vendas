@@ -30,17 +30,19 @@ type
     dsProduto: TDataSource;
     lbl1: TLabel;
     procedure PegaUltimoProduto;
+    procedure ativaComponetes;
+    procedure desativaComponetes;
+    procedure verificaCamposVazios;
     procedure btnNovoClick(Sender: TObject);
-    procedure ControlarBotoes;
     procedure btnGravarClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
     procedure btnDeletarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
-    procedure dbedtValorKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure btnSairClick(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure btnSalvarEdicaoClick(Sender: TObject);
+    procedure edtEstoqueExit(Sender: TObject);
   private
     { Private deClarations }
     Transaction:  TDBXTransaction;
@@ -59,6 +61,58 @@ uses
   UDados, UPesquisaProduto;
 
 {$R *.dfm}
+
+procedure TfrmCadastroProdutos.verificaCamposVazios;
+begin
+   if dbedtProduto.Text = '' then
+    begin
+      ShowMessage('Campo "Produto" obrigatório !!!');
+      dbedtProduto.SetFocus;
+      Abort;
+    end;
+
+   if dbedtValor.Text = '' then
+    begin
+      ShowMessage('Campo "Valor" obrigatório !!!');
+      dbedtValor.SetFocus;
+      Abort;
+    end;
+
+   if edtEstoque.Text = '' then
+    begin
+      ShowMessage('Campo "Estoque" obrigatório !!!');
+      edtEstoque.SetFocus;
+      Abort;
+    end;
+end;
+
+procedure TfrmCadastroProdutos.ativaComponetes;
+begin
+   dbedtValor.Enabled        := True;
+   dbedtProduto.Enabled      := True;
+   edtEstoque.Enabled        := True;
+   dbcbbAtivoInativo.Enabled := True;
+end;
+
+procedure TfrmCadastroProdutos.desativaComponetes;
+begin
+
+   dbedtValor.Enabled        := False;
+   dbedtProduto.Enabled      := False;
+   edtEstoque.Enabled        := False;
+   dbcbbAtivoInativo.Enabled := False;
+end;
+
+
+procedure TfrmCadastroProdutos.edtEstoqueExit(Sender: TObject);
+begin
+    if (StrToInt(edtEstoque.Text) < 0 )then
+    begin
+    ShowMessage(' Estoque minimo é de 1 ');
+    edtEstoque.SetFocus;
+    Abort;
+    end;
+end;
 
 procedure TfrmCadastroProdutos.PegaUltimoProduto;
 begin
@@ -83,15 +137,17 @@ procedure TfrmCadastroProdutos.btnCancelarClick(Sender: TObject);
 begin
     DataModule1.cdsProduto.Cancel;
     DataModule1.cdsProduto.Close;
+    desativaComponetes;
     btnPesquisar.Enabled     := True;
     btnGravar.Enabled        := False;
-    dbedtProduto.Enabled     := False;
-    dbedtValor.Enabled       := False;
-    edtEstoque.Enabled       := False;
     btnGravar.Enabled        := False;
     btnSalvarEdicao.Visible  := False;
-
-end;
+    btnCancelar.Enabled      := False;
+    btnDeletar.Enabled       := False;
+    btnEditar.Enabled        := False;
+    btnNovo.Enabled          := true;
+    btnSair.Enabled          := True;
+end;
 
 procedure TfrmCadastroProdutos.btnDeletarClick(Sender: TObject);
 begin
@@ -119,10 +175,7 @@ begin
     btnGravar.Enabled         := False;
     btnNovo.Enabled           := False;
     btnDeletar.Enabled        := False;
-    dbcbbAtivoInativo.Enabled := True;
-    dbedtValor.Enabled        := True;
-    dbedtProduto.Enabled      := True;
-    edtEstoque.Enabled        := True;
+    ativaComponetes;
 end;
 
 procedure TfrmCadastroProdutos.btnGravarClick(Sender: TObject);
@@ -130,6 +183,8 @@ begin
      if Application.MessageBox('Deseja realmente gravar esse produto?','Aviso',MB_YESNO+MB_ICONQUESTION)= mrYes then
       else
         Abort;
+        try
+        verificaCamposVazios;
         try
           DataModule1.sqlProduto.Close;
           DataModule1.sqlProduto.SQL.Clear;
@@ -141,20 +196,17 @@ begin
         finally
           DataModule1.sqlProduto.SQLConnection.CommitFreeAndNil(Transaction);
           ShowMessage('Produto cadastrado com sucesso!');
-          btnEditar.Enabled := False;
-          btnGravar.Enabled := False;
-          btnNovo.Enabled   := True;
+          btnEditar.Enabled    := False;
+          btnGravar.Enabled    := False;
+          btnNovo.Enabled      := True;
+          btnPesquisar.Enabled := True;
+          btnCancelar.Enabled  := False;
+          btnSair.Enabled      := True;
           DataModule1.cdsProduto.Close;
         end;
-
-
-    {DataModule1.cdsProduto.Post;
-    DataModule1.cdsProduto.ApplyUpdates(0);
-    DataModule1.sqlProduto.SQLConnection.CommitFreeAndNil(Transaction);
-    ShowMessage('Registro salvo com sucesso');
-    btnNovo.Enabled := True;
-    btnGravar.Enabled := False;
-    DataModule1.cdsProduto.Active := False;}
+        except
+        Abort;
+        end;
 end;
 
 procedure TfrmCadastroProdutos.btnNovoClick(Sender: TObject);
@@ -165,9 +217,11 @@ begin
     dbedtProduto.Enabled          := True;
     dbedtValor.Enabled            := True;
     edtEstoque.Enabled            := True;
+    btnNovo.Enabled               := False;
     btnGravar.Enabled             := True;
     btnCancelar.Enabled           := True;
     btnPesquisar.Enabled          := False;
+    btnSair.Enabled               := False;
     dbedtProduto.SetFocus;
 end;
 
@@ -219,26 +273,9 @@ begin
       btnSalvarEdicao.Visible  := False;
       btnNovo.Enabled          := True;
       btnEditar.Enabled        := False;
-      dbedtProduto.Enabled     := False;
-      dbedtValor.Enabled       := False;
-      edtEstoque.Enabled       := False;
-      dbcbbAtivoInativo.Enabled:= False;
+      btnCancelar.Enabled      := False;
+      desativaComponetes;
    end;
-end;
-
-procedure TfrmCadastroProdutos.ControlarBotoes;
-begin
-    btnNovo.Enabled     := DataModule1.cdsProduto.State in [dsBrowse];
-    btnEditar.Enabled   := DataModule1.cdsProduto.State in [dsBrowse];
-    btnDeletar.Enabled  := DataModule1.cdsProduto.State in [dsBrowse];
-    btnDeletar.Enabled  := DataModule1.cdsProduto.State in [dsBrowse];
-    btnGravar.Enabled   := DataModule1.cdsProduto.State in [dsInsert, dsEdit];
-end;
-procedure TfrmCadastroProdutos.dbedtValorKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-   // if not (Key in ['0'..'9',#8]) then
-    //Key := #0;
 end;
 
 procedure TfrmCadastroProdutos.FormCreate(Sender: TObject);

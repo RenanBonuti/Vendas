@@ -53,7 +53,11 @@ type
     lbl3: TLabel;
     lblIE: TLabel;
     edtIE: TDBEdit;
+    sqlClienteTipo: TSQLQuery;
     procedure PegaUltimoCliente;
+    procedure ativaComponentes;
+    procedure desativaComponentes;
+    procedure verificaCamposVazios;
     procedure edtNascimentoKeyPress(Sender: TObject; var Key: Char);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnSairClick(Sender: TObject);
@@ -92,6 +96,104 @@ uses
   UDados, UValidaCpf, UPesquisaCliente;
 
 {$R *.dfm}
+
+procedure TfrmCadastroClientes.verificaCamposVazios;
+begin
+    if dbedtNome.Text = '' then
+    begin
+      ShowMessage('Campo "Nome" obrigatório !!!');
+      dbedtNome.SetFocus;
+      Abort;
+    end;
+
+    if dbedtDataNas.Text = '' then
+    begin
+      ShowMessage('Campo "Data de Nascimento" obrigatório !!!');
+      dbedtDataNas.SetFocus;
+      Abort;
+    end;
+
+    if cbTipo.Text = '' then
+    begin
+      ShowMessage('Escolha o tipo de cliente !!!');
+      cbTipo.SetFocus;
+      Abort;
+    end;
+
+    if edtEndereco.Text = '' then
+    begin
+      ShowMessage('Campo "Endereço" obrigatório !!!');
+      edtEndereco.SetFocus;
+      Abort;
+    end;
+
+    if edtNumero.Text = '' then
+    begin
+      ShowMessage('Campo "Numero" obrigatório !!!');
+      edtNumero.SetFocus;
+      Abort;
+    end;
+
+    if edtBairro.Text = '' then
+    begin
+      ShowMessage('Campo "Bairro" obrigatório !!!');
+      edtBairro.SetFocus;
+      Abort;
+    end;
+
+    if edtCidade.Text = '' then
+    begin
+      ShowMessage('Campo "Cidade" obrigatório !!!');
+      edtCidade.SetFocus;
+      Abort;
+    end;
+
+    if cbUF.Text = '' then
+    begin
+      ShowMessage('Escolha um estado !!!');
+      cbUF.SetFocus;
+      Abort;
+    end;
+
+    if (cbTipo.ItemIndex = 0) and (edtRG.Text = '         ') then
+    begin
+      ShowMessage('O campo RG obrigatório !!!');
+      edtRG.SetFocus;
+      Abort;
+    end;
+end;
+
+procedure TfrmCadastroClientes.ativaComponentes;
+begin
+    dbedtNome.Enabled        := True;
+    edtEndereco.Enabled      := True;
+    edtNumero.Enabled        := True;
+    edtBairro.Enabled        := True;
+    edtCidade.Enabled        := True;
+    edtCep.Enabled           := True;
+    dbedtDataNas.Enabled     := True;
+    cbTipo.Enabled           := True;
+    cbUF.Enabled             := True;
+end;
+
+procedure TfrmCadastroClientes.desativaComponentes;
+begin
+    dbedtNome.Enabled         := False;
+    dbedtCpf.Enabled          := False;
+    edtEndereco.Enabled       := False;
+    edtNumero.Enabled         := False;
+    edtBairro.Enabled         := False;
+    edtCidade.Enabled         := False;
+    edtIE.Enabled             := False;
+    edtCnpj.Enabled           := False;
+    edtCep.Enabled            := False;
+    edtRG.Enabled             := False;
+    dbedtDataNas.Enabled      := False;
+    cbTipo.Enabled            := False;
+    dbcbbAtivoInativo.Enabled := False;
+    cbUF.Enabled              := False;
+end;
+
 procedure TfrmCadastroClientes.PegaUltimoCliente;
 begin
     try
@@ -120,21 +222,16 @@ procedure TfrmCadastroClientes.btnCancelarClick(Sender: TObject);
 begin
     DataModule1.cdsCliente.Cancel;
     DataModule1.cdsCliente.Close;
-    btnPesquisar.Enabled     := True;
-    btnGravar.Enabled        := False;
-    dbedtNome.Enabled        := False;
-    edtEndereco.Enabled      := False;
-    edtNumero.Enabled        := False;
-    edtBairro.Enabled        := False;
-    edtCidade.Enabled        := False;
-    edtCep.Enabled           := False;
-    edtRG.Enabled            := False;
-    dbedtDataNas.Enabled     := False;
-    cbTipo.Enabled           := False;
-    dbcbbAtivoInativo.Enabled:= False;
-    cbUF.Enabled             := False;
-    btnGravar.Enabled        := False;
-
+    desativaComponentes;
+    btnNovo.Enabled         := True;
+    btnPesquisar.Enabled    := True;
+    btnSair.Enabled         := True;
+    btnEditar.Enabled       := False;
+    btnDeletar.Enabled      := False;
+    btnGravar.Enabled       := False;
+    btnCancelar.Enabled     := False;
+    btnSalvarEdicao.Enabled := False;
+    btnSalvarEdicao.Visible := False;
 end;
 
 procedure TfrmCadastroClientes.ControlarBotoes;
@@ -183,6 +280,8 @@ begin
           btnDeletar.Enabled   := False;
           btnEditar.Enabled    := False;
           btnNovo.Enabled      := True;
+          btnCancelar.Enabled  := False;
+          btnPesquisar.Enabled := True;
         end;
       IDNO:
         Exit;
@@ -192,29 +291,43 @@ end;
 procedure TfrmCadastroClientes.btnEditarClick(Sender: TObject);
 begin
     DataModule1.cdsCliente.Edit;
-    btnSalvarEdicao.Visible  := True;
-    btnSalvarEdicao.Left     := 432;
-    btnGravar.Enabled        := False;
-    btnNovo.Enabled          := False;
-    btnDeletar.Enabled       := False;
-    dbedtNome.Enabled        := True;
-    dbedtCpf.Enabled         := True;
-    dbedtDataNas.Enabled     := True;
-    btnCancelar.Enabled      := True;
-    dbedtNome.Enabled        := True;
-    edtEndereco.Enabled      := True;
-    edtNumero.Enabled        := True;
-    edtBairro.Enabled        := True;
-    edtCidade.Enabled        := True;
-    edtCep.Enabled           := True;
-    edtRG.Enabled            := True;
-    edtIE.Enabled            := True;
-    edtCnpj.Enabled          := True;
-    dbedtDataNas.Enabled     := True;
-    dbcbbAtivoInativo.Enabled:= True;
-    cbTipo.Enabled           := True;
-    cbUF.Enabled             := True;
+    sqlClienteTipo.close;
+    sqlClienteTipo.SQL.Clear;
+    sqlClienteTipo.SQL.Text := 'SELECT ' +
+                                       'CL_TIPOSUJEITO ' +
+                                       'FROM CLIENTE ' +
+                                       'WHERE CL_CODIGO =' + QuotedStr(dbedtCodigo.Text);
 
+    sqlClienteTipo.Open;
+    if sqlClienteTipo.FieldByName('CL_TIPOSUJEITO').Value = 'F'  then
+      begin
+          dbedtCpf.Enabled         := True;
+          edtRG.Enabled            := True;
+      end
+    else if sqlClienteTipo.FieldByName('CL_TIPOSUJEITO').Value = 'J' then
+      begin
+          edtIE.Enabled            := True;
+          edtCnpj.Enabled          := True;
+      end;
+
+    btnSalvarEdicao.Visible   := True;
+    btnSalvarEdicao.Left      := 432;
+    btnGravar.Enabled         := False;
+    btnNovo.Enabled           := False;
+    btnDeletar.Enabled        := False;
+    dbedtNome.Enabled         := True;
+    dbedtDataNas.Enabled      := True;
+    btnCancelar.Enabled       := True;
+    dbedtNome.Enabled         := True;
+    edtEndereco.Enabled       := True;
+    edtNumero.Enabled         := True;
+    edtBairro.Enabled         := True;
+    edtCidade.Enabled         := True;
+    edtCep.Enabled            := True;
+    dbedtDataNas.Enabled      := True;
+    dbcbbAtivoInativo.Enabled := True;
+    cbTipo.Enabled            := True;
+    cbUF.Enabled              := True;
 end;
 
 procedure TfrmCadastroClientes.btnGravarClick(Sender: TObject);
@@ -224,6 +337,8 @@ begin
       if Application.MessageBox('Deseja realmente gravar esse cadastro?','Aviso',MB_YESNO+MB_ICONQUESTION)= mrYes then
       else
         Abort;
+       try
+       verificaCamposVazios;
         try
           varData := FormatDateTime('MM/DD/YYYY',strtodate(dbedtDataNas.Text));
           DataModule1.sqlCliente.SQL.Clear;
@@ -237,11 +352,18 @@ begin
         finally
           DataModule1.sqlCliente.SQLConnection.CommitFreeAndNil(Transaction);
           ShowMessage('Cliente cadastrado com sucesso!');
-          btnEditar.Enabled := False;
-          btnGravar.Enabled := False;
-          btnNovo.Enabled   := True;
+          btnEditar.Enabled    := False;
+          btnGravar.Enabled    := False;
+          btnNovo.Enabled      := True;
+          btnPesquisar.Enabled := True;
+          btnCancelar.Enabled  := False;
+          btnSair.Enabled      := True;
+          desativaComponentes;
           DataModule1.cdsCliente.Close;
         end;
+       except
+
+       end;
 end;
 
 procedure TfrmCadastroClientes.btnNovoClick(Sender: TObject);
@@ -253,17 +375,11 @@ begin
     DataModule1.cdsCliente.Insert;
     dbcbbAtivoInativo.ItemIndex := 0;
     dbedtCodigo.Text         := IntToStr(varUltimoCliente);
-    dbedtNome.Enabled        := True;
-    edtEndereco.Enabled      := True;
-    edtNumero.Enabled        := True;
-    edtBairro.Enabled        := True;
-    edtCidade.Enabled        := True;
-    edtCep.Enabled           := True;
-    dbedtDataNas.Enabled     := True;
-    cbTipo.Enabled           := True;
-    cbUF.Enabled             := True;
-    btnGravar.Enabled        := True;
+    ativaComponentes;
     btnPesquisar.Enabled     := False;
+    btnNovo.Enabled          := False;
+    btnGravar.Enabled        := True;
+    btnSair.Enabled          := False;
     dbedtNome.SetFocus;
 end;
 
@@ -279,22 +395,14 @@ begin
         DataModule1.sqlCliente.SQL.Text := 'SELECT * FROM CLIENTE WHERE CL_CODIGO ='
         + QuotedStr(IntToStr(frmPesquisaCliente.varcodigoCliente));
           DataModule1.cdsCliente.Open;
+          desativaComponentes;
           btnDeletar.Enabled    := True;
           btnEditar.Enabled     := True;
           btnGravar.Enabled     := False;
           btnNovo.Enabled       := False;
-          dbedtNome.Enabled     := False;
-          dbedtCpf.Enabled      := False;
-          dbedtDataNas.Enabled  := False;
-          edtEndereco.Enabled   := False;
-          edtNumero.Enabled     := False;
-          edtBairro.Enabled     := False;
-          edtCidade.Enabled     := False;
-          edtCep.Enabled        := False;
-          dbedtDataNas.Enabled  := False;
-          cbTipo.Enabled        := False;
-          cbTipo.Enabled        := False;
-      end;
+          btnCancelar.Enabled   := True;
+          btnPesquisar.Enabled  := False;
+       end;
   finally
     frmPesquisaCliente.Free;
   end;
@@ -310,9 +418,9 @@ begin
         Exit;
       end
     else
-    begin
-        Close;
-    end;
+      begin
+          Close;
+      end;
 end;
 
 procedure TfrmCadastroClientes.btnSalvarEdicaoClick(Sender: TObject);
@@ -320,6 +428,24 @@ begin
    try
       DataModule1.cdsCliente.Post;
       DataModule1.cdsCliente.ApplyUpdates(0);
+      sqlClienteTipo.close;
+      sqlClienteTipo.SQL.Clear;
+      sqlClienteTipo.SQL.Text := 'SELECT ' +
+                                 'CL_TIPOSUJEITO ' +
+                                 'FROM CLIENTE ' +
+                                 'WHERE CL_CODIGO =' + QuotedStr(dbedtCodigo.Text);
+      sqlClienteTipo.Open;
+        if sqlClienteTipo.FieldByName('CL_TIPOSUJEITO').Value = 'F'  then
+          begin
+              sqlClienteTipo.SQL.Text := 'UPDATE CLIENTE SET CL_CNPJ = NULL, CL_IE = NULL ' +
+              'WHERE CL_CODIGO ='  + QuotedStr(dbedtCodigo.Text);
+          end
+        else if sqlClienteTipo.FieldByName('CL_TIPOSUJEITO').Value = 'J' then
+          begin
+              sqlClienteTipo.SQL.Text := 'UPDATE CLIENTE SET CL_CPF = NULL, CL_RG = NULL ' +
+              'WHERE CL_CODIGO ='  + QuotedStr(dbedtCodigo.Text);
+          end;
+      sqlClienteTipo.ExecSQL(TRUE);
    finally
       ShowMessage('Cadastro atualizado com sucesso !');
       DataModule1.cdsCliente.Close;
@@ -327,6 +453,8 @@ begin
       dbcbbAtivoInativo.Enabled := true;
       btnEditar.Enabled         := False;
       btnNovo.Enabled           := True;
+      btnCancelar.Enabled       := False;
+      desativaComponentes;
    end;
 
 end;
@@ -335,31 +463,35 @@ procedure TfrmCadastroClientes.cbTipoChange(Sender: TObject);
 begin
      case cbTipo.ItemIndex of
      0:
-     begin
-        varTipoSujeito := 'F'
-     end;
+       begin
+          varTipoSujeito := 'F'
+       end;
      1:
-     begin
-       varTipoSujeito  := 'J'
-     end;
+       begin
+         varTipoSujeito  := 'J'
+       end;
      end;
 
      case cbTipo.ItemIndex of
      0:
-     begin
-        dbedtCpf.Enabled      := True;
-        edtRG.Enabled         := True;
-        edtCnpj.EnAbled       := False;
-        edtIE.Enabled         := False;
-     end;
+       begin
+          dbedtCpf.Enabled      := True;
+          edtRG.Enabled         := True;
+          edtCnpj.Enabled       := False;
+          edtIE.Enabled         := False;
+          edtCnpj.Clear;
+          edtIE.Clear;
+       end;
      1:
-     begin
-        dbedtCpf.Enabled      := False;
-        edtRG.Enabled         := False;
-        edtCnpj.EnAbled       := True;
-        edtIE.Enabled         := True;
-      end;
-      end;
+       begin
+          dbedtCpf.Enabled      := False;
+          edtRG.Enabled         := False;
+          edtCnpj.Enabled       := True;
+          edtIE.Enabled         := True;
+          dbedtCpf.Clear;
+          edtRG.Clear;
+       end;
+     end;
 end;
 
 procedure TfrmCadastroClientes.edtNascimentoKeyPress(Sender: TObject;
@@ -378,10 +510,10 @@ begin
         Exit;
       end
  else
-    begin
-        Close;
-    end;
-  DataModule1.cdsCliente.Close;
+      begin
+          Close;
+      end;
+    DataModule1.cdsCliente.Close;
 end;
 
 procedure TfrmCadastroClientes.FormCreate(Sender: TObject);

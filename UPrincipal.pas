@@ -134,7 +134,7 @@ begin
     try
       frmRelatorioCatalogoPrecos.ShowModal;
     finally
-     FreeAndNil(frmRelatorioCatalogoPrecos);
+      FreeAndNil(frmRelatorioCatalogoPrecos);
     end;
 end;
 

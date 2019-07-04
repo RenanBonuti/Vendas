@@ -11,85 +11,9 @@ object frmPesquisaVenda: TfrmPesquisaVenda
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object lblCodigo: TLabel
-    Left = 308
-    Top = 16
-    Width = 73
-    Height = 25
-    Caption = 'VENDA'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = 8388672
-    Font.Height = -21
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label1: TLabel
-    Left = 524
-    Top = 16
-    Width = 57
-    Height = 25
-    Caption = 'DATA'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = 8388672
-    Font.Height = -21
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Panel1: TPanel
-    Left = 232
-    Top = 48
-    Width = 209
-    Height = 105
-    Color = clWhite
-    Enabled = False
-    ParentBackground = False
-    TabOrder = 0
-    object lblVenIni: TLabel
-      Left = 30
-      Top = 24
-      Width = 37
-      Height = 17
-      Caption = 'Inicial'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object lblVenFin: TLabel
-      Left = 30
-      Top = 64
-      Width = 30
-      Height = 17
-      Caption = 'Final'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Segoe UI'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-    object edtVenIni: TEdit
-      Left = 80
-      Top = 24
-      Width = 121
-      Height = 21
-      TabOrder = 0
-    end
-    object edtVenFim: TEdit
-      Left = 80
-      Top = 64
-      Width = 121
-      Height = 21
-      TabOrder = 1
-    end
-  end
   object dbgrdPesquisar: TDBGrid
     Left = 12
     Top = 167
@@ -97,7 +21,7 @@ object frmPesquisaVenda: TfrmPesquisaVenda
     Height = 267
     DataSource = DataModule1.dsVenda
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
-    TabOrder = 1
+    TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
@@ -109,31 +33,43 @@ object frmPesquisaVenda: TfrmPesquisaVenda
       item
         Expanded = False
         FieldName = 'VD_NUMERO'
+        Title.Caption = 'Venda'
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'VD_CLIENTE'
+        Title.Caption = 'Cliente'
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'VD_DATA_EMISSAO'
+        Title.Caption = 'Emiss'#227'o'
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'VD_SITUACAO'
+        Title.Caption = 'Situa'#231#227'o'
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'VD_VALOR_TOTAL'
+        Title.Caption = 'Total'
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'VD_OBSERVACAO'
+        Title.Caption = 'Observa'#231#227'o'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'VD_CONDPGTO'
+        Title.Caption = 'Condi'#231#227'o Pgto.'
         Visible = True
       end>
   end
@@ -210,12 +146,12 @@ object frmPesquisaVenda: TfrmPesquisaVenda
       2728295D5D5D5D5D5D5D5D5D5D5D5D5D5D2A282B010300000000000000000000
       0121222324255D5D5D5D5D5D5D5D252423262101000000000000000000000000
       0000011718191A1B1C5D5D1D1B1E191F20010000000000000000}
-    TabOrder = 2
+    TabOrder = 1
     OnClick = btnPesquisar2Click
   end
   object rgTipoPesquisa: TRadioGroup
     Left = 16
-    Top = 40
+    Top = 32
     Width = 185
     Height = 105
     Caption = 'Tipo de Pesquisa'
@@ -223,20 +159,24 @@ object frmPesquisaVenda: TfrmPesquisaVenda
     Items.Strings = (
       'C'#243'digo da Venda'
       'Data da Venda')
-    TabOrder = 3
+    TabOrder = 2
     OnClick = rgTipoPesquisaClick
   end
-  object Panel2: TPanel
-    Left = 448
-    Top = 48
-    Width = 209
-    Height = 105
-    Color = clWhite
-    Enabled = False
-    ParentBackground = False
-    TabOrder = 4
-    object Label2: TLabel
-      Left = 30
+  object grp1: TGroupBox
+    Left = 216
+    Top = 16
+    Width = 385
+    Height = 65
+    Caption = 'Venda'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+    object lblVenIni: TLabel
+      Left = 14
       Top = 24
       Width = 37
       Height = 17
@@ -248,9 +188,57 @@ object frmPesquisaVenda: TfrmPesquisaVenda
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object Label3: TLabel
-      Left = 30
-      Top = 64
+    object lblVenFin: TLabel
+      Left = 206
+      Top = 24
+      Width = 30
+      Height = 17
+      Caption = 'Final'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object edtVenIni: TEdit
+      Left = 64
+      Top = 24
+      Width = 121
+      Height = 22
+      TabOrder = 0
+    end
+    object edtVenFim: TEdit
+      Left = 248
+      Top = 24
+      Width = 121
+      Height = 22
+      TabOrder = 1
+    end
+  end
+  object grp2: TGroupBox
+    Left = 216
+    Top = 94
+    Width = 385
+    Height = 65
+    Caption = 'Data'
+    TabOrder = 4
+    object lbl1: TLabel
+      Left = 14
+      Top = 24
+      Width = 37
+      Height = 17
+      Caption = 'Inicial'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object lbl2: TLabel
+      Left = 206
+      Top = 24
       Width = 30
       Height = 17
       Caption = 'Final'
@@ -262,10 +250,11 @@ object frmPesquisaVenda: TfrmPesquisaVenda
       ParentFont = False
     end
     object medtDataIni: TMaskEdit
-      Left = 80
+      Left = 64
       Top = 24
-      Width = 118
+      Width = 117
       Height = 21
+      Enabled = False
       EditMask = '!00/00/0000;1;_'
       MaxLength = 10
       TabOrder = 0
@@ -273,10 +262,11 @@ object frmPesquisaVenda: TfrmPesquisaVenda
       OnExit = medtDataIniExit
     end
     object medtDatafim: TMaskEdit
-      Left = 80
-      Top = 64
+      Left = 248
+      Top = 24
       Width = 120
       Height = 21
+      Enabled = False
       EditMask = '!00/00/0000;1;_'
       MaxLength = 10
       TabOrder = 1

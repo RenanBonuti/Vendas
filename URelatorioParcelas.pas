@@ -11,7 +11,6 @@ uses
 type
   TfrmRelatorioParcelas = class(TForm)
     btnImprimir: TBitBtn;
-    frxrprtParcela: TfrxReport;
     edtCodigoCliente: TDBEdit;
     lblCodigoCliente: TLabel;
     lblCliente: TLabel;
@@ -26,7 +25,6 @@ type
     lbl2: TLabel;
     medtDatafim: TMaskEdit;
     frxdbdtst1: TfrxDBDataset;
-    btn1: TBitBtn;
     frxrprtParcela2: TfrxReport;
     frxrprtParcela1: TfrxReport;
     procedure ordena;

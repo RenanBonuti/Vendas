@@ -53,6 +53,7 @@ object frmPesquisaCliente: TfrmPesquisaCliente
       OnDblClick = dbgrdPesquisarDblClick
       Columns = <
         item
+          Color = 16744448
           Expanded = False
           FieldName = 'CL_CODIGO'
           Title.Caption = 'C'#243'digo'
@@ -73,13 +74,72 @@ object frmPesquisaCliente: TfrmPesquisaCliente
         item
           Expanded = False
           FieldName = 'CL_DATA_NASCIMENTO'
-          Title.Caption = 'Data Nasc.'
+          Title.Caption = 'Nascimento'
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'CL_ATIVO'
           Title.Caption = 'Situa'#231#227'o'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CL_RG'
+          Title.Caption = 'RG'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CL_TIPOSUJEITO'
+          Title.Caption = 'Tipo'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CL_CNPJ'
+          Title.Caption = 'CNPJ'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CL_IE'
+          Title.Caption = 'Inscri'#231#227'o Nasc.'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CL_ENDERECO'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CL_NUMERO'
+          Title.Caption = 'N'#250'mero '
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CL_BAIRRO'
+          Title.Caption = 'Bairro'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CL_CIDADE'
+          Title.Caption = 'Cidade'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CL_UF'
+          Title.Caption = 'UF'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CL_CEP'
+          Title.Caption = 'CEP'
           Visible = True
         end>
     end

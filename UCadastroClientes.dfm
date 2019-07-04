@@ -1480,8 +1480,6 @@ object frmCadastroClientes: TfrmCadastroClientes
         DataSource = dsCliente
         Enabled = False
         TabOrder = 21
-        OnEnter = dbedtCodigoEnter
-        OnExit = dbedtCpfExit
       end
     end
   end
@@ -1494,12 +1492,21 @@ object frmCadastroClientes: TfrmCadastroClientes
     DataSource = dsCliente
     Enabled = False
     TabOrder = 1
-    OnEnter = dbedtCodigoEnter
-    OnExit = dbedtCpfExit
   end
   object dsCliente: TDataSource
     DataSet = DataModule1.cdsCliente
     Left = 60
     Top = 270
+  end
+  object sqlClienteTipo: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'SELECT'
+      'CL_TIPOSUJEITO'
+      'FROM CLIENTE')
+    SQLConnection = DataModule1.DadosVendas
+    Left = 140
+    Top = 273
   end
 end
