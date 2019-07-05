@@ -847,6 +847,7 @@ object frmVendas: TfrmVendas
           Expanded = False
           FieldName = 'IV_TOTAL_ITEM'
           Title.Caption = 'Total do Item'
+          Width = 64
           Visible = True
         end>
     end
@@ -1419,7 +1420,7 @@ object frmVendas: TfrmVendas
       TabOrder = 15
     end
     object btnPesquisar: TBitBtn
-      Left = 619
+      Left = 627
       Top = 12
       Width = 94
       Height = 36

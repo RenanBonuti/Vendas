@@ -155,13 +155,12 @@ begin
       Abort;
     end;
 
-    if (cbTipo.ItemIndex = 0) and (dbedtCpf.Text = '') then
+    if (cbTipo.ItemIndex = 0) and (edtRG.Text = '         ') then
     begin
-      ShowMessage('O campo CPF obrigatório !!!');
-      dbedtCpf.SetFocus;
+      ShowMessage('O campo RG obrigatório !!!');
+      edtRG.SetFocus;
       Abort;
     end;
-
 end;
 
 procedure TfrmCadastroClientes.ativaComponentes;
@@ -226,6 +225,7 @@ begin
     desativaComponentes;
     btnNovo.Enabled         := True;
     btnPesquisar.Enabled    := True;
+    btnSair.Enabled         := True;
     btnEditar.Enabled       := False;
     btnDeletar.Enabled      := False;
     btnGravar.Enabled       := False;
@@ -281,6 +281,7 @@ begin
           btnEditar.Enabled    := False;
           btnNovo.Enabled      := True;
           btnCancelar.Enabled  := False;
+          btnPesquisar.Enabled := True;
         end;
       IDNO:
         Exit;
@@ -356,6 +357,7 @@ begin
           btnNovo.Enabled      := True;
           btnPesquisar.Enabled := True;
           btnCancelar.Enabled  := False;
+          btnSair.Enabled      := True;
           desativaComponentes;
           DataModule1.cdsCliente.Close;
         end;
@@ -399,6 +401,7 @@ begin
           btnGravar.Enabled     := False;
           btnNovo.Enabled       := False;
           btnCancelar.Enabled   := True;
+          btnPesquisar.Enabled  := False;
        end;
   finally
     frmPesquisaCliente.Free;

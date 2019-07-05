@@ -6,7 +6,7 @@ object frmCadastroClientes: TfrmCadastroClientes
   BorderStyle = bsSingle
   Caption = 'Cadastro de Clientes.'
   ClientHeight = 386
-  ClientWidth = 1008
+  ClientWidth = 821
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -30,7 +30,7 @@ object frmCadastroClientes: TfrmCadastroClientes
   object pgc1: TPageControl
     Left = 0
     Top = 0
-    Width = 1008
+    Width = 821
     Height = 386
     ActivePage = TabSheetCadastro
     Align = alClient
@@ -41,10 +41,8 @@ object frmCadastroClientes: TfrmCadastroClientes
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    ExplicitWidth = 820
     object TabSheetCadastro: TTabSheet
       Caption = 'Cadastro do cliente'
-      ExplicitWidth = 812
       object lblId: TLabel
         Left = 3
         Top = 47
@@ -1482,8 +1480,6 @@ object frmCadastroClientes: TfrmCadastroClientes
         DataSource = dsCliente
         Enabled = False
         TabOrder = 21
-        OnEnter = dbedtCodigoEnter
-        OnExit = dbedtCpfExit
       end
     end
   end
@@ -1496,12 +1492,21 @@ object frmCadastroClientes: TfrmCadastroClientes
     DataSource = dsCliente
     Enabled = False
     TabOrder = 1
-    OnEnter = dbedtCodigoEnter
-    OnExit = dbedtCpfExit
   end
   object dsCliente: TDataSource
     DataSet = DataModule1.cdsCliente
     Left = 60
     Top = 270
+  end
+  object sqlClienteTipo: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'SELECT'
+      'CL_TIPOSUJEITO'
+      'FROM CLIENTE')
+    SQLConnection = DataModule1.DadosVendas
+    Left = 140
+    Top = 273
   end
 end

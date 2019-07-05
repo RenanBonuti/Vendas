@@ -58,6 +58,7 @@ type
     procedure ativaComponentes;
     procedure desativaComponentes;
     procedure verificaCamposVazios;
+  //  procedure validaCnpg;
     procedure edtNascimentoKeyPress(Sender: TObject; var Key: Char);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnSairClick(Sender: TObject);
@@ -158,10 +159,16 @@ begin
     if (cbTipo.ItemIndex = 0) and (edtRG.Text = '         ') then
     begin
       ShowMessage('O campo RG obrigatório !!!');
-      dbedtCpf.SetFocus;
+      edtRG.SetFocus;
       Abort;
     end;
+end;
 
+function imprimeCNPJ(CNPJ: string): string;
+begin
+{ máscara do CNPJ: 99.999.999.9999-99 }
+  imprimeCNPJ := copy(CNPJ, 1, 2) + '.' + copy(CNPJ, 3, 3) + '.' +
+    copy(CNPJ, 6, 3) + '.' + copy(CNPJ, 9, 4) + '-' + copy(CNPJ, 13, 2);
 end;
 
 procedure TfrmCadastroClientes.ativaComponentes;
@@ -226,6 +233,7 @@ begin
     desativaComponentes;
     btnNovo.Enabled         := True;
     btnPesquisar.Enabled    := True;
+    btnSair.Enabled         := True;
     btnEditar.Enabled       := False;
     btnDeletar.Enabled      := False;
     btnGravar.Enabled       := False;
@@ -281,6 +289,7 @@ begin
           btnEditar.Enabled    := False;
           btnNovo.Enabled      := True;
           btnCancelar.Enabled  := False;
+          btnPesquisar.Enabled := True;
         end;
       IDNO:
         Exit;
@@ -356,6 +365,7 @@ begin
           btnNovo.Enabled      := True;
           btnPesquisar.Enabled := True;
           btnCancelar.Enabled  := False;
+          btnSair.Enabled      := True;
           desativaComponentes;
           DataModule1.cdsCliente.Close;
         end;
@@ -399,6 +409,7 @@ begin
           btnGravar.Enabled     := False;
           btnNovo.Enabled       := False;
           btnCancelar.Enabled   := True;
+          btnPesquisar.Enabled  := False;
        end;
   finally
     frmPesquisaCliente.Free;

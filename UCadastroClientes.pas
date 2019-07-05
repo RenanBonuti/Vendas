@@ -58,6 +58,7 @@ type
     procedure ativaComponentes;
     procedure desativaComponentes;
     procedure verificaCamposVazios;
+  //  procedure validaCnpg;
     procedure edtNascimentoKeyPress(Sender: TObject; var Key: Char);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnSairClick(Sender: TObject);
@@ -161,6 +162,13 @@ begin
       edtRG.SetFocus;
       Abort;
     end;
+end;
+
+function imprimeCNPJ(CNPJ: string): string;
+begin
+{ máscara do CNPJ: 99.999.999.9999-99 }
+  imprimeCNPJ := copy(CNPJ, 1, 2) + '.' + copy(CNPJ, 3, 3) + '.' +
+    copy(CNPJ, 6, 3) + '.' + copy(CNPJ, 9, 4) + '-' + copy(CNPJ, 13, 2);
 end;
 
 procedure TfrmCadastroClientes.ativaComponentes;

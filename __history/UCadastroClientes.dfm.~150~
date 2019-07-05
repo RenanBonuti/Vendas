@@ -6,7 +6,7 @@ object frmCadastroClientes: TfrmCadastroClientes
   BorderStyle = bsSingle
   Caption = 'Cadastro de Clientes.'
   ClientHeight = 386
-  ClientWidth = 820
+  ClientWidth = 821
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -30,7 +30,7 @@ object frmCadastroClientes: TfrmCadastroClientes
   object pgc1: TPageControl
     Left = 0
     Top = 0
-    Width = 820
+    Width = 821
     Height = 386
     ActivePage = TabSheetCadastro
     Align = alClient
@@ -285,7 +285,7 @@ object frmCadastroClientes: TfrmCadastroClientes
           0000DDDDDD0FE5E1E13CECE9E95FEEEBEB78ECECEA8AEDEDED8FEDEDED8FEEEC
           EC88EBEBEB77EBE8E85CE3E3E338D4D4D40C0000000000000000000000000000
           0000000000000000000000000000000000000000000000000000}
-        TabOrder = 0
+        TabOrder = 9
         OnClick = btnGravarClick
       end
       object btnSair: TBitBtn
@@ -425,7 +425,7 @@ object frmCadastroClientes: TfrmCadastroClientes
           0001000000010000000100000001000000010000000100000001000000010000
           0001000000010000000100000001000000010000000100000001000000010000
           0001000000000000000000000000000000000000000000000000}
-        TabOrder = 1
+        TabOrder = 10
         OnClick = btnSairClick
       end
       object btnCancelar: TBitBtn
@@ -565,7 +565,7 @@ object frmCadastroClientes: TfrmCadastroClientes
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000}
-        TabOrder = 2
+        TabOrder = 11
         OnClick = btnCancelarClick
       end
       object btnDeletar: TBitBtn
@@ -705,7 +705,7 @@ object frmCadastroClientes: TfrmCadastroClientes
           0000DDDDDD0FE5E1E13CECE9E95FEEEBEB78ECECEA8AEDEDED8FEDEDED8FEEEC
           EC88EBEBEB77EBE8E85CE3E3E338D4D4D40C0000000000000000000000000000
           0000000000000000000000000000000000000000000000000000}
-        TabOrder = 3
+        TabOrder = 13
         OnClick = btnDeletarClick
       end
       object dbedtNome: TDBEdit
@@ -717,7 +717,7 @@ object frmCadastroClientes: TfrmCadastroClientes
         DataField = 'CL_NOME'
         DataSource = dsCliente
         Enabled = False
-        TabOrder = 4
+        TabOrder = 0
         OnEnter = dbedtCodigoEnter
       end
       object dbedtCodigo: TDBEdit
@@ -728,7 +728,7 @@ object frmCadastroClientes: TfrmCadastroClientes
         DataField = 'CL_CODIGO'
         DataSource = dsCliente
         Enabled = False
-        TabOrder = 5
+        TabOrder = 12
         OnEnter = dbedtCodigoEnter
       end
       object dbedtCpf: TDBEdit
@@ -739,7 +739,7 @@ object frmCadastroClientes: TfrmCadastroClientes
         DataField = 'CL_CPF'
         DataSource = dsCliente
         Enabled = False
-        TabOrder = 6
+        TabOrder = 2
         OnEnter = dbedtCodigoEnter
         OnExit = dbedtCpfExit
       end
@@ -751,7 +751,7 @@ object frmCadastroClientes: TfrmCadastroClientes
         DataField = 'CL_DATA_NASCIMENTO'
         DataSource = dsCliente
         Enabled = False
-        TabOrder = 7
+        TabOrder = 14
         OnEnter = dbedtCodigoEnter
         OnExit = dbedtDataNasExit
       end
@@ -767,7 +767,7 @@ object frmCadastroClientes: TfrmCadastroClientes
         Items.Strings = (
           'ATIVO'
           'INATIVO')
-        TabOrder = 8
+        TabOrder = 15
         OnEnter = dbedtCodigoEnter
       end
       object btnNovo: TBitBtn
@@ -907,7 +907,7 @@ object frmCadastroClientes: TfrmCadastroClientes
           0000DDDDDD0FE5E1E13CECE9E95FEEEBEB78ECECEA8AEDEDED8FEDEDED8FEEEC
           EC88EBEBEB77EBE8E85CE3E3E338D4D4D40C0000000000000000000000000000
           0000000000000000000000000000000000000000000000000000}
-        TabOrder = 9
+        TabOrder = 16
         OnClick = btnNovoClick
       end
       object btnEditar: TBitBtn
@@ -1047,7 +1047,7 @@ object frmCadastroClientes: TfrmCadastroClientes
           0000DDDDDD0FE5E1E13CECE9E95FEEEBEB78ECECEA8AEDEDED8FEDEDED8FEEEC
           EC88EBEBEB77EBE8E85CE3E3E338D4D4D40C0000000000000000000000000000
           0000000000000000000000000000000000000000000000000000}
-        TabOrder = 10
+        TabOrder = 17
         OnClick = btnEditarClick
       end
       object btnPesquisar: TBitBtn
@@ -1187,12 +1187,12 @@ object frmCadastroClientes: TfrmCadastroClientes
           0000DDDDDD0FE5E1E13CECE9E95FEEEBEB78ECECEA8AEDEDED8FEDEDED8FEEEC
           EC88EBEBEB77EBE8E85CE3E3E338D4D4D40C0000000000000000000000000000
           0000000000000000000000000000000000000000000000000000}
-        TabOrder = 11
+        TabOrder = 18
         OnClick = btnPesquisarClick
       end
       object btnSalvarEdicao: TBitBtn
-        Left = 900
-        Top = 276
+        Left = 892
+        Top = 314
         Width = 82
         Height = 41
         Caption = 'Salvar'
@@ -1327,7 +1327,7 @@ object frmCadastroClientes: TfrmCadastroClientes
           FFBFFFFFFFBFFFFFFFBFFFFFFFBFFFFFFFBFFFFFFFBFFFFFFFBFFFFFFFBFFFFF
           FFBFFFFFFFBFFFFFFFBFFFFFFFBFD1B67EBFBD9544BFD4AA5EAFD7AA5C61CC99
           3305000000000000000000000000000000000000000000000000}
-        TabOrder = 12
+        TabOrder = 19
         Visible = False
         OnClick = btnSalvarEdicaoClick
       end
@@ -1349,7 +1349,7 @@ object frmCadastroClientes: TfrmCadastroClientes
           'F'#205'SICA'
           'JUR'#205'DICA')
         ParentFont = False
-        TabOrder = 13
+        TabOrder = 1
         OnChange = cbTipoChange
         OnEnter = dbedtCodigoEnter
       end
@@ -1396,7 +1396,7 @@ object frmCadastroClientes: TfrmCadastroClientes
           'TO'
           '')
         ParentFont = False
-        TabOrder = 14
+        TabOrder = 20
         OnEnter = dbedtCodigoEnter
       end
       object edtEndereco: TDBEdit
@@ -1408,7 +1408,7 @@ object frmCadastroClientes: TfrmCadastroClientes
         DataField = 'CL_ENDERECO'
         DataSource = dsCliente
         Enabled = False
-        TabOrder = 15
+        TabOrder = 4
         OnEnter = dbedtCodigoEnter
       end
       object edtNumero: TDBEdit
@@ -1420,7 +1420,7 @@ object frmCadastroClientes: TfrmCadastroClientes
         DataField = 'CL_NUMERO'
         DataSource = dsCliente
         Enabled = False
-        TabOrder = 16
+        TabOrder = 5
         OnEnter = dbedtCodigoEnter
       end
       object edtBairro: TDBEdit
@@ -1432,7 +1432,7 @@ object frmCadastroClientes: TfrmCadastroClientes
         DataField = 'CL_BAIRRO'
         DataSource = dsCliente
         Enabled = False
-        TabOrder = 17
+        TabOrder = 6
         OnEnter = dbedtCodigoEnter
       end
       object edtCidade: TDBEdit
@@ -1444,7 +1444,7 @@ object frmCadastroClientes: TfrmCadastroClientes
         DataField = 'CL_CIDADE'
         DataSource = dsCliente
         Enabled = False
-        TabOrder = 18
+        TabOrder = 7
         OnEnter = dbedtCodigoEnter
       end
       object edtCep: TDBEdit
@@ -1456,7 +1456,7 @@ object frmCadastroClientes: TfrmCadastroClientes
         DataField = 'CL_CEP'
         DataSource = dsCliente
         Enabled = False
-        TabOrder = 19
+        TabOrder = 8
         OnEnter = dbedtCodigoEnter
       end
       object edtRG: TDBEdit
@@ -1467,7 +1467,7 @@ object frmCadastroClientes: TfrmCadastroClientes
         DataField = 'CL_RG'
         DataSource = dsCliente
         Enabled = False
-        TabOrder = 20
+        TabOrder = 3
         OnEnter = dbedtCodigoEnter
         OnExit = dbedtCpfExit
       end
@@ -1480,8 +1480,6 @@ object frmCadastroClientes: TfrmCadastroClientes
         DataSource = dsCliente
         Enabled = False
         TabOrder = 21
-        OnEnter = dbedtCodigoEnter
-        OnExit = dbedtCpfExit
       end
     end
   end
@@ -1494,12 +1492,21 @@ object frmCadastroClientes: TfrmCadastroClientes
     DataSource = dsCliente
     Enabled = False
     TabOrder = 1
-    OnEnter = dbedtCodigoEnter
-    OnExit = dbedtCpfExit
   end
   object dsCliente: TDataSource
     DataSet = DataModule1.cdsCliente
     Left = 60
     Top = 270
+  end
+  object sqlClienteTipo: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'SELECT'
+      'CL_TIPOSUJEITO'
+      'FROM CLIENTE')
+    SQLConnection = DataModule1.DadosVendas
+    Left = 140
+    Top = 273
   end
 end
